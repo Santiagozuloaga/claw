@@ -1,112 +1,154 @@
-# Correcciones Claw — Guía de Integración
+# CLAW - Asistente Personal IA
 
-## Archivos incluidos
+**Versión**: 3.05.5  
+**Fecha**: 2024-06-19  
+**Estándar**: P.A.R.A. + ISO-SAGE
 
-| Archivo | Bugs que corrige | Qué hace |
-|---------|-----------------|----------|
-| `encoding.py` | Bug #4 (UTF-8 Windows) | `configure_encoding()` al inicio |
-| `thinking.py` | Bug #3 (Qwen3), #7 (memoize+env), #9 (parseInt) | Parámetros de thinking seguros |
-| `memory.py` | Bug #6 (fire-and-forget), #12 (thinking replay) | Guardado/carga de sesiones |
-| `error_utils.py` | Bug #1/#2 (bare except), #5 (Promise anti-patrón), #8 (race condition), #11 (hooks sin catch) | Utilidades de manejo de errores |
-| `claw.py` | Todos | Punto de entrada con todo integrado |
-| `claw.bat` | Bug #4 (UTF-8 Windows) | Lanzador Windows con `chcp 65001` |
-
----
-
-## Integración rápida (si ya tienes tu propio claw.py)
-
-### 1. Copiar los módulos de corrección junto a tu claw.py
+## 📁 Estructura del Proyecto (P.A.R.A.)
 
 ```
-tu_proyecto/
-├── claw.py            ← Tu archivo existente
-├── claw.bat           ← Nuevo lanzador Windows
-├── encoding.py        ← Nuevo
-├── thinking.py        ← Nuevo
-├── memory.py          ← Nuevo
-└── error_utils.py     ← Nuevo
+CLAW_FINAL/
+├── 00_SOPORTE/              # Logs, configuraciones, .env
+│   ├── config.py
+│   ├── claw.bat
+│   ├── .gitignore
+│   └── LICENSE
+├── 01_SRC/                  # Código lógico (separado por módulos)
+│   ├── 2024-06-19_CLAW_CLAWSPRING_CORE_V01.py
+│   ├── 2024-06-19_CLAW_AGENT_CORE_V01.py
+│   ├── 2024-06-19_CLAW_PROVIDERS_V01.py
+│   ├── 2024-06-19_CLAW_TOOLS_V01.py
+│   ├── 2024-06-19_CLAW_MEMORY_V01.py
+│   ├── 2024-06-19_CLAW_THINKING_V01.py
+│   ├── 2024-06-19_CLAW_ENCODING_V01.py
+│   ├── 2024-06-19_CLAW_ERROR_UTILS_V01.py
+│   ├── 2024-06-19_CLAW_MAIN_V01.py
+│   ├── 2024-06-19_CLAW_PERSONALIDAD_V01.py
+│   ├── 2024-06-19_CLAW_MEMORY_PACKAGE_V01/
+│   ├── 2024-06-19_CLAW_MULTI_AGENT_V01/
+│   ├── 2024-06-19_CLAW_SKILL_V01/
+│   ├── 2024-06-19_CLAW_MCP_V01/
+│   ├── 2024-06-19_CLAW_PLUGIN_V01/
+│   ├── 2024-06-19_CLAW_TASK_V01/
+│   └── 2024-06-19_CLAW_VOICE_V01/
+├── 02_TESTS/                # Pruebas automatizadas
+│   └── 2024-06-19_CLAW_TESTS_V01/
+├── 03_DOCS/                 # Documentación técnica
+│   ├── 2024-06-19_CLAW_DOCS_V01/
+│   ├── 2024-06-19_CLAW_DEMOS_V01/
+│   ├── README.md
+│   ├── README_JULES.md
+│   ├── SAGE_DELEGACION_BUGS.md
+│   ├── INSTRUCCIONES_SAGE.md
+│   └── claw_historial.html
+├── 04_ASSETS/               # Recursos estáticos
+│   ├── 2024-06-19_CLAW_TEMP_UPLOAD_V01/
+│   └── 2024-06-19_CLAW_PYCACHE_V01/
+├── .clinerules              # Reglas de programación E-SYSTEM
+└── README.md                # Este archivo
 ```
 
-### 2. Agregar al principio de tu claw.py (antes de todo lo demás)
+## 🚀 Ejecución según P.A.R.A.
 
-```python
-# === INICIO SEGURO — agregar ANTES de cualquier import/print ===
-import sys, os
-if sys.platform == "win32":
-    if hasattr(sys.stdout, "reconfigure"):
-        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-    if hasattr(sys.stderr, "reconfigure"):
-        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
-    if hasattr(sys.stdin, "reconfigure"):
-        sys.stdin.reconfigure(encoding="utf-8", errors="replace")
-    os.environ["PYTHONIOENCODING"] = "utf-8"
-# === FIN INICIO SEGURO ===
+### Requisitos
+- Python 3.12+
+- Ollama (para modelos locales)
+- OpenClaw Gateway (para WhatsApp)
 
-from encoding import configure_encoding
-configure_encoding()  # Aplica chcp 65001 en Windows
+### Instalación
+
+```powershell
+# Instalar dependencias
+cd 01_SRC
+pip install -r ../00_SOPORTE/requirements.txt
+
+# Configurar Ollama
+ollama pull qwen2.5:0.5b
 ```
 
-### 3. Reemplazar el manejo de thinking
+### Ejecución
 
-```python
-# Antes (peligroso con Qwen3):
-params = {"thinking": {"type": "adaptive"}}
+```powershell
+# Ejecutar Claw principal
+cd 01_SRC
+python 2024-06-19_CLAW_MAIN_V01.py
 
-# Ahora (seguro):
-from thinking import construir_params_thinking
-params_thinking = construir_params_thinking(modelo, {"type": "adaptive"})
-if params_thinking:
-    kwargs["thinking"] = params_thinking
+# O usar el lanzador
+cd 00_SOPORTE
+claw.bat
 ```
 
-### 4. Reemplazar guardado de memoria
+### Configuración OpenClaw
 
-```python
-# Antes (fire-and-forget sin catch - Bug #6):
-asyncio.create_task(guardar_memoria())
-
-# Ahora (con manejo de errores):
-from error_utils import tarea_segura
-tarea_segura(guardar_memoria(), nombre="guardar_memoria")
+El archivo de configuración está en:
+```
+C:\Users\Admin\.openclaw\openclaw.json
 ```
 
-### 5. Limpiar historial antes de enviarlo a la API
+**Configuración actual (Sage)**:
+- Modelo: `qwen2.5:0.5b` (Ultra Rápido)
+- Nombre: "Sage"
+- Idioma: Español (forzado)
+- Personalidad: Jarvis + Ultron + Alfred + Cortana
+- Thinking: OFF
 
-```python
-# Al cargar historial guardado (Bug #12 - thinking blocks causan error 400):
-from memory import limpiar_mensajes_para_replay
-mensajes = limpiar_mensajes_para_replay(mensajes_del_disco)
-```
+## 📋 Nomenclatura ISO-SAGE
 
-### 6. Reemplazar bare except
+Todo archivo nuevo debe seguir:
+`[AAAA-MM-DD]_[PROYECTO]_[DESCRIPCIÓN]_V[XX].[ext]`
 
-```python
-# Antes (Bug #1/#2 - error silenciado):
-try:
-    operacion()
-except:
-    pass
+Ejemplos:
+- `2024-06-19_CLAW_CLAWSPRING_CORE_V01.py`
+- `2024-06-19_CLAW_MEMORY_V01.py`
 
-# Ahora (error loggeado):
-import logging
-logger = logging.getLogger(__name__)
-try:
-    operacion()
-except Exception as e:
-    logger.warning(f"Error en operacion: {e}")
-```
+## 🤖 Coordinación con IAs
 
----
+Sage coordina con:
+- **ChatGPT**: Revisión código, bugs críticos
+- **VSC AI**: Corrección lanzadores, encoding
+- **Zencoder**: Integración Ollama, capacidades
+- **Antigravity**: Sistemas memoria
+- **Jules**: Optimización, performance
+- **Opal**: Validación configuración
+- **Codex**: Bash tools, hooks
+- **Stitch**: Pipeline voz (Fase 2)
 
-## Checklist de verificación
+Claude está excluido del juego.
 
-- [ ] `chcp 65001` en claw.bat
-- [ ] `sys.stdout.reconfigure(encoding='utf-8')` al inicio de claw.py
-- [ ] Thinking verificado antes de enviar a la API
-- [ ] Historial limpiado de thinking blocks al cargar
-- [ ] Ningún `except: pass` o `except Exception: pass` sin logging
-- [ ] fire-and-forget usando `tarea_segura()` en lugar de `create_task()` directo
+## 🐛 Bugs Delegados
 
----
+**🔴 Críticos**:
+- BUG #1 (catch {} vacío) → ChatGPT
+- BUG #2 (UTF-8 Windows) → VSC AI
+- BUG #3 (Thinking Qwen3) → Parcialmente corregido
+- BUG #4 (Thinking blocks replay) → ChatGPT
 
-*Generado por análisis del código fuente de Claude Code — Mayo 2026*
+**🟡 Importantes**:
+- BUG #5 (Fire-and-forget memoria) → Antigravity
+- BUG #7 (Memoize + env vars) → Jules
+- BUG #12 (Capacidades 3P) → Parcialmente corregido
+
+Ver `03_DOCS/SAGE_DELEGACION_BUGS.md` para detalles completos.
+
+## 🔧 Seguridad Física
+
+Si el script supera los 50 minutos de ejecución, añade un log de 'alerta de enfriamiento'.
+
+## 📚 Documentación
+
+- `03_DOCS/README.md` - Documentación original
+- `03_DOCS/README_JULES.md` - Guía para Jules
+- `03_DOCS/SAGE_DELEGACION_BUGS.md` - Delegación de bugs
+- `03_DOCS/INSTRUCCIONES_SAGE.md` - Instrucciones de activación
+- `03_DOCS/claw_historial.html` - Visualizador de historial
+
+## 🎯 Fases del Proyecto
+
+- **Fase 1**: Python ClawSpring - ✅ COMPLETADA
+- **Fase 2**: Voz (Whisper) - ⏳ Pendiente
+- **Fase 3**: Telegram - ⏳ Pendiente
+- **Fase 4**: Multi-sesión - ⏳ Pendiente
+
+## 📞 Soporte
+
+Sage (Coordinador Técnico) - Asistente personal IA con personalidad combinada de Jarvis, Ultron, Alfred y Cortana.
