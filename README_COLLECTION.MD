@@ -7,6 +7,7 @@
 Source archive of Claude Code and different versions of the clean-room Python rewrite research repository
 
 ## 🔥🔥🔥 News (Pacific Time)
+- Apr 06, 2026: [ClawSpring (Nano Claude Code) v3.05.5: SSJ Developer Mode, Telegram Bridge, Worker Command, MCP support, Plugin system, Task management, Voice input, Brainstorming, and UX improvements (~12000 Lines)](https://github.com/SafeRL-Lab/clawspring)
 - 12:20 PM · Apr 02, 2026: [Nano Claude Code v3.0: Multi-agent packages, memory package, skill package with built-in skills, argument substitution, fork/inline execution, AI memory search, git worktree isolation, agent type definitions (~5000 Lines)](https://github.com/SafeRL-Lab/clawspring)
 - 7:40 AM · Apr 02, 2026: [Nano Claude Code v2.0: A Minimal Python Reimplementation (~3400 Lines), support open and closed source models, skill and memory](https://github.com/SafeRL-Lab/nano-claude-code)
 - 8:36 AM · Apr 01, 2026: [Nano Claude Code v1.0: A Minimal Python Reimplementation (~1300 Lines)](https://github.com/SafeRL-Lab/clawspring)
@@ -47,7 +48,7 @@ Source archive of Claude Code and different versions of the clean-room Python re
     + [Core Classes](#core-classes)
     + [CLI Commands](#cli-commands)
     + [Design Features](#design-features)
-  * [4. nano-claude-code](#4-nano-claude-code)
+  * [4. ClawSpring (Nano Claude Code)](#4-nano-claude-code)
     + [Features](#features)
     + [Supported Models](#supported-models)
     + [Project Structure](#project-structure)
@@ -64,7 +65,7 @@ This repository contains subprojects that study Claude Code (Anthropic’s offic
 | [original-source-code](#1-original-source-code)         | TypeScript | Raw leaked source archive                 | 1,884 files |
 | [claude-code-source-code](#2-claude-code-source-code)   | TypeScript | Decompiled source archive (v2.1.88) + docs| 1,940 files |
 | [claw-code](#3-claw-code)                               | Python     | Clean-room architectural rewrite          | 109 files   |
-| [nano-claude-code](#4-nano-claude-code)                 | Python     | Minimal multi-provider reimplementation   | ~30 files   |
+| [ClawSpring](#4-nano-claude-code) (Nano Claude Code)    | Python     | Minimal multi-provider reimplementation   | ~120 files  |
 
 ---
 
@@ -329,7 +330,7 @@ tool-pool            # Tool pool assembly view
 
 ---
 
-## 4. nano-claude-code
+## 4. ClawSpring (Nano Claude Code)
 
 A minimal, fully-runnable Python reimplementation of Claude Code (~5,000 lines). Unlike `claw-code` (which focuses on architectural mapping), nano-claude-code is a real coding assistant that can be used immediately. It supports 20+ closed-source models and local open-source models, and has grown from a ~900-line prototype to a feature-rich v3.0 with multi-agent orchestration, persistent memory, and a skill system.
 

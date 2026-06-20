@@ -356,7 +356,7 @@ def _read(file_path: str, limit: int = None, offset: int = None) -> str:
         return f"Error: {file_path} is a directory"
     try:
         # Explicitly use utf-8 and newline="" to avoid encoding/line-ending mismatches
-        lines = p.read_text(encoding="utf-8", errors="replace", newline="").splitlines(keepends=True)
+        with p.open("r", encoding="utf-8", errors="replace", newline="") as f: lines = f.readlines()
         start = offset or 0
         chunk = lines[start:start + limit] if limit else lines[start:]
         if not chunk:
@@ -372,7 +372,9 @@ def _write(file_path: str, content: str) -> str:
     try:
         is_new = not p.exists()
         # Ensure utf-8 and newline="" for reading existing content to generate diff
-        old_content = "" if is_new else p.read_text(encoding="utf-8", errors="replace", newline="")
+        if is_new: old_content = ""
+        else:
+            with p.open("r", encoding="utf-8", errors="replace", newline="") as f: old_content = f.read()
         p.parent.mkdir(parents=True, exist_ok=True)
         # Always write as utf-8 with newline="" to prevent double CRLF on Windows
         p.write_text(content, encoding="utf-8", newline="")
@@ -395,7 +397,7 @@ def _edit(file_path: str, old_string: str, new_string: str, replace_all: bool = 
         return f"Error: file not found: {file_path}"
     try:
         # Read with newline="" to get original line endings
-        content = p.read_text(encoding="utf-8", errors="replace", newline="")
+        with p.open("r", encoding="utf-8", errors="replace", newline="") as f: content = f.read()
         
         # Detect original line endings: only treat as pure CRLF if every \n is part of \r\n
         crlf_count = content.count("\r\n")
