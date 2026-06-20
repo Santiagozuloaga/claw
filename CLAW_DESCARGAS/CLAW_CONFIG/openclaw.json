@@ -1,0 +1,99 @@
+﻿{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "custom-localhost-11434/qwen2.5:1.5b"
+      },
+      "workspace": "C:\\Users\\Admin\\.openclaw\\workspace",
+      "models": {
+        "custom-localhost-11434/qwen2.5:1.5b": {
+          "alias": "claw"
+        }
+      },
+      "thinkingDefault": "off"
+    }
+  },
+  "models": {
+    "providers": {
+      "custom-localhost-11434": {
+        "baseUrl": "http://localhost:11434/v1",
+        "api": "openai-completions",
+        "apiKey": "ollama",
+        "models": [
+          {
+            "id": "qwen2.5:1.5b",
+            "name": "qwen2.5:1.5b (Custom Provider)",
+            "contextWindow": 8192,
+            "maxTokens": 512,
+            "input": ["text"],
+            "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+            "reasoning": false
+          }
+        ]
+      }
+    },
+    "mode": "merge"
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": { "mode": "password", "password": "1234" },
+    "port": 18789,
+    "bind": "loopback",
+    "tailscale": { "mode": "off", "resetOnExit": false },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap", "camera.clip", "screen.record",
+        "contacts.add", "calendar.add", "reminders.add",
+        "sms.send", "sms.search"
+      ]
+    }
+  },
+  "session": { "dmScope": "per-channel-peer" },
+  "tools": { "profile": "messaging" },
+  "plugins": {
+    "allow": ["whatsapp"],
+    "bundledDiscovery": "compat",
+    "entries": {
+      "whatsapp": { "enabled": true },
+      "acpx": { "enabled": false },
+      "diagnostics-otel": { "enabled": false },
+      "diagnostics-prometheus": { "enabled": false },
+      "diffs": { "enabled": false },
+      "google-meet": { "enabled": false },
+      "lobster": { "enabled": false },
+      "voice-call": { "enabled": false },
+      "memory-lancedb": { "enabled": false }
+    }
+  },
+  "channels": {
+    "whatsapp": {
+      "enabled": true,
+      "selfChatMode": true,
+      "dmPolicy": "allowlist",
+      "allowFrom": ["573197211133"]
+    }
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": { "enabled": true },
+        "bootstrap-extra-files": { "enabled": true },
+        "command-logger": { "enabled": true },
+        "compaction-notifier": { "enabled": true },
+        "session-memory": { "enabled": true }
+      }
+    }
+  },
+  "messages": { "groupChat": { "visibleReplies": "message_tool" } },
+  "wizard": {
+    "lastRunAt": "2026-05-07T00:40:41.696Z",
+    "lastRunVersion": "2026.5.6",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.5.6",
+    "lastTouchedAt": "2026-06-19T18:30:00.000Z"
+  }
+}

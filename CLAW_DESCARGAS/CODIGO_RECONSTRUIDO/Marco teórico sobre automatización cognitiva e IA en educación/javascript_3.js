@@ -1,0 +1,1 @@
+figNote("Captura de pantalla que ilustra cómo Google integra IA generativa para sintetizar respuestas directamente en el motor de búsqueda, eliminando la necesidad de que el usuario acceda a las fuentes originales. Elaboración propia (2026).")
