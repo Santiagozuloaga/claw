@@ -1,54 +1,44 @@
-# Cortana- Asistente Personal IA
+# CLAW - ClawSpring v3.05.5 (P.A.R.A. + ISO-SAGE)
 
 **Versión**: 3.05.5  
-**Fecha**: 2024-06-19  
-**Estándar**: P.A.R.A. + ISO-SAGE
+**Fecha**: 2024-06-20  
+**Estándar**: P.A.R.A. + ISO-SAGE  
+**Tests**: 239 passed
 
 ## 📁 Estructura del Proyecto (P.A.R.A.)
 
 ```
 CLAW_FINAL/
-├── 00_SOPORTE/              # Logs, configuraciones, .env
-│   ├── config.py
-│   ├── claw.bat
-│   ├── .gitignore
-│   └── LICENSE
-├── 01_SRC/                  # Código lógico (separado por módulos)
-│   ├── 2024-06-19_CLAW_CLAWSPRING_CORE_V01.py
-│   ├── 2024-06-19_CLAW_AGENT_CORE_V01.py
-│   ├── 2024-06-19_CLAW_PROVIDERS_V01.py
-│   ├── 2024-06-19_CLAW_TOOLS_V01.py
-│   ├── 2024-06-19_CLAW_MEMORY_V01.py
-│   ├── 2024-06-19_CLAW_THINKING_V01.py
-│   ├── 2024-06-19_CLAW_ENCODING_V01.py
-│   ├── 2024-06-19_CLAW_ERROR_UTILS_V01.py
-│   ├── 2024-06-19_CLAW_MAIN_V01.py
-│   ├── 2024-06-19_CLAW_PERSONALIDAD_V01.py
-│   ├── 2024-06-19_CLAW_MEMORY_PACKAGE_V01/
-│   ├── 2024-06-19_CLAW_MULTI_AGENT_V01/
-│   ├── 2024-06-19_CLAW_SKILL_V01/
-│   ├── 2024-06-19_CLAW_MCP_V01/
-│   ├── 2024-06-19_CLAW_PLUGIN_V01/
-│   ├── 2024-06-19_CLAW_TASK_V01/
-│   └── 2024-06-19_CLAW_VOICE_V01/
-├── 02_TESTS/                # Pruebas automatizadas
-│   └── 2024-06-19_CLAW_TESTS_V01/
-├── 03_DOCS/                 # Documentación técnica
-│   ├── 2024-06-19_CLAW_DOCS_V01/
-│   ├── 2024-06-19_CLAW_DEMOS_V01/
-│   ├── README.md
-│   ├── README_JULES.md
-│   ├── SAGE_DELEGACION_BUGS.md
-│   ├── INSTRUCCIONES_SAGE.md
-│   └── claw_historial.html
-├── 04_ASSETS/               # Recursos estáticos
-│   ├── 2024-06-19_CLAW_TEMP_UPLOAD_V01/
-│   └── 2024-06-19_CLAW_PYCACHE_V01/
+├── 00_SOPORTE/              # Configuraciones, requisitos, entorno y logs
+│   ├── CLAW_2024_06_19_CONFIG_V01.py
+│   ├── CLAW_2024_06_19_GITIGNORE_V01
+│   ├── CLAW_2024_06_19_PYPROJECT_V01.toml
+│   └── CLAW_2024_06_19_REQUIREMENTS_V01.txt
+├── 01_SRC/                  # Lógica principal del asistente (ClawSpring v3.05.5)
+│   ├── CLAW_2024_06_19_CORE_V01.py
+│   ├── CLAW_2024_06_19_AGENT_V01.py
+│   ├── CLAW_2024_06_19_PROVIDERS_V01.py
+│   ├── CLAW_2024_06_19_TOOLS_V01.py
+│   ├── CLAW_2024_06_19_CONTEXT_V01.py
+│   ├── mcp/, memory/, multi_agent/, plugin/, skill/, task/, voice/
+├── 02_TESTS/                # Pruebas unitarias y de integración
+│   ├── test_compaction.py
+│   ├── test_memory.py
+│   └── ... (239 tests passed)
+├── 03_DOCS/                 # Documentación, manuales y archivos históricos
+│   ├── README_CLAWSPRING.md
+│   ├── CLAW_ARCHIVE_DOCS/
+│   └── README-CN.md
+├── 04_ASSETS/               # Recursos estáticos, imágenes y demos
+│   ├── demos/
+│   ├── logo-2.png
+│   └── screenshot.png
+├── run_claw.py              # Lanzador en la raíz
 ├── .clinerules              # Reglas de programación E-SYSTEM
 └── README.md                # Este archivo
 ```
 
-## 🚀 Ejecución según P.A.R.A.
+## 🚀 Ejecución
 
 ### Requisitos
 - Python 3.12+
@@ -59,23 +49,20 @@ CLAW_FINAL/
 
 ```powershell
 # Instalar dependencias
-cd 01_SRC
-pip install -r ../00_SOPORTE/requirements.txt
+pip install -r 00_SOPORTE/CLAW_2024_06_19_REQUIREMENTS_V01.txt
 
 # Configurar Ollama
-ollama pull qwen2.5:0.5b
+ollama pull qwen2.5:3b
 ```
 
 ### Ejecución
 
 ```powershell
-# Ejecutar Claw principal
-cd 01_SRC
-python 2024-06-19_CLAW_MAIN_V01.py
+# Ejecutar con lanzador raíz
+python run_claw.py
 
-# O usar el lanzador
-cd 00_SOPORTE
-claw.bat
+# O ejecutar directamente
+python 01_SRC/CLAW_2024_06_19_CORE_V01.py
 ```
 
 ### Configuración OpenClaw
@@ -86,9 +73,9 @@ C:\Users\Admin\.openclaw\openclaw.json
 ```
 
 **Configuración actual (Sage)**:
-- Modelo: `qwen2.5:0.5b` (Ultra Rápido)
+- Modelo: `viernes:latest` (Potente)
 - Nombre: "Sage"
-- Idioma: Español (forzado)
+- Idioma: Español
 - Personalidad: Jarvis + Ultron + Alfred + Cortana
 - Thinking: OFF
 
@@ -107,28 +94,15 @@ Sage coordina con:
 - **ChatGPT**: Revisión código, bugs críticos
 - **VSC AI**: Corrección lanzadores, encoding
 - **Zencoder**: Integración Ollama, capacidades
-- **Antigravity**: Sistemas memoria
+- **Antigravity**: Sistemas memoria (hasta 25/6)
 - **Jules**: Optimización, performance
 - **Opal**: Validación configuración
-- **Codex**: Bash tools, hooks
+- **Codex**: Bash tools, hooks (hasta julio)
 - **Stitch**: Pipeline voz (Fase 2)
+- **Devin**: Disponible para colaborar
+- **Aider**: Disponible
 
 Claude está excluido del juego.
-
-## 🐛 Bugs Delegados
-
-**🔴 Críticos**:
-- BUG #1 (catch {} vacío) → ChatGPT
-- BUG #2 (UTF-8 Windows) → VSC AI
-- BUG #3 (Thinking Qwen3) → Parcialmente corregido
-- BUG #4 (Thinking blocks replay) → ChatGPT
-
-**🟡 Importantes**:
-- BUG #5 (Fire-and-forget memoria) → Antigravity
-- BUG #7 (Memoize + env vars) → Jules
-- BUG #12 (Capacidades 3P) → Parcialmente corregido
-
-Ver `03_DOCS/SAGE_DELEGACION_BUGS.md` para detalles completos.
 
 ## 🔧 Seguridad Física
 
@@ -136,19 +110,15 @@ Si el script supera los 50 minutos de ejecución, añade un log de 'alerta de en
 
 ## 📚 Documentación
 
-- `03_DOCS/README.md` - Documentación original
-- `03_DOCS/README_JULES.md` - Guía para Jules
-- `03_DOCS/SAGE_DELEGACION_BUGS.md` - Delegación de bugs
-- `03_DOCS/INSTRUCCIONES_SAGE.md` - Instrucciones de activación
-- `03_DOCS/claw_historial.html` - Visualizador de historial
+- `03_DOCS/README_CLAWSPRING.md` - Documentación completa de ClawSpring v3.05.5
+- `.clinerules` - Reglas de programación E-SYSTEM
 
 ## 🎯 Fases del Proyecto
 
-- **Fase 1**: Python ClawSpring - ✅ COMPLETADA
+- **Fase 1**: Python ClawSpring v3.05.5 - ✅ COMPLETADA
 - **Fase 2**: Voz (Whisper) - ⏳ Pendiente
 - **Fase 3**: Telegram - ⏳ Pendiente
 - **Fase 4**: Multi-sesión - ⏳ Pendiente
 
-## 📞 Soporte
-
-Sage (Coordinador Técnico) - Asistente personal IA con personalidad combinada de Jarvis, Ultron, Alfred y Cortana.
+---
+*Merge de trabajo Jules + Sage - 2024-06-20*
