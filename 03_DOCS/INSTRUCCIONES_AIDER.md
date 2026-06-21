@@ -79,6 +79,23 @@ Claude está excluido del juego.
 - Tests: 239 passed
 - Config OpenClaw: Modelo viernes:latest, alias "Sage", thinking OFF
 
+## Hardware del Usuario
+
+- **Sistema**: HP Laptop 14-dq1xxx
+- **CPU**: Intel Core i3-1005G1 @ 1.20GHz (4 CPUs)
+- **RAM**: 12GB
+- **OS**: Windows 11 Home Single Language 64 bits
+
+## Optimización de Recursos
+
+**IMPORTANTE**: El usuario usará Aider solo sin otras apps consumiendo recursos para evitar lag.
+
+**Recomendaciones para Aider**:
+- Cerrar todas las apps innecesarias antes de trabajar
+- Usar modelos más ligeros cuando sea posible
+- Evitar operaciones pesadas simultáneas
+- Priorizar tareas críticas sobre optimización
+
 ## Disponibilidad
 
 Aider está disponible actualmente sin restricciones de tiempo.
