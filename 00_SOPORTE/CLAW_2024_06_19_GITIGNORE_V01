@@ -5,5 +5,3 @@ build/
 dist/
 debug_payload.json
 brainstorm_outputs/
-00_SOPORTE/local_config.json
-.pytest_cache/

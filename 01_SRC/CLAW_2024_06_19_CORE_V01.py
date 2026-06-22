@@ -75,6 +75,7 @@ import atexit
 import argparse
 import textwrap
 from pathlib import Path
+from datetime import datetime
 from typing import Optional, Union
 import threading
 # ── Optional rich for markdown rendering ──────────────────────────────────
@@ -2697,7 +2698,6 @@ def repl(config: dict, initial_prompt: str = None):
         t.start()
     
     def run_query(user_input: str, is_background: bool = False):
-        sage_check_cooling()
         nonlocal verbose
         
         with query_lock:
@@ -3346,12 +3346,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# --- ISO-SAGE Physical Security Rules ---
-import time as _sage_time
-_sage_start_time = _sage_time.time()
-
-def sage_check_cooling():
-    if _sage_time.time() - _sage_start_time > 3000: # 50 minutes
-        print("\n[ALERTA DE ENFRIAMIENTO] La ejecución ha superado los 50 minutos.")

@@ -1,10 +1,6 @@
-# E-SYSTEM Programming Rules
-# Standard: P.A.R.A. + ISO-SAGE
-
-- Language: Python 3.12+
+# E-SYSTEM Programming Rules (2024-06-19)
 - Hierarchy: P.A.R.A. (00_SOPORTE, 01_SRC, 02_TESTS, 03_DOCS, 04_ASSETS)
 - Nomenclature: CLAW_YYYY_MM_DD_DESCRIPTION_VXX.py
 - Independence: Config in 00_SOPORTE, Logic in 01_SRC.
-- Physical Security: Log 'alerta de enfriamiento' if execution exceeds 50 minutes.
-- Style: Clean code, ISO-SAGE comments.
-- IA Coordination: Sage (qwen2.5:0.5b) coordinates with specialized agents. Claude excluded.
+- Security: Log 'alerta de enfriamiento' if > 50 mins.
+- IA: Sage (qwen2.5:0.5b) coordinates. Claude EXCLUDED.

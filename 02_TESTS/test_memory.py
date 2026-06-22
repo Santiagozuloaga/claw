@@ -36,10 +36,10 @@ def redirect_memory_dirs(tmp_path, monkeypatch):
     proj_mem = tmp_path / "project_memory"
     proj_mem.mkdir()
 
-    monkeypatch.setattr(_store, "USER_MEMORY_DIR", user_mem)
+    monkeypatch.setattr("memory.store.USER_MEMORY_DIR", user_mem)
 
     # Patch get_project_memory_dir to return our tmp project dir
-    monkeypatch.setattr(_store, "get_project_memory_dir", lambda: proj_mem)
+    monkeypatch.setattr("memory.store.get_project_memory_dir", lambda: proj_mem)
 
 
 def _make_entry(name="test note", description="a test", type_="user",
