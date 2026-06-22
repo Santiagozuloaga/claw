@@ -90,6 +90,7 @@ Zencoder se especializa en:
 - Integración de nuevos modelos en CLAW
 - Configuración de providers en OpenClaw
 - Testing de modelos locales
+- **Corrección de errores de Jules**: Zencoder es responsable de corregir incumplimientos de ISO-SAGE y P.A.R.A. cometidos por Jules
 
 ## Estado Actual
 
