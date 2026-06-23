@@ -6,13 +6,7 @@ Provides:
   - SubAgentManager  — thread-pool manager for spawning agents
   - load_agent_definitions / get_agent_definition — agent registry
 """
-from .subagent import (
-    AgentDefinition,
-    SubAgentTask,
-    SubAgentManager,
-    load_agent_definitions,
-    get_agent_definition,
-)
+import importlib; _m_subagent = importlib.import_module(".2024-06-19_CLAW_SUBAGENT_V01", __package__); globals().update({'AgentDefinition': getattr(_m_subagent, 'AgentDefinition'), 'SubAgentTask': getattr(_m_subagent, 'SubAgentTask'), 'SubAgentManager': getattr(_m_subagent, 'SubAgentManager'), 'load_agent_definitions': getattr(_m_subagent, 'load_agent_definitions'), 'get_agent_definition': getattr(_m_subagent, 'get_agent_definition')})
 
 __all__ = [
     "AgentDefinition",

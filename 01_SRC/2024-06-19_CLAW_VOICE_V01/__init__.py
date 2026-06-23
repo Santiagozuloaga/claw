@@ -8,9 +8,9 @@ transcribe(...)      → text string
 voice_input(...)     → transcribed text (record + transcribe in one call)
 """
 
-from .recorder import check_recording_availability, record_until_silence
-from .stt import check_stt_availability, transcribe
-from .keyterms import get_voice_keyterms
+import importlib; _m_recorder = importlib.import_module(".2024-06-19_CLAW_RECORDER_V01", __package__); globals().update({'check_recording_availability': getattr(_m_recorder, 'check_recording_availability'), 'record_until_silence': getattr(_m_recorder, 'record_until_silence')})
+import importlib; _m_stt = importlib.import_module(".2024-06-19_CLAW_STT_V01", __package__); globals().update({'check_stt_availability': getattr(_m_stt, 'check_stt_availability'), 'transcribe': getattr(_m_stt, 'transcribe')})
+import importlib; _m_keyterms = importlib.import_module(".2024-06-19_CLAW_KEYTERMS_V01", __package__); globals().update({'get_voice_keyterms': getattr(_m_keyterms, 'get_voice_keyterms')})
 
 
 def check_voice_deps() -> tuple[bool, str | None]:

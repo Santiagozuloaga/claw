@@ -1,4 +1,16 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+# === UTF-8 Windows fix (Bug #4) ===
+import sys as _sys, os as _os
+if _sys.platform == "win32":
+    if hasattr(_sys.stdout, "reconfigure"):
+        _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(_sys.stderr, "reconfigure"):
+        _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(_sys.stdin, "reconfigure"):
+        _sys.stdin.reconfigure(encoding="utf-8", errors="replace")
+    _os.environ["PYTHONIOENCODING"] = "utf-8"
+# === FIN UTF-8 fix ===
 """
 ClawSpring — Minimal Python implementation of Claude Code.
 
@@ -59,7 +71,6 @@ Slash commands in REPL:
   /cloudsave load <gist_id>  Download and load a session from Gist
   /exit /quit Exit
 """
-from __future__ import annotations
 
 import os
 import re
@@ -507,7 +518,7 @@ def _interactive_ollama_picker(config: dict) -> bool:
         else:
             err("Invalid selection.")
     except (ValueError, KeyboardInterrupt, EOFError):
-        pass
+        pass  # Cancelación esperada (Ctrl+C o input inválido al seleccionar sesión)
     return False
 
 def cmd_brainstorm(args: str, state, config) -> bool:
@@ -839,7 +850,7 @@ def cmd_load(args: str, state, _config) -> bool:
                 turns    = meta.get("turn_count", "?")
                 label    = f"{saved_at}  id:{sid}  turns:{turns}  {s.name}"
             except Exception:
-                pass
+                pass  # Metadata malformed — keep default label, non-critical
             print(clr(f"  [{i+1:2d}] ", "yellow") + label)
 
         # Show history.json option at the bottom if it exists
@@ -1284,7 +1295,7 @@ def cmd_memory(args: str, _state, _config) -> bool:
         import importlib
         m_2024_06_19_CLAW_MEMORY_PACKAGE_V01 = importlib.import_module("2024-06-19_CLAW_MEMORY_PACKAGE_V01")
         globals().update({'consolidate_session': getattr(m_2024_06_19_CLAW_MEMORY_PACKAGE_V01, 'consolidate_session')})
-        msgs = _state.get("messages", [])
+        msgs = _state.messages if hasattr(_state, "messages") else []
         info("  Analyzing session for long-term memories…")
         saved = consolidate_session(msgs, _config)
         if saved:
@@ -2669,7 +2680,7 @@ def setup_readline(history_file: Path):
     try:
         readline.read_history_file(str(history_file))
     except FileNotFoundError:
-        pass
+        pass  # Normal: no history file on first run — readline creates it on exit
     readline.set_history_length(1000)
     atexit.register(readline.write_history_file, str(history_file))
 
@@ -2728,14 +2739,35 @@ def repl(config: dict, initial_prompt: str = None):
     globals().update({'HISTORY_FILE': getattr(m_2024_06_19_CLAW_CONFIG_V01, 'HISTORY_FILE')})
     import importlib
     m_2024_06_19_CLAW_CONTEXT_V01 = importlib.import_module("2024-06-19_CLAW_CONTEXT_V01")
-    globals().update({'build_system_prompt': getattr(m_2024_06_19_CLAW_CONTEXT_V01, 'build_system_prompt')})
+    globals().update({'_build_system_prompt_orig': getattr(m_2024_06_19_CLAW_CONTEXT_V01, 'build_system_prompt')})
     import importlib
     m_2024_06_19_CLAW_AGENT_V01 = importlib.import_module("2024-06-19_CLAW_AGENT_V01")
     globals().update({'AgentState': getattr(m_2024_06_19_CLAW_AGENT_V01, 'AgentState'), 'run': getattr(m_2024_06_19_CLAW_AGENT_V01, 'run'), 'TextChunk': getattr(m_2024_06_19_CLAW_AGENT_V01, 'TextChunk'), 'ThinkingChunk': getattr(m_2024_06_19_CLAW_AGENT_V01, 'ThinkingChunk'), 'ToolStart': getattr(m_2024_06_19_CLAW_AGENT_V01, 'ToolStart'), 'ToolEnd': getattr(m_2024_06_19_CLAW_AGENT_V01, 'ToolEnd'), 'TurnDone': getattr(m_2024_06_19_CLAW_AGENT_V01, 'TurnDone'), 'PermissionRequest': getattr(m_2024_06_19_CLAW_AGENT_V01, 'PermissionRequest')})
 
+    # Personalidad de Claw (opcional — si existe claw_personalidad.py en la carpeta)
+    try:
+        from claw_personalidad import build_system_prompt_claw as _build_sp_claw
+        from claw_personalidad import saludo_inicio, contar_sesiones
+        _PERSONALIDAD_ACTIVA = True
+    except ImportError:
+        _PERSONALIDAD_ACTIVA = False
+
+    def build_system_prompt():
+        if _PERSONALIDAD_ACTIVA and config.get("claw_personalidad", True):
+            return _build_sp_claw()
+        return _build_system_prompt_orig()
+
     setup_readline(HISTORY_FILE)
     state = AgentState()
     verbose = config.get("verbose", False)
+
+    # Saludo de arranque Jarvis (si la personalidad está activa)
+    if _PERSONALIDAD_ACTIVA and config.get("claw_personalidad", True):
+        saludo_inicio(
+            modelo=config.get("model", "?"),
+            session_id=state.session_id if hasattr(state, "session_id") else "????",
+            n_memorias=contar_sesiones(),
+        )
 
     # Banner
     if not initial_prompt:

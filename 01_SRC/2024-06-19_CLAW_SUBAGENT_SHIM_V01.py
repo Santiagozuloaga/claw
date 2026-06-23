@@ -1,11 +1,4 @@
 """Backward-compatibility shim — real implementation is in multi_agent/subagent.py."""
-from multi_agent.subagent import (  # noqa: F401
-    AgentDefinition,
-    SubAgentTask,
-    SubAgentManager,
-    load_agent_definitions,
-    get_agent_definition,
-    _extract_final_text,
-    _agent_run,
-    _BUILTIN_AGENTS,
-)
+import importlib
+m_2024_06_19_CLAW_MULTI_AGENT_V01_2024_06_19_CLAW_SUBAGENT_V01 = importlib.import_module("2024-06-19_CLAW_MULTI_AGENT_V01.2024-06-19_CLAW_SUBAGENT_V01")
+globals().update({'AgentDefinition': getattr(m_2024_06_19_CLAW_MULTI_AGENT_V01_2024_06_19_CLAW_SUBAGENT_V01, 'AgentDefinition'), 'SubAgentTask': getattr(m_2024_06_19_CLAW_MULTI_AGENT_V01_2024_06_19_CLAW_SUBAGENT_V01, 'SubAgentTask'), 'SubAgentManager': getattr(m_2024_06_19_CLAW_MULTI_AGENT_V01_2024_06_19_CLAW_SUBAGENT_V01, 'SubAgentManager'), 'load_agent_definitions': getattr(m_2024_06_19_CLAW_MULTI_AGENT_V01_2024_06_19_CLAW_SUBAGENT_V01, 'load_agent_definitions'), 'get_agent_definition': getattr(m_2024_06_19_CLAW_MULTI_AGENT_V01_2024_06_19_CLAW_SUBAGENT_V01, 'get_agent_definition'), '_extract_final_text': getattr(m_2024_06_19_CLAW_MULTI_AGENT_V01_2024_06_19_CLAW_SUBAGENT_V01, '_extract_final_text'), '_agent_run': getattr(m_2024_06_19_CLAW_MULTI_AGENT_V01_2024_06_19_CLAW_SUBAGENT_V01, '_agent_run'), '_BUILTIN_AGENTS': getattr(m_2024_06_19_CLAW_MULTI_AGENT_V01_2024_06_19_CLAW_SUBAGENT_V01, '_BUILTIN_AGENTS')})

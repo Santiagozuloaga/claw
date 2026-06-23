@@ -1,5 +1,5 @@
 # Script PowerShell para renombrar archivos de formato Jules a formato ISO-SAGE estándar
-# Formato Jules: CLAW_2024_06_19_DESCRIPCION_V01.ext
+# Formato Jules: 2024-06-19_CLAW_DESCRIPCION_V01.ext
 # Formato ISO-SAGE: 2024-06-19_CLAW_DESCRIPCION_V01.ext
 
 $ErrorActionPreference = "Stop"
@@ -18,7 +18,7 @@ function Convert-JulesToISO-SAGE {
         [string]$nombre
     )
     
-    # Patrón Jules: CLAW_2024_06_19_DESCRIPCION_VXX.ext
+    # Patrón Jules: 2024-06-19_CLAW_DESCRIPCION_VXX.ext
     if ($nombre -match "^CLAW_(\d{4})_(\d{2})_(\d{2})_(.+)_V(\d+)(\..+)$") {
         $anio = $matches[1]
         $mes = $matches[2]

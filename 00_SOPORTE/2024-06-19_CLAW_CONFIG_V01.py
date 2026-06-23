@@ -63,18 +63,24 @@ def save_config(cfg: dict):
 
 
 def current_provider(cfg: dict) -> str:
-    from CLAW_2024_06_19_PROVIDERS_V01 import detect_provider
+    import importlib
+    m_2024_06_19_CLAW_PROVIDERS_V01 = importlib.import_module("2024-06-19_CLAW_PROVIDERS_V01")
+    globals().update({'detect_provider': getattr(m_2024_06_19_CLAW_PROVIDERS_V01, 'detect_provider')})
     return detect_provider(cfg.get("model", "claude-opus-4-6"))
 
 
 def has_api_key(cfg: dict) -> bool:
     """Check whether the active provider has an API key configured."""
-    from CLAW_2024_06_19_PROVIDERS_V01 import get_api_key
+    import importlib
+    m_2024_06_19_CLAW_PROVIDERS_V01 = importlib.import_module("2024-06-19_CLAW_PROVIDERS_V01")
+    globals().update({'get_api_key': getattr(m_2024_06_19_CLAW_PROVIDERS_V01, 'get_api_key')})
     pname = current_provider(cfg)
     key = get_api_key(pname, cfg)
     return bool(key)
 
 
 def calc_cost(model: str, in_tokens: int, out_tokens: int) -> float:
-    from CLAW_2024_06_19_PROVIDERS_V01 import calc_cost as _cc
+    import importlib
+    m_2024_06_19_CLAW_PROVIDERS_V01 = importlib.import_module("2024-06-19_CLAW_PROVIDERS_V01")
+    globals().update({'_cc': getattr(m_2024_06_19_CLAW_PROVIDERS_V01, 'calc_cost')})
     return _cc(model, in_tokens, out_tokens)

@@ -10,16 +10,16 @@
 ```
 CLAW_FINAL/
 ├── 00_SOPORTE/              # Configuraciones, requisitos, entorno y logs
-│   ├── CLAW_2024_06_19_CONFIG_V01.py
-│   ├── CLAW_2024_06_19_GITIGNORE_V01
-│   ├── CLAW_2024_06_19_PYPROJECT_V01.toml
-│   └── CLAW_2024_06_19_REQUIREMENTS_V01.txt
+│   ├── 2024-06-19_CLAW_CONFIG_V01.py
+│   ├── 2024-06-19_CLAW_GITIGNORE_V01
+│   ├── 2024-06-19_CLAW_PYPROJECT_V01.toml
+│   └── 2024-06-19_CLAW_REQUIREMENTS_V01.txt
 ├── 01_SRC/                  # Lógica principal del asistente (ClawSpring v3.05.5)
-│   ├── CLAW_2024_06_19_CORE_V01.py
-│   ├── CLAW_2024_06_19_AGENT_V01.py
-│   ├── CLAW_2024_06_19_PROVIDERS_V01.py
-│   ├── CLAW_2024_06_19_TOOLS_V01.py
-│   ├── CLAW_2024_06_19_CONTEXT_V01.py
+│   ├── 2024-06-19_CLAW_CORE_V01.py
+│   ├── 2024-06-19_CLAW_AGENT_V01.py
+│   ├── 2024-06-19_CLAW_PROVIDERS_V01.py
+│   ├── 2024-06-19_CLAW_TOOLS_V01.py
+│   ├── 2024-06-19_CLAW_CONTEXT_V01.py
 │   ├── mcp/, memory/, multi_agent/, plugin/, skill/, task/, voice/
 ├── 02_TESTS/                # Pruebas unitarias y de integración
 │   ├── test_compaction.py
@@ -49,7 +49,7 @@ CLAW_FINAL/
 
 ```powershell
 # Instalar dependencias
-pip install -r 00_SOPORTE/CLAW_2024_06_19_REQUIREMENTS_V01.txt
+pip install -r 00_SOPORTE/2024-06-19_CLAW_REQUIREMENTS_V01.txt
 
 # Configurar Ollama
 ollama pull qwen2.5:3b
@@ -62,7 +62,7 @@ ollama pull qwen2.5:3b
 python run_claw.py
 
 # O ejecutar directamente
-python 01_SRC/CLAW_2024_06_19_CORE_V01.py
+python 01_SRC/2024-06-19_CLAW_CORE_V01.py
 ```
 
 ### Configuración OpenClaw

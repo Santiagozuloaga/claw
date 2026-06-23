@@ -17,41 +17,11 @@ Public API (backward-compatible with the old memory.py module):
   search_memory()  — keyword search across entries
   get_memory_context() — MEMORY.md content for system prompt injection
 """
-from .store import (  # noqa: F401
-    MemoryEntry,
-    save_memory,
-    delete_memory,
-    load_index,
-    load_entries,
-    search_memory,
-    get_index_content,
-    parse_frontmatter,
-    USER_MEMORY_DIR,
-    INDEX_FILENAME,
-    MAX_INDEX_LINES,
-    MAX_INDEX_BYTES,
-)
-from .scan import (  # noqa: F401
-    MemoryHeader,
-    scan_memory_dir,
-    scan_all_memories,
-    format_memory_manifest,
-    memory_age_days,
-    memory_age_str,
-    memory_freshness_text,
-)
-from .context import (  # noqa: F401
-    get_memory_context,
-    find_relevant_memories,
-    truncate_index_content,
-)
-from .types import (  # noqa: F401
-    MEMORY_TYPES,
-    MEMORY_TYPE_DESCRIPTIONS,
-    MEMORY_SYSTEM_PROMPT,
-    WHAT_NOT_TO_SAVE,
-)
-from .consolidator import consolidate_session  # noqa: F401
+import importlib; _m_store = importlib.import_module(".2024-06-19_CLAW_STORE_V01", __package__); globals().update({'MemoryEntry': getattr(_m_store, 'MemoryEntry'), 'save_memory': getattr(_m_store, 'save_memory'), 'delete_memory': getattr(_m_store, 'delete_memory'), 'load_index': getattr(_m_store, 'load_index'), 'load_entries': getattr(_m_store, 'load_entries'), 'search_memory': getattr(_m_store, 'search_memory'), 'get_index_content': getattr(_m_store, 'get_index_content'), 'parse_frontmatter': getattr(_m_store, 'parse_frontmatter'), 'USER_MEMORY_DIR': getattr(_m_store, 'USER_MEMORY_DIR'), 'INDEX_FILENAME': getattr(_m_store, 'INDEX_FILENAME'), 'MAX_INDEX_LINES': getattr(_m_store, 'MAX_INDEX_LINES'), 'MAX_INDEX_BYTES': getattr(_m_store, 'MAX_INDEX_BYTES')})
+import importlib; _m_scan = importlib.import_module(".2024-06-19_CLAW_SCAN_V01", __package__); globals().update({'MemoryHeader': getattr(_m_scan, 'MemoryHeader'), 'scan_memory_dir': getattr(_m_scan, 'scan_memory_dir'), 'scan_all_memories': getattr(_m_scan, 'scan_all_memories'), 'format_memory_manifest': getattr(_m_scan, 'format_memory_manifest'), 'memory_age_days': getattr(_m_scan, 'memory_age_days'), 'memory_age_str': getattr(_m_scan, 'memory_age_str'), 'memory_freshness_text': getattr(_m_scan, 'memory_freshness_text')})
+import importlib; _m_context = importlib.import_module(".2024-06-19_CLAW_CONTEXT_V01", __package__); globals().update({'get_memory_context': getattr(_m_context, 'get_memory_context'), 'find_relevant_memories': getattr(_m_context, 'find_relevant_memories'), 'truncate_index_content': getattr(_m_context, 'truncate_index_content')})
+import importlib; _m_types = importlib.import_module(".2024-06-19_CLAW_TYPES_V01", __package__); globals().update({'MEMORY_TYPES': getattr(_m_types, 'MEMORY_TYPES'), 'MEMORY_TYPE_DESCRIPTIONS': getattr(_m_types, 'MEMORY_TYPE_DESCRIPTIONS'), 'MEMORY_SYSTEM_PROMPT': getattr(_m_types, 'MEMORY_SYSTEM_PROMPT'), 'WHAT_NOT_TO_SAVE': getattr(_m_types, 'WHAT_NOT_TO_SAVE')})
+import importlib; _m_consolidator = importlib.import_module(".2024-06-19_CLAW_CONSOLIDATOR_V01", __package__); globals().update({'consolidate_session': getattr(_m_consolidator, 'consolidate_session')})
 
 __all__ = [
     # store

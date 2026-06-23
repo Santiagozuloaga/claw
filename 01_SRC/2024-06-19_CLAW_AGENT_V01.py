@@ -5,11 +5,21 @@ import uuid
 from dataclasses import dataclass, field
 from typing import Generator
 
-from CLAW_2024_06_19_TOOL_REGISTRY_V01 import get_tool_schemas
-from CLAW_2024_06_19_TOOLS_V01 import execute_tool
-import CLAW_2024_06_19_TOOLS_V01 as _tools_init  # ensure built-in tools are registered on import
-from CLAW_2024_06_19_PROVIDERS_V01 import stream, AssistantTurn, TextChunk, ThinkingChunk, detect_provider
-from CLAW_2024_06_19_COMPACTION_V01 import maybe_compact
+import importlib
+
+m_2024_06_19_CLAW_TOOL_REGISTRY_V01 = importlib.import_module("2024-06-19_CLAW_TOOL_REGISTRY_V01")
+
+globals().update({'get_tool_schemas': getattr(m_2024_06_19_CLAW_TOOL_REGISTRY_V01, 'get_tool_schemas')})
+import importlib
+m_2024_06_19_CLAW_TOOLS_V01 = importlib.import_module("2024-06-19_CLAW_TOOLS_V01")
+globals().update({'execute_tool': getattr(m_2024_06_19_CLAW_TOOLS_V01, 'execute_tool')})
+import importlib; _tools_init = importlib.import_module("2024-06-19_CLAW_TOOLS_V01")  # ensure built-in tools are registered on import
+import importlib
+m_2024_06_19_CLAW_PROVIDERS_V01 = importlib.import_module("2024-06-19_CLAW_PROVIDERS_V01")
+globals().update({'stream': getattr(m_2024_06_19_CLAW_PROVIDERS_V01, 'stream'), 'AssistantTurn': getattr(m_2024_06_19_CLAW_PROVIDERS_V01, 'AssistantTurn'), 'TextChunk': getattr(m_2024_06_19_CLAW_PROVIDERS_V01, 'TextChunk'), 'ThinkingChunk': getattr(m_2024_06_19_CLAW_PROVIDERS_V01, 'ThinkingChunk'), 'detect_provider': getattr(m_2024_06_19_CLAW_PROVIDERS_V01, 'detect_provider')})
+import importlib
+m_2024_06_19_CLAW_COMPACTION_V01 = importlib.import_module("2024-06-19_CLAW_COMPACTION_V01")
+globals().update({'maybe_compact': getattr(m_2024_06_19_CLAW_COMPACTION_V01, 'maybe_compact')})
 
 # ── Re-export event types (used by clawspring.py) ────────────────────────
 __all__ = [
@@ -165,7 +175,9 @@ def _check_permission(tc: dict, config: dict) -> bool:
     if name in ("Read", "Glob", "Grep", "WebFetch", "WebSearch"):
         return True
     if name == "Bash":
-        from CLAW_2024_06_19_TOOLS_V01 import _is_safe_bash
+        import importlib
+        m_2024_06_19_CLAW_TOOLS_V01 = importlib.import_module("2024-06-19_CLAW_TOOLS_V01")
+        globals().update({'_is_safe_bash': getattr(m_2024_06_19_CLAW_TOOLS_V01, '_is_safe_bash')})
         return _is_safe_bash(tc["input"].get("command", ""))
     return False   # Write, Edit → ask
 
