@@ -16,7 +16,7 @@ from __future__ import annotations
 import threading
 from typing import Dict, List, Optional
 
-from CLAW_2024_06_19_TOOL_REGISTRY_V01 import ToolDef, register_tool
+from tool_registry import ToolDef, register_tool
 from .client import MCPClient, MCPManager, get_mcp_manager
 from .config import load_mcp_configs
 from .types import MCPServerConfig, MCPTool

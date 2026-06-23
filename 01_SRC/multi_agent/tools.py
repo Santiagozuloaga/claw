@@ -9,7 +9,7 @@ Registers the following tools into the central tool_registry:
 """
 from __future__ import annotations
 
-from CLAW_2024_06_19_TOOL_REGISTRY_V01 import ToolDef, register_tool
+from tool_registry import ToolDef, register_tool
 from .subagent import SubAgentManager, get_agent_definition, load_agent_definitions
 
 
