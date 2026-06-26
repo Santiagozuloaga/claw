@@ -9,15 +9,15 @@ from unittest.mock import patch
 
 import pytest
 
-from plugin.types import (
+from CLAW_2026_06_24_PLUGIN_V01.types import (
     PluginManifest, PluginEntry, PluginScope,
     parse_plugin_identifier, sanitize_plugin_name,
 )
-from plugin.recommend import (
+from CLAW_2026_06_24_PLUGIN_V01.recommend import (
     recommend_plugins, recommend_from_files, format_recommendations,
     PluginRecommendation,
 )
-import plugin.store as _store
+import CLAW_2026_06_24_PLUGIN_V01.store as _store
 
 
 # ── Fixtures ──────────────────────────────────────────────────────────────────

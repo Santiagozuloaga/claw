@@ -7,12 +7,12 @@ from pathlib import Path
 
 import pytest
 
-from task.types import Task, TaskStatus
-from task import (
+from CLAW_2026_06_24_TASK_V01.types import Task, TaskStatus
+from CLAW_2026_06_24_TASK_V01 import (
     create_task, get_task, list_tasks, update_task,
     delete_task, clear_all_tasks,
 )
-import task.store as _store
+import CLAW_2026_06_24_TASK_V01.store as _store
 
 
 # ── Fixtures ──────────────────────────────────────────────────────────────────
@@ -218,48 +218,48 @@ class TestTaskToolFunctions:
     """Test the string-returning functions used by the registered tools."""
 
     def test_task_create_tool(self):
-        from task.tools import _task_create
+        from CLAW_2026_06_24_TASK_V01.tools import _task_create
         result = _task_create("Write README", "Add installation section")
         assert "#1" in result
         assert "Write README" in result
 
     def test_task_update_tool_status(self):
-        from task.tools import _task_create, _task_update
+        from CLAW_2026_06_24_TASK_V01.tools import _task_create, _task_update
         _task_create("Fix lint", "Run ruff")
         result = _task_update("1", status="in_progress")
         assert "in_progress" in result or "updated" in result.lower()
 
     def test_task_update_tool_delete(self):
-        from task.tools import _task_create, _task_update
+        from CLAW_2026_06_24_TASK_V01.tools import _task_create, _task_update
         _task_create("Temp task", "Will be deleted")
         result = _task_update("1", status="deleted")
         assert "deleted" in result.lower()
         assert get_task("1") is None
 
     def test_task_update_not_found(self):
-        from task.tools import _task_update
+        from CLAW_2026_06_24_TASK_V01.tools import _task_update
         result = _task_update("999", status="completed")
         assert "not found" in result.lower()
 
     def test_task_get_tool(self):
-        from task.tools import _task_create, _task_get
+        from CLAW_2026_06_24_TASK_V01.tools import _task_create, _task_get
         _task_create("Review PR", "Check the diff carefully")
         result = _task_get("1")
         assert "Review PR" in result
         assert "pending" in result
 
     def test_task_get_not_found(self):
-        from task.tools import _task_get
+        from CLAW_2026_06_24_TASK_V01.tools import _task_get
         result = _task_get("999")
         assert "not found" in result.lower()
 
     def test_task_list_tool_empty(self):
-        from task.tools import _task_list
+        from CLAW_2026_06_24_TASK_V01.tools import _task_list
         result = _task_list()
         assert "No tasks" in result
 
     def test_task_list_tool_multiple(self):
-        from task.tools import _task_create, _task_list
+        from CLAW_2026_06_24_TASK_V01.tools import _task_create, _task_list
         _task_create("Step 1", "First thing")
         _task_create("Step 2", "Second thing")
         result = _task_list()
@@ -267,7 +267,7 @@ class TestTaskToolFunctions:
         assert "#2" in result
 
     def test_task_list_hides_resolved_blockers(self):
-        from task.tools import _task_create, _task_update, _task_list
+        from CLAW_2026_06_24_TASK_V01.tools import _task_create, _task_update, _task_list
         _task_create("Step A", "")           # id=1 (blocker)
         _task_create("Step B", "")           # id=2 (depends on 1)
         _task_update("2", add_blocked_by=["1"])
