@@ -58,7 +58,7 @@ def consolidate_session(messages: list, config: dict) -> list[str]:
         return []
 
     try:
-        from providers import stream, AssistantTurn
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['stream', 'AssistantTurn']})
         from .store import MemoryEntry, save_memory, check_conflict
         import json
 

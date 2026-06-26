@@ -1,7 +1,7 @@
 """Context window management: two-layer compression for long conversations."""
 from __future__ import annotations
 
-import CLAW_2024_06_19_PROVIDERS_V01 as providers
+import importlib; providers = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01')
 
 
 # ── Token estimation ──────────────────────────────────────────────────────

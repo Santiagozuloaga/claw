@@ -9,13 +9,10 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from mcp.types import (
-    MCPServerConfig, MCPTool, MCPServerState, MCPTransport,
-    make_request, make_notification, INIT_PARAMS,
-)
-from mcp.config import load_mcp_configs, add_server_to_user_config, remove_server_from_user_config
-from mcp.client import MCPManager, MCPClient, StdioTransport, get_mcp_manager
-import mcp.config as _mcp_config
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MCP_V01.types'); globals().update({k: getattr(_mod, k) for k in ['MCPServerConfig', 'MCPTool', 'MCPServerState', 'MCPTransport', 'make_request', 'make_notification', 'INIT_PARAMS']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MCP_V01.config'); globals().update({k: getattr(_mod, k) for k in ['load_mcp_configs', 'add_server_to_user_config', 'remove_server_from_user_config']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MCP_V01.client'); globals().update({k: getattr(_mod, k) for k in ['MCPManager', 'MCPClient', 'StdioTransport', 'get_mcp_manager']})
+import importlib; _mcp_config = importlib.import_module('2024-06-19_CLAW_MCP_V01.config')
 
 
 # ── Fixtures ──────────────────────────────────────────────────────────────────
@@ -23,7 +20,7 @@ import mcp.config as _mcp_config
 @pytest.fixture(autouse=True)
 def reset_manager(monkeypatch):
     """Each test gets a fresh MCPManager singleton."""
-    import mcp.client as _client_mod
+    import importlib; _client_mod = importlib.import_module('2024-06-19_CLAW_MCP_V01.client')
     monkeypatch.setattr(_client_mod, "_manager", None)
 
 

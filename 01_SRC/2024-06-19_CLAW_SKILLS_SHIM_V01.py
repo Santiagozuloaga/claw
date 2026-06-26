@@ -1,5 +1,5 @@
 """Backward-compatibility shim — real implementation is in skill/ package."""
-from skill.loader import (  # noqa: F401
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_SKILL_V01.loader'); globals().update({k: getattr(_mod, k) for k in []}) # noqa: F401
     SkillDef,
     load_skills,
     find_skill,
@@ -7,8 +7,8 @@ from skill.loader import (  # noqa: F401
     _parse_skill_file,
     _parse_list_field,
 )
-from skill.executor import execute_skill  # noqa: F401
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_SKILL_V01.executor'); globals().update({k: getattr(_mod, k) for k in ['execute_skill']}) # noqa: F401
 
 # Legacy constant — kept for tests that patch it
-from skill.loader import _get_skill_paths as _gsp
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_SKILL_V01.loader'); globals().update({k: getattr(_mod, k) for k in ['_get_skill_paths as _gsp']})
 SKILL_PATHS = _gsp()

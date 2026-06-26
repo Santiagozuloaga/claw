@@ -3,9 +3,9 @@ from __future__ import annotations
 import pytest
 from pathlib import Path
 
-import skill.loader as _loader
-from skill.loader import _parse_skill_file, _parse_list_field, find_skill, SkillDef
-from skill import load_skills, substitute_arguments
+import importlib; _loader = importlib.import_module('2024-06-19_CLAW_SKILL_V01.loader')
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_SKILL_V01.loader'); globals().update({k: getattr(_mod, k) for k in ['_parse_skill_file', '_parse_list_field', 'find_skill', 'SkillDef']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_SKILL_V01'); globals().update({k: getattr(_mod, k) for k in ['load_skills', 'substitute_arguments']})
 
 
 COMMIT_MD = """\

@@ -384,7 +384,7 @@ def cmd_help(_args: str, _state, _config) -> bool:
     return True
 
 def cmd_model(args: str, _state, config) -> bool:
-    from providers import PROVIDERS, detect_provider
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['PROVIDERS', 'detect_provider']})
     if not args:
         model = config["model"]
         pname = detect_provider(model)
@@ -409,13 +409,13 @@ def cmd_model(args: str, _state, config) -> bool:
         config["model"] = m
         pname = detect_provider(m)
         ok(f"Model set to {m}  (provider: {pname})")
-        from config import save_config
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['save_config']})
         save_config(config)
     return True
 
 def _generate_personas(topic: str, curr_model: str, config: dict, count: int = 5) -> dict | None:
     """Ask the LLM to generate `count` topic-appropriate expert personas as a dict."""
-    from providers import stream, TextChunk
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['stream', 'TextChunk']})
     import json
 
     example_entries = "\n".join(
@@ -469,7 +469,7 @@ _TECH_PERSONAS = {
 
 def _interactive_ollama_picker(config: dict) -> bool:
     """Prompt the user to select from locally available Ollama models."""
-    from providers import PROVIDERS, list_ollama_models
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['PROVIDERS', 'list_ollama_models']})
     prov = PROVIDERS.get("ollama", {})
     base_url = prov.get("base_url", "http://localhost:11434")
     
@@ -490,7 +490,7 @@ def _interactive_ollama_picker(config: dict) -> bool:
         if 0 <= idx < len(models):
             new_model = f"ollama/{models[idx]}"
             config["model"] = new_model
-            from config import save_config
+            import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['save_config']})
             save_config(config)
             ok(f"Model updated to {new_model}")
             return True
@@ -505,7 +505,7 @@ def cmd_brainstorm(args: str, state, config) -> bool:
     
     Usage: /brainstorm [topic]
     """
-    from providers import stream
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['stream']})
     import time
     from pathlib import Path
     
@@ -607,7 +607,7 @@ INSTRUCTIONS:
         internal_config["no_tools"] = True
         
         try:
-            from providers import TextChunk
+            import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['TextChunk']})
             for event in stream(curr_model, system_prompt, [{"role": "user", "content": user_msg}], [], internal_config):
                 if isinstance(event, TextChunk):
                     full_response.append(event.text)
@@ -689,7 +689,7 @@ def cmd_clear(_args: str, state, _config) -> bool:
     return True
 
 def cmd_config(args: str, _state, config) -> bool:
-    from config import save_config
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['save_config']})
     if not args:
         display = {k: v for k, v in config.items() if k != "api_key"}
         print(json.dumps(display, indent=2))
@@ -711,7 +711,7 @@ def cmd_config(args: str, _state, config) -> bool:
     return True
 
 def cmd_save(args: str, state, _config) -> bool:
-    from config import SESSIONS_DIR
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['SESSIONS_DIR']})
     import uuid
     sid   = uuid.uuid4().hex[:8]
     ts    = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -724,7 +724,7 @@ def cmd_save(args: str, state, _config) -> bool:
 
 def save_latest(args: str, state, config_or_none=None) -> bool:
     """Save session on exit: session_latest.json + daily/ copy + append to history.json."""
-    from config import MR_SESSION_DIR, DAILY_DIR, SESSION_HIST_FILE
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['MR_SESSION_DIR', 'DAILY_DIR', 'SESSION_HIST_FILE']})
     if not state.messages:
         return True
 
@@ -779,7 +779,7 @@ def save_latest(args: str, state, config_or_none=None) -> bool:
     ok(f"             → {SESSION_HIST_FILE}  ({len(hist['sessions'])} sessions / {hist['total_turns']} total turns)")
     return True
 def cmd_load(args: str, state, _config) -> bool:
-    from config import SESSIONS_DIR, MR_SESSION_DIR, DAILY_DIR
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['SESSIONS_DIR', 'MR_SESSION_DIR', 'DAILY_DIR']})
 
     path = None
     if not args.strip():
@@ -821,7 +821,7 @@ def cmd_load(args: str, state, _config) -> bool:
             print(clr(f"  [{i+1:2d}] ", "yellow") + label)
 
         # Show history.json option at the bottom if it exists
-        from config import SESSION_HIST_FILE
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['SESSION_HIST_FILE']})
         has_history = SESSION_HIST_FILE.exists()
         if has_history:
             try:
@@ -929,7 +929,7 @@ def cmd_load(args: str, state, _config) -> bool:
     return True
 
 def cmd_resume(args: str, state, _config) -> bool:
-    from config import MR_SESSION_DIR
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['MR_SESSION_DIR']})
 
     if not args.strip():
         path = MR_SESSION_DIR / "session_latest.json"
@@ -993,7 +993,7 @@ def cmd_context(_args: str, state, config) -> bool:
     return True
 
 def cmd_cost(_args: str, state, config) -> bool:
-    from config import calc_cost
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['calc_cost']})
     cost = calc_cost(config["model"],
                      state.total_input_tokens,
                      state.total_output_tokens)
@@ -1003,7 +1003,7 @@ def cmd_cost(_args: str, state, config) -> bool:
     return True
 
 def cmd_verbose(_args: str, _state, config) -> bool:
-    from config import save_config
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['save_config']})
     config["verbose"] = not config.get("verbose", False)
     state_str = "ON" if config["verbose"] else "OFF"
     ok(f"Verbose mode: {state_str}")
@@ -1011,7 +1011,7 @@ def cmd_verbose(_args: str, _state, config) -> bool:
     return True
 
 def cmd_thinking(_args: str, _state, config) -> bool:
-    from config import save_config
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['save_config']})
     config["thinking"] = not config.get("thinking", False)
     state_str = "ON" if config["thinking"] else "OFF"
     ok(f"Extended thinking: {state_str}")
@@ -1019,7 +1019,7 @@ def cmd_thinking(_args: str, _state, config) -> bool:
     return True
 
 def cmd_permissions(args: str, _state, config) -> bool:
-    from config import save_config
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['save_config']})
     modes = ["auto", "accept-all", "manual"]
     mode_desc = {
         "auto":       "Prompt for each tool call (default)",
@@ -1099,8 +1099,8 @@ def cmd_cloudsave(args: str, state, config) -> bool:
     /cloudsave list            — list your clawspring Gists
     /cloudsave load <gist_id>  — download and load a session from Gist
     """
-    from cloudsave import validate_token, upload_session, list_sessions, download_session
-    from config import save_config
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CLOUDSAVE_V01'); globals().update({k: getattr(_mod, k) for k in ['validate_token', 'upload_session', 'list_sessions', 'download_session']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['save_config']})
 
     parts = args.strip().split(None, 1)
     sub = parts[0].lower() if parts else ""
@@ -1212,8 +1212,8 @@ def cmd_exit(_args: str, _state, _config) -> bool:
     # Auto cloud-sync if enabled
     if _config.get("cloudsave_auto") and _config.get("gist_token") and _state.messages:
         info("Auto cloud-sync: uploading session to Gist…")
-        from cloudsave import upload_session
-        from config import save_config
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CLOUDSAVE_V01'); globals().update({k: getattr(_mod, k) for k in ['upload_session']})
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['save_config']})
         session_data = _build_session_data(_state)
         gist_id, err_msg = upload_session(
             session_data, _config["gist_token"],
@@ -1228,14 +1228,14 @@ def cmd_exit(_args: str, _state, _config) -> bool:
     sys.exit(0)
 
 def cmd_memory(args: str, _state, _config) -> bool:
-    from memory import search_memory, load_index
-    from memory.scan import scan_all_memories, format_memory_manifest, memory_freshness_text
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MEMORY_SHIM_V01'); globals().update({k: getattr(_mod, k) for k in ['search_memory', 'load_index']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MEMORY_PACKAGE_V01.scan'); globals().update({k: getattr(_mod, k) for k in ['scan_all_memories', 'format_memory_manifest', 'memory_freshness_text']})
 
     stripped = args.strip()
 
     # /memory consolidate  — extract long-term memories from current session
     if stripped == "consolidate":
-        from memory import consolidate_session
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MEMORY_SHIM_V01'); globals().update({k: getattr(_mod, k) for k in ['consolidate_session']})
         msgs = _state.get("messages", [])
         info("  Analyzing session for long-term memories…")
         saved = consolidate_session(msgs, _config)
@@ -1274,7 +1274,7 @@ def cmd_memory(args: str, _state, _config) -> bool:
 
 def cmd_agents(_args: str, _state, _config) -> bool:
     try:
-        from multi_agent.tools import get_agent_manager
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MULTI_AGENT_V01.tools'); globals().update({k: getattr(_mod, k) for k in ['get_agent_manager']})
         mgr = get_agent_manager()
         tasks = mgr.list_tasks()
         if not tasks:
@@ -1296,7 +1296,7 @@ def _print_background_notifications():
     Called before each user prompt so the user sees results without polling.
     """
     try:
-        from multi_agent.tools import get_agent_manager
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MULTI_AGENT_V01.tools'); globals().update({k: getattr(_mod, k) for k in ['get_agent_manager']})
         mgr = get_agent_manager()
     except Exception:
         return
@@ -1323,7 +1323,7 @@ def _print_background_notifications():
             print()
 
 def cmd_skills(_args: str, _state, _config) -> bool:
-    from skill import load_skills
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_SKILL_V01'); globals().update({k: getattr(_mod, k) for k in ['load_skills']})
     skills = load_skills()
     if not skills:
         info("No skills found.")
@@ -1347,10 +1347,9 @@ def cmd_mcp(args: str, _state, _config) -> bool:
     /mcp add <name> <command> [args...] — add a stdio server to user config
     /mcp remove <name> — remove a server from user config
     """
-    from mcp.client import get_mcp_manager
-    from mcp.config import (load_mcp_configs, add_server_to_user_config,
-                             remove_server_from_user_config, list_config_files)
-    from mcp.tools import initialize_mcp, reload_mcp, refresh_server
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MCP_V01.client'); globals().update({k: getattr(_mod, k) for k in ['get_mcp_manager']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MCP_V01.config'); globals().update({k: getattr(_mod, k) for k in ['load_mcp_configs', 'add_server_to_user_config', 'remove_server_from_user_config', 'list_config_files']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MCP_V01.tools'); globals().update({k: getattr(_mod, k) for k in ['initialize_mcp', 'reload_mcp', 'refresh_server']})
 
     parts = args.split() if args.strip() else []
     subcmd = parts[0].lower() if parts else ""
@@ -1448,11 +1447,7 @@ def cmd_plugin(args: str, _state, _config) -> bool:
     /plugin recommend [context]  — recommend plugins for context
     /plugin info name            — show plugin details
     """
-    from plugin import (
-        install_plugin, uninstall_plugin, enable_plugin, disable_plugin,
-        disable_all_plugins, update_plugin, list_plugins, get_plugin,
-        PluginScope, recommend_plugins, format_recommendations,
-    )
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PLUGIN_V01'); globals().update({k: getattr(_mod, k) for k in ['install_plugin', 'uninstall_plugin', 'enable_plugin', 'disable_plugin', 'disable_all_plugins', 'update_plugin', 'list_plugins', 'get_plugin', 'PluginScope', 'recommend_plugins', 'format_recommendations']})
 
     parts = args.split(None, 1)
     subcmd = parts[0].lower() if parts else ""
@@ -1529,7 +1524,7 @@ def cmd_plugin(args: str, _state, _config) -> bool:
         context = rest
         if not context:
             # Auto-detect context from project files
-            from plugin.recommend import recommend_from_files
+            import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PLUGIN_V01.recommend'); globals().update({k: getattr(_mod, k) for k in ['recommend_from_files']})
             files = list(_Path.cwd().glob("**/*"))[:200]
             recs = recommend_from_files(files)
         else:
@@ -1579,8 +1574,8 @@ def cmd_tasks(args: str, _state, _config) -> bool:
     /tasks get <id>         — show full task details
     /tasks clear            — delete all tasks
     """
-    from task import list_tasks, get_task, create_task, update_task, delete_task, clear_all_tasks
-    from task.types import TaskStatus
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TASK_V01'); globals().update({k: getattr(_mod, k) for k in ['list_tasks', 'get_task', 'create_task', 'update_task', 'delete_task', 'clear_all_tasks']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TASK_V01.types'); globals().update({k: getattr(_mod, k) for k in ['TaskStatus']})
 
     parts = args.split(None, 1)
     subcmd = parts[0].lower() if parts else ""
@@ -2214,7 +2209,7 @@ def cmd_telegram(args: str, _state, config) -> bool:
     Settings are saved so you only configure once.
     """
     global _telegram_thread, _telegram_stop
-    from config import save_config
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['save_config']})
 
     parts = args.strip().split()
 
@@ -2370,8 +2365,8 @@ def cmd_voice(args: str, state, config) -> bool:
     # ── /voice status ──
     if subcmd == "status":
         try:
-            from voice import check_voice_deps, check_recording_availability, check_stt_availability
-            from voice.stt import get_stt_backend_name
+            import importlib; _mod = importlib.import_module('2024-06-19_CLAW_VOICE_V01'); globals().update({k: getattr(_mod, k) for k in ['check_voice_deps', 'check_recording_availability', 'check_stt_availability']})
+            import importlib; _mod = importlib.import_module('2024-06-19_CLAW_VOICE_V01.stt'); globals().update({k: getattr(_mod, k) for k in ['get_stt_backend_name']})
         except ImportError as e:
             err(f"voice package not available: {e}")
             return True
@@ -2394,7 +2389,7 @@ def cmd_voice(args: str, state, config) -> bool:
 
     # ── /voice [start] — record once and submit ──
     try:
-        from voice import check_voice_deps, voice_input as _voice_input
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_VOICE_V01'); globals()['check_voice_deps'] = getattr(_mod, 'check_voice_deps'); globals()['_voice_input'] = getattr(_mod, 'voice_input')
     except ImportError:
         err("voice/ package not found — this should not happen")
         return True
@@ -2537,7 +2532,7 @@ def handle_slash(line: str, state, config) -> Union[bool, tuple]:
         return True
 
     # Fall through to skill lookup
-    from skill import find_skill
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_SKILL_V01'); globals().update({k: getattr(_mod, k) for k in ['find_skill']})
     skill = find_skill(line)
     if skill:
         cmd_parts = line.strip().split(maxsplit=1)
@@ -2650,9 +2645,9 @@ def setup_readline(history_file: Path):
 # ── Main REPL ──────────────────────────────────────────────────────────────
 
 def repl(config: dict, initial_prompt: str = None):
-    from config import HISTORY_FILE
-    from context import build_system_prompt
-    from agent import AgentState, run, TextChunk, ThinkingChunk, ToolStart, ToolEnd, TurnDone, PermissionRequest
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['HISTORY_FILE']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONTEXT_V01'); globals().update({k: getattr(_mod, k) for k in ['build_system_prompt']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_AGENT_V01'); globals().update({k: getattr(_mod, k) for k in ['AgentState', 'run', 'TextChunk', 'ThinkingChunk', 'ToolStart', 'ToolEnd', 'TurnDone', 'PermissionRequest']})
 
     setup_readline(HISTORY_FILE)
     state = AgentState()
@@ -2660,7 +2655,7 @@ def repl(config: dict, initial_prompt: str = None):
 
     # Banner
     if not initial_prompt:
-        from providers import detect_provider
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['detect_provider']})
         model    = config["model"]
         pname    = detect_provider(model)
         model_clr = clr(model, "cyan", "bold")
@@ -2830,7 +2825,7 @@ def repl(config: dict, initial_prompt: str = None):
                 import urllib.error
                 # Catch 404 Not Found (Ollama model missing)
                 if isinstance(e, urllib.error.HTTPError) and e.code == 404:
-                    from providers import detect_provider
+                    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['detect_provider']})
                     if detect_provider(config["model"]) == "ollama":
                         flush_response()
                         err(f"Ollama model '{config['model']}' not found.")
@@ -2853,7 +2848,7 @@ def repl(config: dict, initial_prompt: str = None):
                 print(clr("\n[claude-code-local] » ", "yellow"), end="", flush=True)
 
         # Drain any AskUserQuestion prompts raised during this turn
-        from tools import drain_pending_questions
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOLS_V01'); globals().update({k: getattr(_mod, k) for k in ['drain_pending_questions']})
         drain_pending_questions()
         
         config["_last_interaction_time"] = time.time()
@@ -3272,7 +3267,7 @@ def repl(config: dict, initial_prompt: str = None):
             skill, skill_args = result
             info(f"Running skill: {skill.name}" + (f" [{skill.context}]" if skill.context == "fork" else ""))
             try:
-                from skill import substitute_arguments
+                import importlib; _mod = importlib.import_module('2024-06-19_CLAW_SKILL_V01'); globals().update({k: getattr(_mod, k) for k in ['substitute_arguments']})
                 rendered = substitute_arguments(skill.prompt, skill_args, skill.arguments)
                 run_query(f"[Skill: {skill.name}]\n\n{rendered}")
             except KeyboardInterrupt:
@@ -3325,8 +3320,8 @@ def main():
         print(__doc__)
         sys.exit(0)
 
-    from config import load_config, save_config, has_api_key
-    from providers import detect_provider, PROVIDERS
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_CONFIG_V01'); globals().update({k: getattr(_mod, k) for k in ['load_config', 'save_config', 'has_api_key']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['detect_provider', 'PROVIDERS']})
 
     config = load_config()
 
@@ -3337,7 +3332,7 @@ def main():
         # (e.g. "ollama:llama3.3" → "ollama/llama3.3"), but leave version tags intact
         # (e.g. "ollama/qwen3.5:35b" must NOT become "ollama/qwen3.5/35b")
         if "/" not in m and ":" in m:
-            from providers import PROVIDERS
+            import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['PROVIDERS']})
             left, _ = m.split(":", 1)
             if left in PROVIDERS:
                 m = m.replace(":", "/", 1)

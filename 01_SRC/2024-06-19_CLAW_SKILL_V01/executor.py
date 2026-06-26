@@ -38,7 +38,7 @@ def execute_skill(
 
 def _execute_inline(message: str, state, config: dict, system_prompt: str) -> Generator:
     """Run skill prompt inline in the current conversation."""
-    import agent as _agent
+    import importlib; _agent = importlib.import_module('2024-06-19_CLAW_AGENT_V01')
     yield from _agent.run(message, state, config, system_prompt)
 
 
@@ -49,7 +49,7 @@ def _execute_forked(
     system_prompt: str,
 ) -> Generator:
     """Run skill as an isolated sub-agent (separate conversation context)."""
-    import agent as _agent
+    import importlib; _agent = importlib.import_module('2024-06-19_CLAW_AGENT_V01')
 
     # Build a sub-agent config with depth tracking
     depth = config.get("_depth", 0) + 1

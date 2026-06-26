@@ -9,8 +9,8 @@ import threading
 from pathlib import Path
 from typing import Callable, Optional
 
-from tool_registry import ToolDef, register_tool
-from tool_registry import execute_tool as _registry_execute
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals().update({k: getattr(_mod, k) for k in ['ToolDef', 'register_tool']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals()['_registry_execute'] = getattr(_mod, 'execute_tool')
 
 # ── AskUserQuestion state ──────────────────────────────────────────────────────
 # The main REPL loop drains _pending_questions and fills _question_answers.
@@ -356,7 +356,7 @@ def _read(file_path: str, limit: int = None, offset: int = None) -> str:
         return f"Error: {file_path} is a directory"
     try:
         # Explicitly use utf-8 and newline="" to avoid encoding/line-ending mismatches
-        lines = p.read_text(encoding="utf-8", errors="replace", newline="").splitlines(keepends=True)
+        lines = open(p, 'r', encoding='utf-8', errors='replace', newline='').read().splitlines(keepends=True)
         start = offset or 0
         chunk = lines[start:start + limit] if limit else lines[start:]
         if not chunk:
@@ -372,10 +372,10 @@ def _write(file_path: str, content: str) -> str:
     try:
         is_new = not p.exists()
         # Ensure utf-8 and newline="" for reading existing content to generate diff
-        old_content = "" if is_new else p.read_text(encoding="utf-8", errors="replace", newline="")
+        old_content = "" if is_new else open(p, 'r', encoding='utf-8', errors='replace', newline='').read()
         p.parent.mkdir(parents=True, exist_ok=True)
         # Always write as utf-8 with newline="" to prevent double CRLF on Windows
-        p.write_text(content, encoding="utf-8", newline="")
+        open(p, 'w', encoding='utf-8', newline='').write(content)
         if is_new:
             lc = content.count("\n") + (1 if content and not content.endswith("\n") else 0)
             return f"Created {file_path} ({lc} lines)"
@@ -395,7 +395,7 @@ def _edit(file_path: str, old_string: str, new_string: str, replace_all: bool = 
         return f"Error: file not found: {file_path}"
     try:
         # Read with newline="" to get original line endings
-        content = p.read_text(encoding="utf-8", errors="replace", newline="")
+        content = open(p, 'r', encoding='utf-8', errors='replace', newline='').read()
         
         # Detect original line endings: only treat as pure CRLF if every \n is part of \r\n
         crlf_count = content.count("\r\n")
@@ -427,7 +427,7 @@ def _edit(file_path: str, old_string: str, new_string: str, replace_all: bool = 
             old_content_final = content_norm
                       
         # Write with newline="" to prevent double CRLF translation on Windows
-        p.write_text(final_content, encoding="utf-8", newline="")
+        open(p, 'w', encoding='utf-8', newline='').write(final_content)
         filename = p.name
         diff = generate_unified_diff(old_content_final, final_content, filename)
         return f"Changes applied to {filename}:\n\n{diff}"
@@ -1046,33 +1046,33 @@ _register_builtins()
 
 # ── Memory tools (MemorySave, MemoryDelete, MemorySearch, MemoryList) ────────
 # Defined in memory/tools.py; importing registers them automatically.
-import memory.tools as _memory_tools  # noqa: F401
+import importlib; _memory_tools = importlib.import_module('2024-06-19_CLAW_MEMORY_PACKAGE_V01.tools') # noqa: F401
 
 
 
 # ── Multi-agent tools (Agent, SendMessage, CheckAgentResult, ListAgentTasks, ListAgentTypes) ──
 # Defined in multi_agent/tools.py; importing registers them automatically.
-import multi_agent.tools as _multiagent_tools  # noqa: F401
+import importlib; _multiagent_tools = importlib.import_module('2024-06-19_CLAW_MULTI_AGENT_V01.tools') # noqa: F401
 
 # Expose get_agent_manager at module level for backward compatibility
-from multi_agent.tools import get_agent_manager as _get_agent_manager  # noqa: F401
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MULTI_AGENT_V01.tools'); globals()['_get_agent_manager'] = getattr(_mod, 'get_agent_manager') # noqa: F401
 
 
 # ── Skill tools (Skill, SkillList) ────────────────────────────────────────
 # Defined in skill/tools.py; importing registers them automatically.
-import skill.tools as _skill_tools  # noqa: F401
+import importlib; _skill_tools = importlib.import_module('2024-06-19_CLAW_SKILL_V01.tools') # noqa: F401
 
 
 # ── MCP tools ─────────────────────────────────────────────────────────────────
 # mcp/tools.py connects to configured MCP servers and registers their tools.
 # Connection happens in a background thread so startup is not blocked.
-import mcp.tools as _mcp_tools  # noqa: F401
+import importlib; _mcp_tools = importlib.import_module('2024-06-19_CLAW_MCP_V01.tools') # noqa: F401
 
 
 # ── Plugin tools ───────────────────────────────────────────────────────────────
 # Load tools contributed by installed+enabled plugins.
 try:
-    from plugin.loader import register_plugin_tools as _reg_plugin_tools
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PLUGIN_V01.loader'); globals().update({k: getattr(_mod, k) for k in ['register_plugin_tools as _reg_plugin_tools']})
     _reg_plugin_tools()
 except Exception as _plugin_err:
     pass  # Plugin loading is best-effort; never crash startup
@@ -1080,4 +1080,4 @@ except Exception as _plugin_err:
 
 # ── Task tools (TaskCreate, TaskUpdate, TaskGet, TaskList) ─────────────────────
 # task/tools.py registers all four tools into the central registry on import.
-import task.tools as _task_tools  # noqa: F401
+import importlib; _task_tools = importlib.import_module('2024-06-19_CLAW_TASK_V01.tools') # noqa: F401

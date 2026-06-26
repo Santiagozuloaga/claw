@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from tool_registry import ToolDef, register_tool
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals().update({k: getattr(_mod, k) for k in ['ToolDef', 'register_tool']})
 from .store import MemoryEntry, save_memory, delete_memory, load_index, check_conflict, touch_last_used
 from .context import find_relevant_memories
 from .scan import scan_all_memories, format_memory_manifest

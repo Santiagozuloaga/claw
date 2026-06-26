@@ -2,15 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from tool_registry import (
-    ToolDef,
-    clear_registry,
-    execute_tool,
-    get_all_tools,
-    get_tool,
-    get_tool_schemas,
-    register_tool,
-)
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals().update({k: getattr(_mod, k) for k in ['ToolDef', 'clear_registry', 'execute_tool', 'get_all_tools', 'get_tool', 'get_tool_schemas', 'register_tool']})
 
 
 @pytest.fixture(autouse=True)

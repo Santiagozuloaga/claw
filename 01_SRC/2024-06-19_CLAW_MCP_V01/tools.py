@@ -16,7 +16,7 @@ from __future__ import annotations
 import threading
 from typing import Dict, List, Optional
 
-from tool_registry import ToolDef, register_tool
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals().update({k: getattr(_mod, k) for k in ['ToolDef', 'register_tool']})
 from .client import MCPClient, MCPManager, get_mcp_manager
 from .config import load_mcp_configs
 from .types import MCPServerConfig, MCPTool

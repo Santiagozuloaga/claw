@@ -9,15 +9,9 @@ from unittest.mock import patch
 
 import pytest
 
-from plugin.types import (
-    PluginManifest, PluginEntry, PluginScope,
-    parse_plugin_identifier, sanitize_plugin_name,
-)
-from plugin.recommend import (
-    recommend_plugins, recommend_from_files, format_recommendations,
-    PluginRecommendation,
-)
-import plugin.store as _store
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PLUGIN_V01.types'); globals().update({k: getattr(_mod, k) for k in ['PluginManifest', 'PluginEntry', 'PluginScope', 'parse_plugin_identifier', 'sanitize_plugin_name']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PLUGIN_V01.recommend'); globals().update({k: getattr(_mod, k) for k in ['recommend_plugins', 'recommend_from_files', 'format_recommendations', 'PluginRecommendation']})
+import importlib; _store = importlib.import_module('2024-06-19_CLAW_PLUGIN_V01.store')
 
 
 # ── Fixtures ──────────────────────────────────────────────────────────────────
@@ -286,13 +280,13 @@ class TestPluginRecommend:
 class TestAskUserQuestion:
     def test_drain_empty(self):
         """drain_pending_questions returns False when nothing pending."""
-        from tools import drain_pending_questions, _pending_questions
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOLS_V01'); globals().update({k: getattr(_mod, k) for k in ['drain_pending_questions', '_pending_questions']})
         _pending_questions.clear()
         assert drain_pending_questions() is False
 
     def test_roundtrip_with_freetext(self):
         """Submit a question, simulate user typing 'yes', collect result."""
-        import tools as _tools
+        import importlib; _tools = importlib.import_module('2024-06-19_CLAW_TOOLS_V01')
 
         _tools._pending_questions.clear()
 
@@ -317,7 +311,7 @@ class TestAskUserQuestion:
 
     def test_roundtrip_with_option_selection(self):
         """Select option 1 from a numbered list."""
-        import tools as _tools
+        import importlib; _tools = importlib.import_module('2024-06-19_CLAW_TOOLS_V01')
         _tools._pending_questions.clear()
 
         answered = threading.Event()
@@ -345,6 +339,6 @@ class TestAskUserQuestion:
 
     def test_tool_schema_registered(self):
         """AskUserQuestion must appear in TOOL_SCHEMAS."""
-        from tools import TOOL_SCHEMAS
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOLS_V01'); globals().update({k: getattr(_mod, k) for k in ['TOOL_SCHEMAS']})
         names = [s["name"] for s in TOOL_SCHEMAS]
         assert "AskUserQuestion" in names

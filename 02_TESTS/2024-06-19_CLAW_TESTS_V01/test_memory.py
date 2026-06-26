@@ -2,28 +2,11 @@
 import pytest
 from pathlib import Path
 
-import memory.store as _store
-from memory.store import (
-    MemoryEntry,
-    save_memory,
-    load_index,
-    load_entries,
-    delete_memory,
-    search_memory,
-    _slugify,
-    parse_frontmatter,
-    get_index_content,
-)
-from memory.context import get_memory_context, truncate_index_content
-from memory.scan import (
-    scan_memory_dir,
-    format_memory_manifest,
-    memory_age_days,
-    memory_age_str,
-    memory_freshness_text,
-    MemoryHeader,
-)
-from memory.types import MEMORY_TYPES
+import importlib; _store = importlib.import_module('2024-06-19_CLAW_MEMORY_PACKAGE_V01.store')
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MEMORY_PACKAGE_V01.store'); globals().update({k: getattr(_mod, k) for k in ['MemoryEntry', 'save_memory', 'load_index', 'load_entries', 'delete_memory', 'search_memory', '_slugify', 'parse_frontmatter', 'get_index_content']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MEMORY_PACKAGE_V01.context'); globals().update({k: getattr(_mod, k) for k in ['get_memory_context', 'truncate_index_content']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MEMORY_PACKAGE_V01.scan'); globals().update({k: getattr(_mod, k) for k in ['scan_memory_dir', 'format_memory_manifest', 'memory_age_days', 'memory_age_str', 'memory_freshness_text', 'MemoryHeader']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MEMORY_PACKAGE_V01.types'); globals().update({k: getattr(_mod, k) for k in ['MEMORY_TYPES']})
 
 
 # ── Fixtures ─────────────────────────────────────────────────────────────

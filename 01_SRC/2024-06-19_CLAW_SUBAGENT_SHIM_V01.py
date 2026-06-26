@@ -1,5 +1,5 @@
 """Backward-compatibility shim — real implementation is in multi_agent/subagent.py."""
-from multi_agent.subagent import (  # noqa: F401
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MULTI_AGENT_V01.subagent'); globals().update({k: getattr(_mod, k) for k in []}) # noqa: F401
     AgentDefinition,
     SubAgentTask,
     SubAgentManager,

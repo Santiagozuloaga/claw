@@ -5,11 +5,11 @@ import uuid
 from dataclasses import dataclass, field
 from typing import Generator
 
-from CLAW_2024_06_19_TOOL_REGISTRY_V01 import get_tool_schemas
-from CLAW_2024_06_19_TOOLS_V01 import execute_tool
-import CLAW_2024_06_19_TOOLS_V01 as _tools_init  # ensure built-in tools are registered on import
-from CLAW_2024_06_19_PROVIDERS_V01 import stream, AssistantTurn, TextChunk, ThinkingChunk, detect_provider
-from CLAW_2024_06_19_COMPACTION_V01 import maybe_compact
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals().update({k: getattr(_mod, k) for k in ['get_tool_schemas']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOLS_V01'); globals().update({k: getattr(_mod, k) for k in ['execute_tool']})
+import importlib; _tools_init = importlib.import_module('2024-06-19_CLAW_TOOLS_V01')  # ensure built-in tools are registered on import
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['stream', 'AssistantTurn', 'TextChunk', 'ThinkingChunk', 'detect_provider']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_COMPACTION_V01'); globals().update({k: getattr(_mod, k) for k in ['maybe_compact']})
 
 # ── Re-export event types (used by clawspring.py) ────────────────────────
 __all__ = [
@@ -165,7 +165,7 @@ def _check_permission(tc: dict, config: dict) -> bool:
     if name in ("Read", "Glob", "Grep", "WebFetch", "WebSearch"):
         return True
     if name == "Bash":
-        from CLAW_2024_06_19_TOOLS_V01 import _is_safe_bash
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOLS_V01'); globals().update({k: getattr(_mod, k) for k in ['_is_safe_bash']})
         return _is_safe_bash(tc["input"].get("command", ""))
     return False   # Write, Edit → ask
 
