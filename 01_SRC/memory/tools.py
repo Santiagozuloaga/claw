@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from CLAW_2024_06_19_TOOL_REGISTRY_V01 import ToolDef, register_tool
+from tool_registry import ToolDef, register_tool
 from .store import MemoryEntry, save_memory, delete_memory, load_index, check_conflict, touch_last_used
 from .context import find_relevant_memories
 from .scan import scan_all_memories, format_memory_manifest

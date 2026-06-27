@@ -1,7 +1,7 @@
 """Skill tool: lets the model invoke skills by name via tool call."""
 from __future__ import annotations
 
-from CLAW_2024_06_19_TOOL_REGISTRY_V01 import ToolDef, register_tool
+from tool_registry import ToolDef, register_tool
 from .loader import find_skill, load_skills, substitute_arguments
 
 

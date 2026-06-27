@@ -1,7 +1,7 @@
 """Task tools: TaskCreate, TaskUpdate, TaskGet, TaskList — registered into tool_registry."""
 from __future__ import annotations
 
-from CLAW_2024_06_19_TOOL_REGISTRY_V01 import ToolDef, register_tool
+from tool_registry import ToolDef, register_tool
 from .store import create_task, get_task, list_tasks, update_task, delete_task
 from .types import TaskStatus
 

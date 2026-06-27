@@ -261,7 +261,7 @@ def _agent_run(prompt, state, config, system_prompt, depth=0, cancel_check=None)
     Uses absolute import so this works whether called from inside or outside
     the multi_agent package (sys.path includes the project root).
     """
-    import CLAW_2024_06_19_AGENT_V01 as _agent_mod
+    import agent as _agent_mod
     return _agent_mod.run(prompt, state, config, system_prompt, depth=depth, cancel_check=cancel_check)
 
 
