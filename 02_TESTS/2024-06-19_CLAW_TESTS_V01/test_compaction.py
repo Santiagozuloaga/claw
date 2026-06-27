@@ -7,7 +7,7 @@ import os
 # Ensure project root is on sys.path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_COMPACTION_V01'); globals().update({k: getattr(_mod, k) for k in ['estimate_tokens', 'get_context_limit', 'snip_old_tool_results', 'find_split_point']})
+from compaction import estimate_tokens, get_context_limit, snip_old_tool_results, find_split_point
 
 
 # ── estimate_tokens ───────────────────────────────────────────────────────

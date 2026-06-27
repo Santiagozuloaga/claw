@@ -4,7 +4,7 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MEMORY_SHIM_V01'); globals().update({k: getattr(_mod, k) for k in ['get_memory_context']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MEMORY_SHIM_V01'); globals()['get_memory_context'] = getattr(_mod, 'get_memory_context')
 
 SYSTEM_PROMPT_TEMPLATE = """\
 You are ClawSpring, Created by SAIL Lab (Safe AI and Robot Learning Lab at UC Berkeley), an AI coding assistant running in the terminal.

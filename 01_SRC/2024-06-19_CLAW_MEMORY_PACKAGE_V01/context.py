@@ -164,7 +164,7 @@ def _ai_select_memories(
     Falls back to keyword results on any error.
     """
     try:
-        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['stream', 'AssistantTurn']})
+        from providers import stream, AssistantTurn
         from .scan import scan_all_memories
 
         headers = scan_all_memories()

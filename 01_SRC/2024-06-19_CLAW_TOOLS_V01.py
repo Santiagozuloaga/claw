@@ -9,7 +9,7 @@ import threading
 from pathlib import Path
 from typing import Callable, Optional
 
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals().update({k: getattr(_mod, k) for k in ['ToolDef', 'register_tool']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals()['ToolDef'] = getattr(_mod, 'ToolDef'); globals()['register_tool'] = getattr(_mod, 'register_tool')
 import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals()['_registry_execute'] = getattr(_mod, 'execute_tool')
 
 # ── AskUserQuestion state ──────────────────────────────────────────────────────
@@ -1046,33 +1046,33 @@ _register_builtins()
 
 # ── Memory tools (MemorySave, MemoryDelete, MemorySearch, MemoryList) ────────
 # Defined in memory/tools.py; importing registers them automatically.
-import importlib; _memory_tools = importlib.import_module('2024-06-19_CLAW_MEMORY_PACKAGE_V01.tools') # noqa: F401
+import importlib; _memory_tools = importlib.import_module('2024-06-19_CLAW_MEMORY_PACKAGE_V01.tools')  # noqa: F401
 
 
 
 # ── Multi-agent tools (Agent, SendMessage, CheckAgentResult, ListAgentTasks, ListAgentTypes) ──
 # Defined in multi_agent/tools.py; importing registers them automatically.
-import importlib; _multiagent_tools = importlib.import_module('2024-06-19_CLAW_MULTI_AGENT_V01.tools') # noqa: F401
+import importlib; _multiagent_tools = importlib.import_module('2024-06-19_CLAW_MULTI_AGENT_V01.tools')  # noqa: F401
 
 # Expose get_agent_manager at module level for backward compatibility
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MULTI_AGENT_V01.tools'); globals()['_get_agent_manager'] = getattr(_mod, 'get_agent_manager') # noqa: F401
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MULTI_AGENT_V01.tools'); globals()['_get_agent_manager'] = getattr(_mod, 'get_agent_manager')# noqa: F401
 
 
 # ── Skill tools (Skill, SkillList) ────────────────────────────────────────
 # Defined in skill/tools.py; importing registers them automatically.
-import importlib; _skill_tools = importlib.import_module('2024-06-19_CLAW_SKILL_V01.tools') # noqa: F401
+import importlib; _skill_tools = importlib.import_module('2024-06-19_CLAW_SKILL_V01.tools')  # noqa: F401
 
 
 # ── MCP tools ─────────────────────────────────────────────────────────────────
 # mcp/tools.py connects to configured MCP servers and registers their tools.
 # Connection happens in a background thread so startup is not blocked.
-import importlib; _mcp_tools = importlib.import_module('2024-06-19_CLAW_MCP_V01.tools') # noqa: F401
+import importlib; _mcp_tools = importlib.import_module('2024-06-19_CLAW_MCP_V01.tools')  # noqa: F401
 
 
 # ── Plugin tools ───────────────────────────────────────────────────────────────
 # Load tools contributed by installed+enabled plugins.
 try:
-    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PLUGIN_V01.loader'); globals().update({k: getattr(_mod, k) for k in ['register_plugin_tools as _reg_plugin_tools']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PLUGIN_V01.loader'); globals()['_reg_plugin_tools'] = getattr(_mod, 'register_plugin_tools')
     _reg_plugin_tools()
 except Exception as _plugin_err:
     pass  # Plugin loading is best-effort; never crash startup
@@ -1080,4 +1080,4 @@ except Exception as _plugin_err:
 
 # ── Task tools (TaskCreate, TaskUpdate, TaskGet, TaskList) ─────────────────────
 # task/tools.py registers all four tools into the central registry on import.
-import importlib; _task_tools = importlib.import_module('2024-06-19_CLAW_TASK_V01.tools') # noqa: F401
+import importlib; _task_tools = importlib.import_module('2024-06-19_CLAW_TASK_V01.tools')  # noqa: F401

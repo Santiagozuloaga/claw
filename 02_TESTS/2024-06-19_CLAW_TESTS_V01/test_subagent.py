@@ -4,7 +4,7 @@ import threading
 
 import pytest
 
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MULTI_AGENT_V01.subagent'); globals().update({k: getattr(_mod, k) for k in ['SubAgentManager', 'SubAgentTask', '_extract_final_text']})
+from multi_agent.subagent import SubAgentManager, SubAgentTask, _extract_final_text
 
 
 # ── Mock for _agent_run ──────────────────────────────────────────────────

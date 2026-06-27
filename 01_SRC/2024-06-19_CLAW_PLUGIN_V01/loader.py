@@ -35,7 +35,7 @@ def register_plugin_tools(scope: PluginScope | None = None) -> int:
     Import tool modules from enabled plugins and register them into tool_registry.
     Returns number of tools registered.
     """
-    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals().update({k: getattr(_mod, k) for k in ['register_tool', 'ToolDef']})
+    from tool_registry import register_tool, ToolDef
     count = 0
     for entry in load_all_plugins(scope):
         if not entry.manifest or not entry.manifest.tools:

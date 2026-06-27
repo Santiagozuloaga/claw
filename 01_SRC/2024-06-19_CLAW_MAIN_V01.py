@@ -40,7 +40,7 @@ from typing import Optional
 # Módulos de correcciones
 from encoding import configure_encoding, safe_print
 from thinking import construir_params_thinking, modelo_soporta_thinking
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_MEMORY_SHIM_V01'); globals().update({k: getattr(_mod, k) for k in ['guardar_memoria_auto', 'cargar_sesion']})
+from memory import guardar_memoria_auto, cargar_sesion
 from error_utils import tarea_segura, ejecutar_hook_seguro, TareaConCancelacion
 
 # Aplicar configuración completa de encoding (incluye chcp 65001)

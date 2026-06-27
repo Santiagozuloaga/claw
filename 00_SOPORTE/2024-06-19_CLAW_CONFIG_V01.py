@@ -63,13 +63,13 @@ def save_config(cfg: dict):
 
 
 def current_provider(cfg: dict) -> str:
-    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['detect_provider']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals()['detect_provider'] = getattr(_mod, 'detect_provider')
     return detect_provider(cfg.get("model", "claude-opus-4-6"))
 
 
 def has_api_key(cfg: dict) -> bool:
     """Check whether the active provider has an API key configured."""
-    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['get_api_key']})
+    import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals()['get_api_key'] = getattr(_mod, 'get_api_key')
     pname = current_provider(cfg)
     key = get_api_key(pname, cfg)
     return bool(key)

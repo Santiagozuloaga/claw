@@ -5,11 +5,11 @@ import uuid
 from dataclasses import dataclass, field
 from typing import Generator
 
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals().update({k: getattr(_mod, k) for k in ['get_tool_schemas']})
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOLS_V01'); globals().update({k: getattr(_mod, k) for k in ['execute_tool']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals()['get_tool_schemas'] = getattr(_mod, 'get_tool_schemas')
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOLS_V01'); globals()['execute_tool'] = getattr(_mod, 'execute_tool')
 import importlib; _tools_init = importlib.import_module('2024-06-19_CLAW_TOOLS_V01')  # ensure built-in tools are registered on import
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals().update({k: getattr(_mod, k) for k in ['stream', 'AssistantTurn', 'TextChunk', 'ThinkingChunk', 'detect_provider']})
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_COMPACTION_V01'); globals().update({k: getattr(_mod, k) for k in ['maybe_compact']})
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_PROVIDERS_V01'); globals()['stream'] = getattr(_mod, 'stream'); globals()['AssistantTurn'] = getattr(_mod, 'AssistantTurn'); globals()['TextChunk'] = getattr(_mod, 'TextChunk'); globals()['ThinkingChunk'] = getattr(_mod, 'ThinkingChunk'); globals()['detect_provider'] = getattr(_mod, 'detect_provider')
+import importlib; _mod = importlib.import_module('2024-06-19_CLAW_COMPACTION_V01'); globals()['maybe_compact'] = getattr(_mod, 'maybe_compact')
 
 # ── Re-export event types (used by clawspring.py) ────────────────────────
 __all__ = [
@@ -165,7 +165,7 @@ def _check_permission(tc: dict, config: dict) -> bool:
     if name in ("Read", "Glob", "Grep", "WebFetch", "WebSearch"):
         return True
     if name == "Bash":
-        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOLS_V01'); globals().update({k: getattr(_mod, k) for k in ['_is_safe_bash']})
+        import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOLS_V01'); globals()['_is_safe_bash'] = getattr(_mod, '_is_safe_bash')
         return _is_safe_bash(tc["input"].get("command", ""))
     return False   # Write, Edit → ask
 

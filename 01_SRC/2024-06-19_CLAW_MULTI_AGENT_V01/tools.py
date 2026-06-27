@@ -9,7 +9,7 @@ Registers the following tools into the central tool_registry:
 """
 from __future__ import annotations
 
-import importlib; _mod = importlib.import_module('2024-06-19_CLAW_TOOL_REGISTRY_V01'); globals().update({k: getattr(_mod, k) for k in ['ToolDef', 'register_tool']})
+from tool_registry import ToolDef, register_tool
 from .subagent import SubAgentManager, get_agent_definition, load_agent_definitions
 
 
