@@ -607,7 +607,8 @@ def stream_ollama(
         "qwen2.5", "qwen2.5-coder",
         "mistral-nemo", "mistral-large",
         "command-r", "command-r-plus",
-        "firefunction-v2",
+        "firefunction-v2", "deepseek-r1",
+        "marco-o1", "smollm2", "qwq",
     }
 
     # Extraer nombre base ignorando prefijo "ollama/" y tag ":latest"
