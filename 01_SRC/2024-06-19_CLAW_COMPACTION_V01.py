@@ -1,7 +1,7 @@
 """Context window management: two-layer compression for long conversations."""
 from __future__ import annotations
 
-import CLAW_2024_06_19_PROVIDERS_V01 as providers
+import providers as providers
 
 
 # ── Token estimation ──────────────────────────────────────────────────────

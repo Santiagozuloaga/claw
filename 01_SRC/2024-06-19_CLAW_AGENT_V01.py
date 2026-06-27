@@ -5,11 +5,11 @@ import uuid
 from dataclasses import dataclass, field
 from typing import Generator
 
-from CLAW_2024_06_19_TOOL_REGISTRY_V01 import get_tool_schemas
-from CLAW_2024_06_19_TOOLS_V01 import execute_tool
-import CLAW_2024_06_19_TOOLS_V01 as _tools_init  # ensure built-in tools are registered on import
-from CLAW_2024_06_19_PROVIDERS_V01 import stream, AssistantTurn, TextChunk, ThinkingChunk, detect_provider
-from CLAW_2024_06_19_COMPACTION_V01 import maybe_compact
+from tool_registry import get_tool_schemas
+from tools import execute_tool
+import tools as _tools_init  # ensure built-in tools are registered on import
+from providers import stream, AssistantTurn, TextChunk, ThinkingChunk, detect_provider
+from compaction import maybe_compact
 
 # ── Re-export event types (used by clawspring.py) ────────────────────────
 __all__ = [
@@ -165,7 +165,7 @@ def _check_permission(tc: dict, config: dict) -> bool:
     if name in ("Read", "Glob", "Grep", "WebFetch", "WebSearch"):
         return True
     if name == "Bash":
-        from CLAW_2024_06_19_TOOLS_V01 import _is_safe_bash
+        from tools import _is_safe_bash
         return _is_safe_bash(tc["input"].get("command", ""))
     return False   # Write, Edit → ask
 

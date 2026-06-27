@@ -370,7 +370,7 @@ def cmd_help(_args: str, _state, _config) -> bool:
     return True
 
 def cmd_model(args: str, _state, config) -> bool:
-    from CLAW_2024_06_19_PROVIDERS_V01 import PROVIDERS, detect_provider
+    from providers import PROVIDERS, detect_provider
     if not args:
         model = config["model"]
         pname = detect_provider(model)
@@ -395,13 +395,13 @@ def cmd_model(args: str, _state, config) -> bool:
         config["model"] = m
         pname = detect_provider(m)
         ok(f"Model set to {m}  (provider: {pname})")
-        from CLAW_2024_06_19_CONFIG_V01 import save_config
+        from config import save_config
         save_config(config)
     return True
 
 def _generate_personas(topic: str, curr_model: str, config: dict, count: int = 5) -> dict | None:
     """Ask the LLM to generate `count` topic-appropriate expert personas as a dict."""
-    from CLAW_2024_06_19_PROVIDERS_V01 import stream, TextChunk
+    from providers import stream, TextChunk
     import json
 
     example_entries = "\n".join(
@@ -453,7 +453,7 @@ _TECH_PERSONAS = {
 
 def _interactive_ollama_picker(config: dict) -> bool:
     """Prompt the user to select from locally available Ollama models."""
-    from CLAW_2024_06_19_PROVIDERS_V01 import PROVIDERS, list_ollama_models
+    from providers import PROVIDERS, list_ollama_models
     prov = PROVIDERS.get("ollama", {})
     base_url = prov.get("base_url", "http://localhost:11434")
     
@@ -474,7 +474,7 @@ def _interactive_ollama_picker(config: dict) -> bool:
         if 0 <= idx < len(models):
             new_model = f"ollama/{models[idx]}"
             config["model"] = new_model
-            from CLAW_2024_06_19_CONFIG_V01 import save_config
+            from config import save_config
             save_config(config)
             ok(f"Model updated to {new_model}")
             return True
@@ -489,7 +489,7 @@ def cmd_brainstorm(args: str, state, config) -> bool:
     
     Usage: /brainstorm [topic]
     """
-    from CLAW_2024_06_19_PROVIDERS_V01 import stream
+    from providers import stream
     import time
     from pathlib import Path
     
@@ -590,7 +590,7 @@ INSTRUCTIONS:
         internal_config["no_tools"] = True
         
         try:
-            from CLAW_2024_06_19_PROVIDERS_V01 import TextChunk
+            from providers import TextChunk
             for event in stream(curr_model, system_prompt, [{"role": "user", "content": user_msg}], [], internal_config):
                 if isinstance(event, TextChunk):
                     full_response.append(event.text)
@@ -672,7 +672,7 @@ def cmd_clear(_args: str, state, _config) -> bool:
     return True
 
 def cmd_config(args: str, _state, config) -> bool:
-    from CLAW_2024_06_19_CONFIG_V01 import save_config
+    from config import save_config
     if not args:
         display = {k: v for k, v in config.items() if k != "api_key"}
         print(json.dumps(display, indent=2))
@@ -694,7 +694,7 @@ def cmd_config(args: str, _state, config) -> bool:
     return True
 
 def cmd_save(args: str, state, _config) -> bool:
-    from CLAW_2024_06_19_CONFIG_V01 import SESSIONS_DIR
+    from config import SESSIONS_DIR
     import uuid
     sid   = uuid.uuid4().hex[:8]
     ts    = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -707,7 +707,7 @@ def cmd_save(args: str, state, _config) -> bool:
 
 def save_latest(args: str, state, config_or_none=None) -> bool:
     """Save session on exit: session_latest.json + daily/ copy + append to history.json."""
-    from CLAW_2024_06_19_CONFIG_V01 import MR_SESSION_DIR, DAILY_DIR, SESSION_HIST_FILE
+    from config import MR_SESSION_DIR, DAILY_DIR, SESSION_HIST_FILE
     if not state.messages:
         return True
 
@@ -762,7 +762,7 @@ def save_latest(args: str, state, config_or_none=None) -> bool:
     ok(f"             → {SESSION_HIST_FILE}  ({len(hist['sessions'])} sessions / {hist['total_turns']} total turns)")
     return True
 def cmd_load(args: str, state, _config) -> bool:
-    from CLAW_2024_06_19_CONFIG_V01 import SESSIONS_DIR, MR_SESSION_DIR, DAILY_DIR
+    from config import SESSIONS_DIR, MR_SESSION_DIR, DAILY_DIR
 
     path = None
     if not args.strip():
@@ -804,7 +804,7 @@ def cmd_load(args: str, state, _config) -> bool:
             print(clr(f"  [{i+1:2d}] ", "yellow") + label)
 
         # Show history.json option at the bottom if it exists
-        from CLAW_2024_06_19_CONFIG_V01 import SESSION_HIST_FILE
+        from config import SESSION_HIST_FILE
         has_history = SESSION_HIST_FILE.exists()
         if has_history:
             try:
@@ -912,7 +912,7 @@ def cmd_load(args: str, state, _config) -> bool:
     return True
 
 def cmd_resume(args: str, state, _config) -> bool:
-    from CLAW_2024_06_19_CONFIG_V01 import MR_SESSION_DIR
+    from config import MR_SESSION_DIR
 
     if not args.strip():
         path = MR_SESSION_DIR / "session_latest.json"
@@ -976,7 +976,7 @@ def cmd_context(_args: str, state, config) -> bool:
     return True
 
 def cmd_cost(_args: str, state, config) -> bool:
-    from CLAW_2024_06_19_CONFIG_V01 import calc_cost
+    from config import calc_cost
     cost = calc_cost(config["model"],
                      state.total_input_tokens,
                      state.total_output_tokens)
@@ -986,7 +986,7 @@ def cmd_cost(_args: str, state, config) -> bool:
     return True
 
 def cmd_verbose(_args: str, _state, config) -> bool:
-    from CLAW_2024_06_19_CONFIG_V01 import save_config
+    from config import save_config
     config["verbose"] = not config.get("verbose", False)
     state_str = "ON" if config["verbose"] else "OFF"
     ok(f"Verbose mode: {state_str}")
@@ -994,7 +994,7 @@ def cmd_verbose(_args: str, _state, config) -> bool:
     return True
 
 def cmd_thinking(_args: str, _state, config) -> bool:
-    from CLAW_2024_06_19_CONFIG_V01 import save_config
+    from config import save_config
     config["thinking"] = not config.get("thinking", False)
     state_str = "ON" if config["thinking"] else "OFF"
     ok(f"Extended thinking: {state_str}")
@@ -1002,7 +1002,7 @@ def cmd_thinking(_args: str, _state, config) -> bool:
     return True
 
 def cmd_permissions(args: str, _state, config) -> bool:
-    from CLAW_2024_06_19_CONFIG_V01 import save_config
+    from config import save_config
     modes = ["auto", "accept-all", "manual"]
     mode_desc = {
         "auto":       "Prompt for each tool call (default)",
@@ -1082,8 +1082,8 @@ def cmd_cloudsave(args: str, state, config) -> bool:
     /cloudsave list            — list your clawspring Gists
     /cloudsave load <gist_id>  — download and load a session from Gist
     """
-    from CLAW_2024_06_19_CLOUDSAVE_V01 import validate_token, upload_session, list_sessions, download_session
-    from CLAW_2024_06_19_CONFIG_V01 import save_config
+    from cloudsave import validate_token, upload_session, list_sessions, download_session
+    from config import save_config
 
     parts = args.strip().split(None, 1)
     sub = parts[0].lower() if parts else ""
@@ -1195,8 +1195,8 @@ def cmd_exit(_args: str, _state, _config) -> bool:
     # Auto cloud-sync if enabled
     if _config.get("cloudsave_auto") and _config.get("gist_token") and _state.messages:
         info("Auto cloud-sync: uploading session to Gist…")
-        from CLAW_2024_06_19_CLOUDSAVE_V01 import upload_session
-        from CLAW_2024_06_19_CONFIG_V01 import save_config
+        from cloudsave import upload_session
+        from config import save_config
         session_data = _build_session_data(_state)
         gist_id, err_msg = upload_session(
             session_data, _config["gist_token"],
@@ -1211,14 +1211,14 @@ def cmd_exit(_args: str, _state, _config) -> bool:
     sys.exit(0)
 
 def cmd_memory(args: str, _state, _config) -> bool:
-    from CLAW_2024_06_19_MEMORY_SHIM_V01 import search_memory, load_index
+    from memory_shim import search_memory, load_index
     from memory.scan import scan_all_memories, format_memory_manifest, memory_freshness_text
 
     stripped = args.strip()
 
     # /memory consolidate  — extract long-term memories from current session
     if stripped == "consolidate":
-        from CLAW_2024_06_19_MEMORY_SHIM_V01 import consolidate_session
+        from memory_shim import consolidate_session
         msgs = _state.get("messages", [])
         info("  Analyzing session for long-term memories…")
         saved = consolidate_session(msgs, _config)
@@ -2193,7 +2193,7 @@ def cmd_telegram(args: str, _state, config) -> bool:
     Settings are saved so you only configure once.
     """
     global _telegram_thread, _telegram_stop
-    from CLAW_2024_06_19_CONFIG_V01 import save_config
+    from config import save_config
 
     parts = args.strip().split()
 
@@ -2629,9 +2629,9 @@ def setup_readline(history_file: Path):
 # ── Main REPL ──────────────────────────────────────────────────────────────
 
 def repl(config: dict, initial_prompt: str = None):
-    from CLAW_2024_06_19_CONFIG_V01 import HISTORY_FILE
-    from CLAW_2024_06_19_CONTEXT_V01 import build_system_prompt
-    from CLAW_2024_06_19_AGENT_V01 import AgentState, run, TextChunk, ThinkingChunk, ToolStart, ToolEnd, TurnDone, PermissionRequest
+    from config import HISTORY_FILE
+    from context import build_system_prompt
+    from agent import AgentState, run, TextChunk, ThinkingChunk, ToolStart, ToolEnd, TurnDone, PermissionRequest
 
     setup_readline(HISTORY_FILE)
     state = AgentState()
@@ -2639,7 +2639,7 @@ def repl(config: dict, initial_prompt: str = None):
 
     # Banner
     if not initial_prompt:
-        from CLAW_2024_06_19_PROVIDERS_V01 import detect_provider
+        from providers import detect_provider
         model    = config["model"]
         pname    = detect_provider(model)
         model_clr = clr(model, "cyan", "bold")
@@ -2810,7 +2810,7 @@ def repl(config: dict, initial_prompt: str = None):
                 import urllib.error
                 # Catch 404 Not Found (Ollama model missing)
                 if isinstance(e, urllib.error.HTTPError) and e.code == 404:
-                    from CLAW_2024_06_19_PROVIDERS_V01 import detect_provider
+                    from providers import detect_provider
                     if detect_provider(config["model"]) == "ollama":
                         flush_response()
                         err(f"Ollama model '{config['model']}' not found.")
@@ -2833,7 +2833,7 @@ def repl(config: dict, initial_prompt: str = None):
                 print(clr("\n[claude-code-local] » ", "yellow"), end="", flush=True)
 
         # Drain any AskUserQuestion prompts raised during this turn
-        from CLAW_2024_06_19_TOOLS_V01 import drain_pending_questions
+        from tools import drain_pending_questions
         drain_pending_questions()
         
         config["_last_interaction_time"] = time.time()
@@ -3303,8 +3303,8 @@ def main():
         print(__doc__)
         sys.exit(0)
 
-    from CLAW_2024_06_19_CONFIG_V01 import load_config, save_config, has_api_key
-    from CLAW_2024_06_19_PROVIDERS_V01 import detect_provider, PROVIDERS
+    from config import load_config, save_config, has_api_key
+    from providers import detect_provider, PROVIDERS
 
     config = load_config()
 
@@ -3315,7 +3315,7 @@ def main():
         # (e.g. "ollama:llama3.3" → "ollama/llama3.3"), but leave version tags intact
         # (e.g. "ollama/qwen3.5:35b" must NOT become "ollama/qwen3.5/35b")
         if "/" not in m and ":" in m:
-            from CLAW_2024_06_19_PROVIDERS_V01 import PROVIDERS
+            from providers import PROVIDERS
             left, _ = m.split(":", 1)
             if left in PROVIDERS:
                 m = m.replace(":", "/", 1)
