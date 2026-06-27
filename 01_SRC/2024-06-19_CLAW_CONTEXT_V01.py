@@ -1,10 +1,18 @@
 """System context: CLAUDE.md, git info, cwd injection."""
 import os
+import time
 import subprocess
 from pathlib import Path
 from datetime import datetime
 
 from CLAW_2024_06_19_MEMORY_SHIM_V01 import get_memory_context
+
+# Cache for git info and CLAUDE.md to avoid redundant shell calls and FS lookups
+_CONTEXT_CACHE = {
+    "git": {"data": "", "ts": 0},
+    "claude": {"data": "", "ts": 0, "cwd": ""},
+}
+_CACHE_TTL = 2.0  # 2 seconds TTL
 
 SYSTEM_PROMPT_TEMPLATE = """\
 You are ClawSpring, Created by SAIL Lab (Safe AI and Robot Learning Lab at UC Berkeley), an AI coding assistant running in the terminal.
@@ -96,30 +104,43 @@ Installed+enabled plugins' tools are available automatically in this session.
 
 
 def get_git_info() -> str:
-    """Return git branch/status summary if in a git repo."""
+    """Return git branch/status summary if in a git repo (cached)."""
+    now = time.time()
+    if now - _CONTEXT_CACHE["git"]["ts"] < _CACHE_TTL:
+        return _CONTEXT_CACHE["git"]["data"]
+
     try:
-        branch = subprocess.check_output(
-            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-            stderr=subprocess.DEVNULL, text=True).strip()
-        status = subprocess.check_output(
-            ["git", "status", "--short"],
-            stderr=subprocess.DEVNULL, text=True).strip()
-        log = subprocess.check_output(
-            ["git", "log", "--oneline", "-5"],
-            stderr=subprocess.DEVNULL, text=True).strip()
+        # Run in a single shell call to reduce overhead
+        cmd = "git rev-parse --abbrev-ref HEAD && echo '---' && git status --short && echo '---' && git log --oneline -5"
+        out = subprocess.check_output(cmd, shell=True, stderr=subprocess.DEVNULL, text=True)
+        parts_raw = out.split("\n---\n")
+
+        branch = parts_raw[0].strip()
+        status = parts_raw[1].strip() if len(parts_raw) > 1 else ""
+        log    = parts_raw[2].strip() if len(parts_raw) > 2 else ""
+
         parts = [f"- Git branch: {branch}"]
         if status:
             lines = status.split('\n')[:10]
             parts.append("- Git status:\n" + "\n".join(f"  {l}" for l in lines))
         if log:
             parts.append("- Recent commits:\n" + "\n".join(f"  {l}" for l in log.split('\n')))
-        return "\n".join(parts) + "\n"
+
+        res = "\n".join(parts) + "\n"
+        _CONTEXT_CACHE["git"] = {"data": res, "ts": now}
+        return res
     except Exception:
+        _CONTEXT_CACHE["git"] = {"data": "", "ts": now}
         return ""
 
 
 def get_claude_md() -> str:
-    """Load CLAUDE.md from cwd or parents, and ~/.claude/CLAUDE.md."""
+    """Load CLAUDE.md from cwd or parents (cached)."""
+    now = time.time()
+    cwd = str(Path.cwd())
+    if now - _CONTEXT_CACHE["claude"]["ts"] < _CACHE_TTL and _CONTEXT_CACHE["claude"]["cwd"] == cwd:
+        return _CONTEXT_CACHE["claude"]["data"]
+
     content_parts = []
 
     # Global CLAUDE.md
@@ -146,8 +167,12 @@ def get_claude_md() -> str:
         p = parent
 
     if not content_parts:
-        return ""
-    return "\n# Memory / CLAUDE.md\n" + "\n\n".join(content_parts) + "\n"
+        res = ""
+    else:
+        res = "\n# Memory / CLAUDE.md\n" + "\n\n".join(content_parts) + "\n"
+
+    _CONTEXT_CACHE["claude"] = {"data": res, "ts": now, "cwd": cwd}
+    return res
 
 
 def build_system_prompt() -> str:

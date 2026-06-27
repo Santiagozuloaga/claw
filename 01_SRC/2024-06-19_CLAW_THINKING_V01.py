@@ -6,10 +6,15 @@ variable ANTHROPIC_DEFAULT_*_MODEL_SUPPORTED_CAPABILITIES no estaba definida.
 Esta versión verifica capacidades de forma segura antes de enviar thinking.
 """
 import os
+import time
 import logging
 from typing import Optional
 
 logger = logging.getLogger(__name__)
+
+# Cache for environment variable lookups (TTL 5s)
+_ENV_CACHE = {}
+_ENV_CACHE_TTL = 5.0
 
 # Modelos de Anthropic que soportan thinking (lista oficial conocida)
 _MODELOS_CON_THINKING = {
@@ -95,16 +100,24 @@ def modelo_soporta_adaptive_thinking(modelo: str) -> bool:
 
 def _leer_capacidad_env(modelo_lower: str, capacidad: str) -> Optional[bool]:
     """
-    Lee ANTHROPIC_DEFAULT_*_MODEL_SUPPORTED_CAPABILITIES del entorno.
-    Corrección Bug #7: NO cachear esta función ya que lee os.environ.
+    Lee ANTHROPIC_DEFAULT_*_MODEL_SUPPORTED_CAPABILITIES del entorno (con cache TTL).
+    Corrección Bug #7: El cache tiene un TTL muy corto para permitir cambios.
     Retorna None si la variable no está configurada.
     """
+    cache_key = f"cap_{modelo_lower}_{capacidad}"
+    now = time.time()
+    if cache_key in _ENV_CACHE:
+        val, ts = _ENV_CACHE[cache_key]
+        if now - ts < _ENV_CACHE_TTL:
+            return val
+
     tiers = [
         ("ANTHROPIC_DEFAULT_OPUS_MODEL", "ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES"),
         ("ANTHROPIC_DEFAULT_SONNET_MODEL", "ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES"),
         ("ANTHROPIC_DEFAULT_HAIKU_MODEL", "ANTHROPIC_DEFAULT_HAIKU_MODEL_SUPPORTED_CAPABILITIES"),
     ]
 
+    res = None
     for modelo_env_var, capacidades_env_var in tiers:
         modelo_fijado = os.environ.get(modelo_env_var, "")
         capacidades_raw = os.environ.get(capacidades_env_var)
@@ -116,9 +129,11 @@ def _leer_capacidad_env(modelo_lower: str, capacidad: str) -> Optional[bool]:
             continue
 
         capacidades = {c.strip().lower() for c in capacidades_raw.split(",")}
-        return capacidad.lower() in capacidades
+        res = capacidad.lower() in capacidades
+        break
 
-    return None
+    _ENV_CACHE[cache_key] = (res, now)
+    return res
 
 
 def construir_params_thinking(modelo: str, thinking_config: dict) -> dict:
