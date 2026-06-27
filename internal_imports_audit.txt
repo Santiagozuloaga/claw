@@ -1,0 +1,681 @@
+00_SOPORTE/2024-06-19_CLAW_CONFIG_V01.py:    from CLAW_2024_06_19_PROVIDERS_V01 import calc_cost as _cc
+00_SOPORTE/2024-06-19_CLAW_CONFIG_V01.py:    from CLAW_2024_06_19_PROVIDERS_V01 import detect_provider
+00_SOPORTE/2024-06-19_CLAW_CONFIG_V01.py:    from CLAW_2024_06_19_PROVIDERS_V01 import get_api_key
+00_SOPORTE/2024-06-19_CLAW_CONFIG_V01.py:# kept for backward-compat (/resume still reads from here)
+00_SOPORTE/LICENSE:          attribution notices from the Source form of the Work,
+00_SOPORTE/LICENSE:          or as an addendum to the NOTICE text from the Work, provided
+00_SOPORTE/LICENSE:      "Object" form shall mean any form resulting from mechanical
+00_SOPORTE/config.py:    from providers import calc_cost as _cc
+00_SOPORTE/config.py:    from providers import detect_provider
+00_SOPORTE/config.py:    from providers import get_api_key
+00_SOPORTE/config.py:# kept for backward-compat (/resume still reads from here)
+01_SRC/2024-06-19_CLAW_AGENT_CORE_V01.py:        # Stream from provider (auto-detected from model name)
+01_SRC/2024-06-19_CLAW_AGENT_CORE_V01.py:        from tools import _is_safe_bash
+01_SRC/2024-06-19_CLAW_AGENT_CORE_V01.py:from compaction import maybe_compact
+01_SRC/2024-06-19_CLAW_AGENT_CORE_V01.py:from providers import stream, AssistantTurn, TextChunk, ThinkingChunk, detect_provider
+01_SRC/2024-06-19_CLAW_AGENT_CORE_V01.py:from tool_registry import get_tool_schemas
+01_SRC/2024-06-19_CLAW_AGENT_CORE_V01.py:from tools import execute_tool
+01_SRC/2024-06-19_CLAW_AGENT_CORE_V01.py:import tools as _tools_init  # ensure built-in tools are registered on import
+01_SRC/2024-06-19_CLAW_AGENT_V01.py:        # Stream from provider (auto-detected from model name)
+01_SRC/2024-06-19_CLAW_AGENT_V01.py:        from CLAW_2024_06_19_TOOLS_V01 import _is_safe_bash
+01_SRC/2024-06-19_CLAW_AGENT_V01.py:from CLAW_2024_06_19_COMPACTION_V01 import maybe_compact
+01_SRC/2024-06-19_CLAW_AGENT_V01.py:from CLAW_2024_06_19_PROVIDERS_V01 import stream, AssistantTurn, TextChunk, ThinkingChunk, detect_provider
+01_SRC/2024-06-19_CLAW_AGENT_V01.py:from CLAW_2024_06_19_TOOLS_V01 import execute_tool
+01_SRC/2024-06-19_CLAW_AGENT_V01.py:from CLAW_2024_06_19_TOOL_REGISTRY_V01 import get_tool_schemas
+01_SRC/2024-06-19_CLAW_AGENT_V01.py:import CLAW_2024_06_19_TOOLS_V01 as _tools_init  # ensure built-in tools are registered on import
+01_SRC/2024-06-19_CLAW_ALTERNATIVE_V01.py:            from rich.console import Console
+01_SRC/2024-06-19_CLAW_ALTERNATIVE_V01.py:            from rich.markdown import Markdown
+01_SRC/2024-06-19_CLAW_ALTERNATIVE_V01.py:            import anthropic
+01_SRC/2024-06-19_CLAW_ALTERNATIVE_V01.py:# ██ INICIO SEGURO — UTF-8 ANTES de cualquier import que use print/logging ██
+01_SRC/2024-06-19_CLAW_ALTERNATIVE_V01.py:from claw_personalidad import (
+01_SRC/2024-06-19_CLAW_ALTERNATIVE_V01.py:from encoding   import configure_encoding, safe_print
+01_SRC/2024-06-19_CLAW_ALTERNATIVE_V01.py:from error_utils import tarea_segura, TareaConCancelacion
+01_SRC/2024-06-19_CLAW_ALTERNATIVE_V01.py:from memory     import guardar_memoria_auto, cargar_sesion, listar_sesiones
+01_SRC/2024-06-19_CLAW_ALTERNATIVE_V01.py:from thinking   import construir_params_thinking, modelo_soporta_thinking
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                                # Extract text blocks from content array
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                          "You can specify a path or generate one from a brainstorm file.", "dim"))
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                        "Order by priority. Include ALL actionable items from the plan. "
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                    # Offer to auto-generate todo_list.txt from the brainstorm .md, then run worker
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                    from providers import detect_provider
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                    print(clr("\n  ── Generating TODO List from Master Plan ──", "dim"))
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                "Order by priority. Include ALL actionable items from the plan. "
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                # Grab the last assistant response from state
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                from skill import substitute_arguments
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                import msvcrt
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                import random as _random
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:                print(clr("\n  ── Analysis from Main Agent ──", "dim"))
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            # Auto-detect context from project files
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            # Promote-then-Worker: generate todo_list.txt from brainstorm .md, then run worker
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            from config import save_config
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            from faker import Faker
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            from providers import PROVIDERS
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            from providers import TextChunk
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            from voice import check_voice_deps, check_recording_availability, check_stt_availability
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            from voice.stt import get_stt_backend_name
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            import random
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            ok(f"Removed MCP server '{name}' from user config")
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:            return f"Error from Agent {letter}: {e}"
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        """Process a /command from Telegram, handling sentinels inline.
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        # Also include manually /save'd sessions from SESSIONS_DIR root
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        # Collect sessions from daily/ folders, newest first
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        agent_count = 5  # skip interactive input when called from Telegram
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        from PIL import ImageGrab
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        from cloudsave import upload_session
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        from config import SESSION_HIST_FILE
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        from config import save_config
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        from memory import consolidate_session
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        from multi_agent.tools import get_agent_manager
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        from providers import detect_provider
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        from tools import drain_pending_questions
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        from voice import check_voice_deps, voice_input as _voice_input
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        import io, base64
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        import select as _sel
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        info("Fetching your clawspring sessions from GitHub Gist…")
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        info(f"Downloading session {gist_id[:8]}… from Gist…")
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:        ok(f"Session loaded from Gist ({len(state.messages)} messages).")
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:      /worker --path /some/todo.txt        — all tasks from custom path
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:      /worker --path /some/todo.txt 1,4,6  — specific tasks from custom path
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    """Auto-implement pending tasks from a todo_list.txt file.
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    """Grab image from clipboard and send to vision model with optional prompt."""
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    """Prompt the user to select from locally available Ollama models."""
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    # /memory consolidate  — extract long-term memories from current session
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    # Since cmd_voice is called from handle_slash which is inside repl(),
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    /cloudsave load <gist_id>  — download and load a session from Gist
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    /mcp remove <name> — remove a server from user config
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    /plugin update name          — update a plugin from its source
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from agent import AgentState, run, TextChunk, ThinkingChunk, ToolStart, ToolEnd, TurnDone, PermissionRequest
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from cloudsave import validate_token, upload_session, list_sessions, download_session
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from config import HISTORY_FILE
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from config import MR_SESSION_DIR
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from config import MR_SESSION_DIR, DAILY_DIR, SESSION_HIST_FILE
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from config import SESSIONS_DIR
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from config import SESSIONS_DIR, MR_SESSION_DIR, DAILY_DIR
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from config import calc_cost
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from config import load_config, save_config, has_api_key
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from config import save_config
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from context import build_system_prompt
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from mcp.client import get_mcp_manager
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from mcp.config import (load_mcp_configs, add_server_to_user_config,
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from mcp.tools import initialize_mcp, reload_mcp, refresh_server
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from memory import search_memory, load_index
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from memory.scan import scan_all_memories, format_memory_manifest, memory_freshness_text
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from plugin import (
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from providers import PROVIDERS, detect_provider
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from providers import PROVIDERS, list_ollama_models
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from providers import detect_provider, PROVIDERS
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from providers import stream
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from providers import stream, TextChunk
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from rich import print as rprint
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from rich.console import Console
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from rich.live import Live
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from rich.markdown import Markdown
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from rich.panel import Panel
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from rich.syntax import Syntax
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from skill import find_skill
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from skill import load_skills
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from task import list_tasks, get_task, create_task, update_task, delete_task, clear_all_tasks
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    from task.types import TaskStatus
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    import anthropic
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:    import random
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:  /cloudsave load <gist_id>  Download and load a session from Gist
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:  /load [f]   Load session from file
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:  /mcp remove <n>   Remove an MCP server from config
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:  /memory consolidate     Extract long-term insights from current session via AI
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:1. Provide 3-5 concrete, actionable insights or ideas from your expert perspective on the topic.
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:2. If there are prior ideas from other agents, briefly acknowledge them and build upon or challenge them.
+01_SRC/2024-06-19_CLAW_CLAWSPRING_CORE_V01.py:Choose experts whose domains are most relevant to analyzing "{topic}" from different angles."""
+01_SRC/2024-06-19_CLAW_CLOUDSAVE_V01.py:  - Zero extra dependencies (uses urllib from stdlib)
+01_SRC/2024-06-19_CLAW_COMPACTION_V01.py:        "content": "Understood. I have the context from the previous conversation. Let's continue.",
+01_SRC/2024-06-19_CLAW_COMPACTION_V01.py:        preserve_last_n_turns: number of messages from end to preserve
+01_SRC/2024-06-19_CLAW_COMPACTION_V01.py:    """Truncate tool-role messages older than preserve_last_n_turns from end.
+01_SRC/2024-06-19_CLAW_COMPACTION_V01.py:    Walks backwards from end, accumulating token estimates, and returns the
+01_SRC/2024-06-19_CLAW_COMPACTION_V01.py:import CLAW_2024_06_19_PROVIDERS_V01 as providers
+01_SRC/2024-06-19_CLAW_CONTEXT_V01.py:    """Load CLAUDE.md from cwd or parents, and ~/.claude/CLAUDE.md."""
+01_SRC/2024-06-19_CLAW_CONTEXT_V01.py:    # Project CLAUDE.md (walk up from cwd)
+01_SRC/2024-06-19_CLAW_CONTEXT_V01.py:- **WebFetch**: Fetch and extract content from a URL
+01_SRC/2024-06-19_CLAW_CONTEXT_V01.py:MCP servers extend your toolset with external capabilities. Tools from MCP servers are
+01_SRC/2024-06-19_CLAW_CONTEXT_V01.py:from CLAW_2024_06_19_MEMORY_SHIM_V01 import get_memory_context
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                                # Extract text blocks from content array
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                          "You can specify a path or generate one from a brainstorm file.", "dim"))
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                        "Order by priority. Include ALL actionable items from the plan. "
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                    # Offer to auto-generate todo_list.txt from the brainstorm .md, then run worker
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                    from CLAW_2024_06_19_PROVIDERS_V01 import detect_provider
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                    print(clr("\n  ── Generating TODO List from Master Plan ──", "dim"))
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                "Order by priority. Include ALL actionable items from the plan. "
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                # Grab the last assistant response from state
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                from skill import substitute_arguments
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                import msvcrt
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                import random as _random
+01_SRC/2024-06-19_CLAW_CORE_V01.py:                print(clr("\n  ── Analysis from Main Agent ──", "dim"))
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            # Auto-detect context from project files
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            # Promote-then-Worker: generate todo_list.txt from brainstorm .md, then run worker
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            from CLAW_2024_06_19_CONFIG_V01 import save_config
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            from CLAW_2024_06_19_PROVIDERS_V01 import PROVIDERS
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            from CLAW_2024_06_19_PROVIDERS_V01 import TextChunk
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            from faker import Faker
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            from voice import check_voice_deps, check_recording_availability, check_stt_availability
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            from voice.stt import get_stt_backend_name
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            import random
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            ok(f"Removed MCP server '{name}' from user config")
+01_SRC/2024-06-19_CLAW_CORE_V01.py:            return f"Error from Agent {letter}: {e}"
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        """Process a /command from Telegram, handling sentinels inline.
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        # Also include manually /save'd sessions from SESSIONS_DIR root
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        # Collect sessions from daily/ folders, newest first
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        agent_count = 5  # skip interactive input when called from Telegram
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        from CLAW_2024_06_19_CLOUDSAVE_V01 import upload_session
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        from CLAW_2024_06_19_CONFIG_V01 import SESSION_HIST_FILE
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        from CLAW_2024_06_19_CONFIG_V01 import save_config
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        from CLAW_2024_06_19_MEMORY_SHIM_V01 import consolidate_session
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        from CLAW_2024_06_19_PROVIDERS_V01 import detect_provider
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        from CLAW_2024_06_19_TOOLS_V01 import drain_pending_questions
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        from PIL import ImageGrab
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        from multi_agent.tools import get_agent_manager
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        from voice import check_voice_deps, voice_input as _voice_input
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        import io, base64
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        import select as _sel
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        info("Fetching your clawspring sessions from GitHub Gist…")
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        info(f"Downloading session {gist_id[:8]}… from Gist…")
+01_SRC/2024-06-19_CLAW_CORE_V01.py:        ok(f"Session loaded from Gist ({len(state.messages)} messages).")
+01_SRC/2024-06-19_CLAW_CORE_V01.py:      /worker --path /some/todo.txt        — all tasks from custom path
+01_SRC/2024-06-19_CLAW_CORE_V01.py:      /worker --path /some/todo.txt 1,4,6  — specific tasks from custom path
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    """Auto-implement pending tasks from a todo_list.txt file.
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    """Grab image from clipboard and send to vision model with optional prompt."""
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    """Prompt the user to select from locally available Ollama models."""
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    # /memory consolidate  — extract long-term memories from current session
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    # Since cmd_voice is called from handle_slash which is inside repl(),
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    /cloudsave load <gist_id>  — download and load a session from Gist
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    /mcp remove <name> — remove a server from user config
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    /plugin update name          — update a plugin from its source
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_AGENT_V01 import AgentState, run, TextChunk, ThinkingChunk, ToolStart, ToolEnd, TurnDone, PermissionRequest
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_CLOUDSAVE_V01 import validate_token, upload_session, list_sessions, download_session
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_CONFIG_V01 import HISTORY_FILE
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_CONFIG_V01 import MR_SESSION_DIR
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_CONFIG_V01 import MR_SESSION_DIR, DAILY_DIR, SESSION_HIST_FILE
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_CONFIG_V01 import SESSIONS_DIR
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_CONFIG_V01 import SESSIONS_DIR, MR_SESSION_DIR, DAILY_DIR
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_CONFIG_V01 import calc_cost
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_CONFIG_V01 import load_config, save_config, has_api_key
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_CONFIG_V01 import save_config
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_CONTEXT_V01 import build_system_prompt
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_MEMORY_SHIM_V01 import search_memory, load_index
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_PROVIDERS_V01 import PROVIDERS, detect_provider
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_PROVIDERS_V01 import PROVIDERS, list_ollama_models
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_PROVIDERS_V01 import detect_provider, PROVIDERS
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_PROVIDERS_V01 import stream
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from CLAW_2024_06_19_PROVIDERS_V01 import stream, TextChunk
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from mcp.client import get_mcp_manager
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from mcp.config import (load_mcp_configs, add_server_to_user_config,
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from mcp.tools import initialize_mcp, reload_mcp, refresh_server
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from memory.scan import scan_all_memories, format_memory_manifest, memory_freshness_text
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from plugin import (
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from rich import print as rprint
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from rich.console import Console
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from rich.live import Live
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from rich.markdown import Markdown
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from rich.panel import Panel
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from rich.syntax import Syntax
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from skill import find_skill
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from skill import load_skills
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from task import list_tasks, get_task, create_task, update_task, delete_task, clear_all_tasks
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    from task.types import TaskStatus
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    import anthropic
+01_SRC/2024-06-19_CLAW_CORE_V01.py:    import random
+01_SRC/2024-06-19_CLAW_CORE_V01.py:  /cloudsave load <gist_id>  Download and load a session from Gist
+01_SRC/2024-06-19_CLAW_CORE_V01.py:  /load [f]   Load session from file
+01_SRC/2024-06-19_CLAW_CORE_V01.py:  /mcp remove <n>   Remove an MCP server from config
+01_SRC/2024-06-19_CLAW_CORE_V01.py:  /memory consolidate     Extract long-term insights from current session via AI
+01_SRC/2024-06-19_CLAW_CORE_V01.py:1. Provide 3-5 concrete, actionable insights or ideas from your expert perspective on the topic.
+01_SRC/2024-06-19_CLAW_CORE_V01.py:2. If there are prior ideas from other agents, briefly acknowledge them and build upon or challenge them.
+01_SRC/2024-06-19_CLAW_CORE_V01.py:Choose experts whose domains are most relevant to analyzing "{topic}" from different angles."""
+01_SRC/2024-06-19_CLAW_ERROR_UTILS_V01.py:import functools
+01_SRC/2024-06-19_CLAW_MAIN_V01.py:            import anthropic
+01_SRC/2024-06-19_CLAW_MAIN_V01.py:from encoding import configure_encoding, safe_print
+01_SRC/2024-06-19_CLAW_MAIN_V01.py:from error_utils import tarea_segura, ejecutar_hook_seguro, TareaConCancelacion
+01_SRC/2024-06-19_CLAW_MAIN_V01.py:from memory import guardar_memoria_auto, cargar_sesion
+01_SRC/2024-06-19_CLAW_MAIN_V01.py:from thinking import construir_params_thinking, modelo_soporta_thinking
+01_SRC/2024-06-19_CLAW_MCP_V01/__init__.py:from .client import MCPClient, MCPManager, get_mcp_manager                 # noqa: F401
+01_SRC/2024-06-19_CLAW_MCP_V01/__init__.py:from .config import (                                                       # noqa: F401
+01_SRC/2024-06-19_CLAW_MCP_V01/__init__.py:from .tools import initialize_mcp, reload_mcp, refresh_server              # noqa: F401
+01_SRC/2024-06-19_CLAW_MCP_V01/__init__.py:from .types import MCPServerConfig, MCPTool, MCPServerState, MCPTransport  # noqa: F401
+01_SRC/2024-06-19_CLAW_MCP_V01/client.py:                import httpx
+01_SRC/2024-06-19_CLAW_MCP_V01/client.py:        """Fetch tool list from server and cache as MCPTool objects."""
+01_SRC/2024-06-19_CLAW_MCP_V01/client.py:        """Return all tools from all connected servers."""
+01_SRC/2024-06-19_CLAW_MCP_V01/client.py:        # Parse server and tool name from qualified name
+01_SRC/2024-06-19_CLAW_MCP_V01/client.py:        Returns the text content from the response, or an error string.
+01_SRC/2024-06-19_CLAW_MCP_V01/client.py:        import httpx
+01_SRC/2024-06-19_CLAW_MCP_V01/client.py:from .types import (
+01_SRC/2024-06-19_CLAW_MCP_V01/config.py:    """Remove a server from the user MCP config. Returns True if found."""
+01_SRC/2024-06-19_CLAW_MCP_V01/config.py:    # Walk up from cwd to find .mcp.json (up to 10 levels)
+01_SRC/2024-06-19_CLAW_MCP_V01/config.py:"""Load MCP server configs from .mcp.json files (project + user level).
+01_SRC/2024-06-19_CLAW_MCP_V01/config.py:from .types import MCPServerConfig
+01_SRC/2024-06-19_CLAW_MCP_V01/tools.py:        # Register tools from all successfully connected servers
+01_SRC/2024-06-19_CLAW_MCP_V01/tools.py:3. Discovers tools from each server
+01_SRC/2024-06-19_CLAW_MCP_V01/tools.py:from .client import MCPClient, MCPManager, get_mcp_manager
+01_SRC/2024-06-19_CLAW_MCP_V01/tools.py:from .config import load_mcp_configs
+01_SRC/2024-06-19_CLAW_MCP_V01/tools.py:from .types import MCPServerConfig, MCPTool
+01_SRC/2024-06-19_CLAW_MCP_V01/tools.py:from tool_registry import ToolDef, register_tool
+01_SRC/2024-06-19_CLAW_MCP_V01/types.py:    read_only: bool = False         # from annotations.readOnlyHint
+01_SRC/2024-06-19_CLAW_MCP_V01/types.py:    tool_name: str                  # original name from server
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/__init__.py:  load_index()     — load all entries from one or both scopes
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/__init__.py:from .consolidator import consolidate_session  # noqa: F401
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/__init__.py:from .context import (  # noqa: F401
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/__init__.py:from .scan import (  # noqa: F401
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/__init__.py:from .store import (  # noqa: F401
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/__init__.py:from .types import (  # noqa: F401
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/consolidator.py:        # Build condensed transcript from the last 40 messages (≈ 20 turns)
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/consolidator.py:        from .store import MemoryEntry, save_memory, check_conflict
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/consolidator.py:        from providers import stream, AssistantTurn
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/consolidator.py:"""Memory consolidator: extract long-term insights from completed sessions.
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/consolidator.py:- Anything already obvious from CLAUDE.md
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/consolidator.py:- Code patterns, architecture, file paths — derivable from the codebase
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/consolidator.py:2. Project decisions or facts made explicit (NOT derivable from code/git)
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/context.py:            f"(0-based) from the provided list. Select at most {max_results} entries. "
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/context.py:        from .scan import scan_all_memories
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/context.py:        from providers import stream, AssistantTurn
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/context.py:    """Use a fast AI call to select the most relevant memories from candidates.
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/context.py:from .scan import scan_all_memories, format_memory_manifest, memory_freshness_text
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/context.py:from .store import (
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/context.py:from .types import MEMORY_SYSTEM_PROMPT
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/scan.py:        description: value from frontmatter `description:` field
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/scan.py:        type:        value from frontmatter `type:` field
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/scan.py:    """Lightweight descriptor loaded from a memory file's frontmatter.
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/scan.py:Mirrors the key ideas from Claude Code's memoryScan.ts and memoryAge.ts:
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/scan.py:from .store import get_memory_dir, parse_frontmatter, INDEX_FILENAME
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/scan.py:import math
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/store.py:    """A single memory entry loaded from a .md file.
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/store.py:    """Load memory entries from one or both scopes.
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/store.py:    """Rebuild MEMORY.md for the given scope from all .md files in that dir."""
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/tools.py:                        "'model' (inferred by AI), 'tool' (from tool output)."
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/tools.py:    from .store import load_entries
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/tools.py:    import math, time as _time
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/tools.py:from .context import find_relevant_memories
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/tools.py:from .scan import scan_all_memories, format_memory_manifest
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/tools.py:from .store import MemoryEntry, save_memory, delete_memory, load_index, check_conflict, touch_last_used
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/tools.py:from tool_registry import ToolDef, register_tool
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/types.py:        "Ongoing work, goals, bugs, or incidents not derivable from code or git history. "
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/types.py:**Before recommending from memory**: A memory naming a file, function, or flag may be stale.
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/types.py:**Types** (save only what cannot be derived from the codebase):
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/types.py:- Code patterns, conventions, architecture, file paths, or project structure — derivable from the codebase.
+01_SRC/2024-06-19_CLAW_MEMORY_PACKAGE_V01/types.py:Four types capture context NOT derivable from the current project state.
+01_SRC/2024-06-19_CLAW_MEMORY_SHIM_V01.py:from memory.context import get_memory_context  # noqa: F401
+01_SRC/2024-06-19_CLAW_MEMORY_SHIM_V01.py:from memory.store import (  # noqa: F401
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/__init__.py:from .subagent import (
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:                    f"Your changes are isolated from the main workspace at {git_root}. "
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:                import yaml as _yaml
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:            import agent as _agent_mod; AgentState = _agent_mod.AgentState
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:    """Lazy-import wrapper to avoid circular dependency with agent module.
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:    Uses absolute import so this works whether called from inside or outside
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:    import agent as _agent_mod
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:    model: str = ""            # model override; "" = inherit from parent
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:# ── Loading agent definitions from .md files ──────────────────────────────
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:from concurrent.futures import ThreadPoolExecutor, Future
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:import queue
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/subagent.py:import tempfile
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/tools.py:            "types (coder, reviewer, researcher, tester, or custom from .clawspring/agents/), "
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/tools.py:    Reads from config:
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/tools.py:from .subagent import SubAgentManager, get_agent_definition, load_agent_definitions
+01_SRC/2024-06-19_CLAW_MULTI_AGENT_V01/tools.py:from tool_registry import ToolDef, register_tool
+01_SRC/2024-06-19_CLAW_PERSONALIDAD_V01.py:        from claw_personalidad import build_system_prompt_claw
+01_SRC/2024-06-19_CLAW_PERSONALIDAD_V01.py:        from claw_personalidad import parchar_config_clawspring
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/__init__.py:from .loader import (
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/__init__.py:from .store import (
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/__init__.py:from .types import PluginManifest, PluginEntry, PluginScope, parse_plugin_identifier
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/loader.py:    """Dynamically import a module from a plugin directory."""
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/loader.py:    """Return paths to skill markdown files from enabled plugins."""
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/loader.py:    Import tool modules from all enabled plugins and collect their TOOL_SCHEMAS.
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/loader.py:    Import tool modules from enabled plugins and register them into tool_registry.
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/loader.py:"""Plugin loader: discover and load tools/skills/mcp from installed plugins."""
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/loader.py:from .store import list_plugins
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/loader.py:from .types import PluginEntry, PluginScope
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/loader.py:import importlib.util
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/recommend.py:    """Lower-case word tokens from text."""
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/recommend.py:    # Also add tags from installed plugins to context (cross-pollination)
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/recommend.py:from .store import list_plugins, USER_PLUGIN_DIR
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/recommend.py:from .types import PluginManifest, PluginScope
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/store.py:        # Install from local path or git
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/store.py:        return False, f"Plugin '{name}' was installed from a local path; cannot auto-update."
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/store.py:from .types import PluginEntry, PluginManifest, PluginScope, parse_plugin_identifier, sanitize_plugin_name
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/store.py:import shutil
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/types.py:            import yaml  # type: ignore
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/types.py:        """Load manifest from a plugin directory (plugin.json or PLUGIN.md frontmatter)."""
+01_SRC/2024-06-19_CLAW_PLUGIN_V01/types.py:    """Parsed from PLUGIN.md YAML frontmatter or plugin.json."""
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:        "base_url":   None,   # read from config["custom_base_url"]
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:        ) from e
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:        yield from stream_anthropic(api_key, model_name, system, messages, tool_schemas, config)
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:        yield from stream_ollama(base_url, model_name, system, messages, tool_schemas, config)
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:        yield from stream_openai_compat(
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:    """Fetch locally available model tags from Ollama server."""
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:    """Stream from Anthropic API. Yields TextChunk/ThinkingChunk, then AssistantTurn."""
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:    """Stream from any OpenAI-compatible API. Yields TextChunk, then AssistantTurn."""
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:    Auto-detects provider from model string.
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:    from openai import OpenAI
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:    import anthropic as _ant
+01_SRC/2024-06-19_CLAW_PROVIDERS_V01.py:  "custom/my-model"          uses CUSTOM_BASE_URL from config
+01_SRC/2024-06-19_CLAW_SKILLS_SHIM_V01.py:from skill.executor import execute_skill  # noqa: F401
+01_SRC/2024-06-19_CLAW_SKILLS_SHIM_V01.py:from skill.loader import (  # noqa: F401
+01_SRC/2024-06-19_CLAW_SKILLS_SHIM_V01.py:from skill.loader import _get_skill_paths as _gsp
+01_SRC/2024-06-19_CLAW_SKILL_V01/__init__.py:from . import builtin as _builtin  # noqa: F401
+01_SRC/2024-06-19_CLAW_SKILL_V01/__init__.py:from .executor import execute_skill  # noqa: F401
+01_SRC/2024-06-19_CLAW_SKILL_V01/__init__.py:from .loader import (  # noqa: F401
+01_SRC/2024-06-19_CLAW_SKILL_V01/builtin.py:from .loader import SkillDef, register_builtin_skill
+01_SRC/2024-06-19_CLAW_SKILL_V01/executor.py:        args: raw argument string from user (after the trigger word)
+01_SRC/2024-06-19_CLAW_SKILL_V01/executor.py:        yield from _execute_forked(skill, message, config, system_prompt)
+01_SRC/2024-06-19_CLAW_SKILL_V01/executor.py:        yield from _execute_inline(message, state, config, system_prompt)
+01_SRC/2024-06-19_CLAW_SKILL_V01/executor.py:    import agent as _agent
+01_SRC/2024-06-19_CLAW_SKILL_V01/executor.py:    yield from _agent.run(message, state, config, system_prompt)
+01_SRC/2024-06-19_CLAW_SKILL_V01/executor.py:    yield from _agent.run(message, sub_state, sub_config, system_prompt)
+01_SRC/2024-06-19_CLAW_SKILL_V01/executor.py:from .loader import SkillDef, substitute_arguments
+01_SRC/2024-06-19_CLAW_SKILL_V01/loader.py:    """Return skills from disk + builtins, deduplicated (project > user > builtin)."""
+01_SRC/2024-06-19_CLAW_SKILL_V01/tools.py:    import agent as _agent
+01_SRC/2024-06-19_CLAW_SKILL_V01/tools.py:from .loader import find_skill, load_skills, substitute_arguments
+01_SRC/2024-06-19_CLAW_SKILL_V01/tools.py:from tool_registry import ToolDef, register_tool
+01_SRC/2024-06-19_CLAW_SUBAGENT_SHIM_V01.py:from multi_agent.subagent import (  # noqa: F401
+01_SRC/2024-06-19_CLAW_TASK_V01/__init__.py:from .store import (
+01_SRC/2024-06-19_CLAW_TASK_V01/__init__.py:from .types import Task, TaskStatus
+01_SRC/2024-06-19_CLAW_TASK_V01/store.py:    """Force reload from disk (used in tests)."""
+01_SRC/2024-06-19_CLAW_TASK_V01/store.py:# The store is kept in memory; we reload from disk on first access.
+01_SRC/2024-06-19_CLAW_TASK_V01/store.py:from .types import Task, TaskStatus
+01_SRC/2024-06-19_CLAW_TASK_V01/tools.py:from .store import create_task, get_task, list_tasks, update_task, delete_task
+01_SRC/2024-06-19_CLAW_TASK_V01/tools.py:from .types import TaskStatus
+01_SRC/2024-06-19_CLAW_TASK_V01/tools.py:from tool_registry import ToolDef, register_tool
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:                        "shellscript. Omit to auto-detect from file extension."
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:            "Use this when you need a decision from the user before proceeding. "
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:            import random, string
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:        import httpx
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:        print("\033[1;35m❓ Question from assistant:\033[0m")
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:from multi_agent.tools import get_agent_manager as _get_agent_manager  # noqa: F401
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:from tool_registry import ToolDef, register_tool
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:from tool_registry import execute_tool as _registry_execute
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:import difflib
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:import glob as _glob
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:import mcp.tools as _mcp_tools  # noqa: F401
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:import memory.tools as _memory_tools  # noqa: F401
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:import multi_agent.tools as _multiagent_tools  # noqa: F401
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:import skill.tools as _skill_tools  # noqa: F401
+01_SRC/2024-06-19_CLAW_TOOLS_V01.py:import task.tools as _task_tools  # noqa: F401
+01_SRC/2024-06-19_CLAW_VOICE_V01/__init__.py:from .keyterms import get_voice_keyterms
+01_SRC/2024-06-19_CLAW_VOICE_V01/__init__.py:from .recorder import check_recording_availability, record_until_silence
+01_SRC/2024-06-19_CLAW_VOICE_V01/__init__.py:from .stt import check_stt_availability, transcribe
+01_SRC/2024-06-19_CLAW_VOICE_V01/keyterms.py:setting and adapted to pull context from the Python runtime environment.
+01_SRC/2024-06-19_CLAW_VOICE_V01/recorder.py:            import numpy  # noqa: F401
+01_SRC/2024-06-19_CLAW_VOICE_V01/recorder.py:        import sounddevice  # noqa: F401
+01_SRC/2024-06-19_CLAW_VOICE_V01/recorder.py:    """Record from microphone until silence or max_seconds.
+01_SRC/2024-06-19_CLAW_VOICE_V01/recorder.py:    import numpy as np
+01_SRC/2024-06-19_CLAW_VOICE_V01/recorder.py:    import sounddevice as sd
+01_SRC/2024-06-19_CLAW_VOICE_V01/recorder.py:import io
+01_SRC/2024-06-19_CLAW_VOICE_V01/recorder.py:import shutil
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:        from faster_whisper import WhisperModel
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:        import ctranslate2
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:        import faster_whisper  # noqa: F401
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:        import torch
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:        import whisper
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:        import whisper  # noqa: F401
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:    client = OpenAI()  # uses OPENAI_API_KEY from env
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:    from openai import OpenAI
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:    import numpy as np
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:from .recorder import SAMPLE_RATE, CHANNELS, BYTES_PER_SAMPLE
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:import io
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:import struct
+01_SRC/2024-06-19_CLAW_VOICE_V01/stt.py:import tempfile
+01_SRC/clawspring (1).py:                                # Extract text blocks from content array
+01_SRC/clawspring (1).py:                          "You can specify a path or generate one from a brainstorm file.", "dim"))
+01_SRC/clawspring (1).py:                        "Order by priority. Include ALL actionable items from the plan. "
+01_SRC/clawspring (1).py:                    # Offer to auto-generate todo_list.txt from the brainstorm .md, then run worker
+01_SRC/clawspring (1).py:                    from providers import detect_provider
+01_SRC/clawspring (1).py:                    print(clr("\n  ── Generating TODO List from Master Plan ──", "dim"))
+01_SRC/clawspring (1).py:                "Order by priority. Include ALL actionable items from the plan. "
+01_SRC/clawspring (1).py:                # Grab the last assistant response from state
+01_SRC/clawspring (1).py:                from skill import substitute_arguments
+01_SRC/clawspring (1).py:                import msvcrt
+01_SRC/clawspring (1).py:                import random as _random
+01_SRC/clawspring (1).py:                print(clr("\n  ── Analysis from Main Agent ──", "dim"))
+01_SRC/clawspring (1).py:            # Auto-detect context from project files
+01_SRC/clawspring (1).py:            # Promote-then-Worker: generate todo_list.txt from brainstorm .md, then run worker
+01_SRC/clawspring (1).py:            from config import save_config
+01_SRC/clawspring (1).py:            from faker import Faker
+01_SRC/clawspring (1).py:            from providers import PROVIDERS
+01_SRC/clawspring (1).py:            from providers import TextChunk
+01_SRC/clawspring (1).py:            from voice import check_voice_deps, check_recording_availability, check_stt_availability
+01_SRC/clawspring (1).py:            from voice.stt import get_stt_backend_name
+01_SRC/clawspring (1).py:            import random
+01_SRC/clawspring (1).py:            ok(f"Removed MCP server '{name}' from user config")
+01_SRC/clawspring (1).py:            return f"Error from Agent {letter}: {e}"
+01_SRC/clawspring (1).py:        """Process a /command from Telegram, handling sentinels inline.
+01_SRC/clawspring (1).py:        # Also include manually /save'd sessions from SESSIONS_DIR root
+01_SRC/clawspring (1).py:        # Collect sessions from daily/ folders, newest first
+01_SRC/clawspring (1).py:        agent_count = 5  # skip interactive input when called from Telegram
+01_SRC/clawspring (1).py:        from PIL import ImageGrab
+01_SRC/clawspring (1).py:        from claw_personalidad import build_system_prompt_claw as _build_sp_claw
+01_SRC/clawspring (1).py:        from claw_personalidad import saludo_inicio, contar_sesiones
+01_SRC/clawspring (1).py:        from cloudsave import upload_session
+01_SRC/clawspring (1).py:        from config import SESSION_HIST_FILE
+01_SRC/clawspring (1).py:        from config import save_config
+01_SRC/clawspring (1).py:        from memory import consolidate_session
+01_SRC/clawspring (1).py:        from multi_agent.tools import get_agent_manager
+01_SRC/clawspring (1).py:        from providers import detect_provider
+01_SRC/clawspring (1).py:        from tools import drain_pending_questions
+01_SRC/clawspring (1).py:        from voice import check_voice_deps, voice_input as _voice_input
+01_SRC/clawspring (1).py:        import io, base64
+01_SRC/clawspring (1).py:        import select as _sel
+01_SRC/clawspring (1).py:        info("Fetching your clawspring sessions from GitHub Gist…")
+01_SRC/clawspring (1).py:        info(f"Downloading session {gist_id[:8]}… from Gist…")
+01_SRC/clawspring (1).py:        ok(f"Session loaded from Gist ({len(state.messages)} messages).")
+01_SRC/clawspring (1).py:      /worker --path /some/todo.txt        — all tasks from custom path
+01_SRC/clawspring (1).py:      /worker --path /some/todo.txt 1,4,6  — specific tasks from custom path
+01_SRC/clawspring (1).py:    """Auto-implement pending tasks from a todo_list.txt file.
+01_SRC/clawspring (1).py:    """Grab image from clipboard and send to vision model with optional prompt."""
+01_SRC/clawspring (1).py:    """Prompt the user to select from locally available Ollama models."""
+01_SRC/clawspring (1).py:    # /memory consolidate  — extract long-term memories from current session
+01_SRC/clawspring (1).py:    # Since cmd_voice is called from handle_slash which is inside repl(),
+01_SRC/clawspring (1).py:    /cloudsave load <gist_id>  — download and load a session from Gist
+01_SRC/clawspring (1).py:    /mcp remove <name> — remove a server from user config
+01_SRC/clawspring (1).py:    /plugin update name          — update a plugin from its source
+01_SRC/clawspring (1).py:    from agent import AgentState, run, TextChunk, ThinkingChunk, ToolStart, ToolEnd, TurnDone, PermissionRequest
+01_SRC/clawspring (1).py:    from cloudsave import validate_token, upload_session, list_sessions, download_session
+01_SRC/clawspring (1).py:    from config import HISTORY_FILE
+01_SRC/clawspring (1).py:    from config import MR_SESSION_DIR
+01_SRC/clawspring (1).py:    from config import MR_SESSION_DIR, DAILY_DIR, SESSION_HIST_FILE
+01_SRC/clawspring (1).py:    from config import SESSIONS_DIR
+01_SRC/clawspring (1).py:    from config import SESSIONS_DIR, MR_SESSION_DIR, DAILY_DIR
+01_SRC/clawspring (1).py:    from config import calc_cost
+01_SRC/clawspring (1).py:    from config import load_config, save_config, has_api_key
+01_SRC/clawspring (1).py:    from config import save_config
+01_SRC/clawspring (1).py:    from context import build_system_prompt as _build_system_prompt_orig
+01_SRC/clawspring (1).py:    from mcp.client import get_mcp_manager
+01_SRC/clawspring (1).py:    from mcp.config import (load_mcp_configs, add_server_to_user_config,
+01_SRC/clawspring (1).py:    from mcp.tools import initialize_mcp, reload_mcp, refresh_server
+01_SRC/clawspring (1).py:    from memory import search_memory, load_index
+01_SRC/clawspring (1).py:    from memory.scan import scan_all_memories, format_memory_manifest, memory_freshness_text
+01_SRC/clawspring (1).py:    from plugin import (
+01_SRC/clawspring (1).py:    from providers import PROVIDERS, detect_provider
+01_SRC/clawspring (1).py:    from providers import PROVIDERS, list_ollama_models
+01_SRC/clawspring (1).py:    from providers import detect_provider, PROVIDERS
+01_SRC/clawspring (1).py:    from providers import stream
+01_SRC/clawspring (1).py:    from providers import stream, TextChunk
+01_SRC/clawspring (1).py:    from rich import print as rprint
+01_SRC/clawspring (1).py:    from rich.console import Console
+01_SRC/clawspring (1).py:    from rich.live import Live
+01_SRC/clawspring (1).py:    from rich.markdown import Markdown
+01_SRC/clawspring (1).py:    from rich.panel import Panel
+01_SRC/clawspring (1).py:    from rich.syntax import Syntax
+01_SRC/clawspring (1).py:    from skill import find_skill
+01_SRC/clawspring (1).py:    from skill import load_skills
+01_SRC/clawspring (1).py:    from task import list_tasks, get_task, create_task, update_task, delete_task, clear_all_tasks
+01_SRC/clawspring (1).py:    from task.types import TaskStatus
+01_SRC/clawspring (1).py:    import anthropic
+01_SRC/clawspring (1).py:    import random
+01_SRC/clawspring (1).py:  /cloudsave load <gist_id>  Download and load a session from Gist
+01_SRC/clawspring (1).py:  /load [f]   Load session from file
+01_SRC/clawspring (1).py:  /mcp remove <n>   Remove an MCP server from config
+01_SRC/clawspring (1).py:  /memory consolidate     Extract long-term insights from current session via AI
+01_SRC/clawspring (1).py:1. Provide 3-5 concrete, actionable insights or ideas from your expert perspective on the topic.
+01_SRC/clawspring (1).py:2. If there are prior ideas from other agents, briefly acknowledge them and build upon or challenge them.
+01_SRC/clawspring (1).py:Choose experts whose domains are most relevant to analyzing "{topic}" from different angles."""
+01_SRC/cloudsave.py:  - Zero extra dependencies (uses urllib from stdlib)
+01_SRC/compaction.py:        "content": "Understood. I have the context from the previous conversation. Let's continue.",
+01_SRC/compaction.py:        preserve_last_n_turns: number of messages from end to preserve
+01_SRC/compaction.py:    """Truncate tool-role messages older than preserve_last_n_turns from end.
+01_SRC/compaction.py:    Walks backwards from end, accumulating token estimates, and returns the
+01_SRC/compaction.py:import providers
+01_SRC/context.py:    """Load CLAUDE.md from cwd or parents, and ~/.claude/CLAUDE.md."""
+01_SRC/context.py:    # Project CLAUDE.md (walk up from cwd)
+01_SRC/context.py:- **WebFetch**: Fetch and extract content from a URL
+01_SRC/context.py:MCP servers extend your toolset with external capabilities. Tools from MCP servers are
+01_SRC/context.py:from memory import get_memory_context
+01_SRC/demo.py:from agent import AgentState, run, TextChunk, ThinkingChunk, ToolStart, ToolEnd, TurnDone, PermissionRequest
+01_SRC/demo.py:from config import load_config
+01_SRC/demo.py:from context import build_system_prompt
+01_SRC/mcp/__init__.py:from .client import MCPClient, MCPManager, get_mcp_manager                 # noqa: F401
+01_SRC/mcp/__init__.py:from .config import (                                                       # noqa: F401
+01_SRC/mcp/__init__.py:from .tools import initialize_mcp, reload_mcp, refresh_server              # noqa: F401
+01_SRC/mcp/__init__.py:from .types import MCPServerConfig, MCPTool, MCPServerState, MCPTransport  # noqa: F401
+01_SRC/mcp/client.py:                import httpx
+01_SRC/mcp/client.py:        """Fetch tool list from server and cache as MCPTool objects."""
+01_SRC/mcp/client.py:        """Return all tools from all connected servers."""
+01_SRC/mcp/client.py:        # Parse server and tool name from qualified name
+01_SRC/mcp/client.py:        Returns the text content from the response, or an error string.
+01_SRC/mcp/client.py:        import httpx
+01_SRC/mcp/client.py:from .types import (
+01_SRC/mcp/config.py:    """Remove a server from the user MCP config. Returns True if found."""
+01_SRC/mcp/config.py:    # Walk up from cwd to find .mcp.json (up to 10 levels)
+01_SRC/mcp/config.py:"""Load MCP server configs from .mcp.json files (project + user level).
+01_SRC/mcp/config.py:from .types import MCPServerConfig
+01_SRC/mcp/tools.py:        # Register tools from all successfully connected servers
+01_SRC/mcp/tools.py:3. Discovers tools from each server
+01_SRC/mcp/tools.py:from .client import MCPClient, MCPManager, get_mcp_manager
+01_SRC/mcp/tools.py:from .config import load_mcp_configs
+01_SRC/mcp/tools.py:from .types import MCPServerConfig, MCPTool
+01_SRC/mcp/tools.py:from CLAW_2024_06_19_TOOL_REGISTRY_V01 import ToolDef, register_tool
+01_SRC/mcp/types.py:    read_only: bool = False         # from annotations.readOnlyHint
+01_SRC/mcp/types.py:    tool_name: str                  # original name from server
+01_SRC/memory/__init__.py:  load_index()     — load all entries from one or both scopes
+01_SRC/memory/__init__.py:from .consolidator import consolidate_session  # noqa: F401
+01_SRC/memory/__init__.py:from .context import (  # noqa: F401
+01_SRC/memory/__init__.py:from .scan import (  # noqa: F401
+01_SRC/memory/__init__.py:from .store import (  # noqa: F401
+01_SRC/memory/__init__.py:from .types import (  # noqa: F401
+01_SRC/memory/consolidator.py:        # Build condensed transcript from the last 40 messages (≈ 20 turns)
+01_SRC/memory/consolidator.py:        from .store import MemoryEntry, save_memory, check_conflict
+01_SRC/memory/consolidator.py:        from CLAW_2024_06_19_PROVIDERS_V01 import stream, AssistantTurn
+01_SRC/memory/consolidator.py:"""Memory consolidator: extract long-term insights from completed sessions.
+01_SRC/memory/consolidator.py:- Anything already obvious from CLAUDE.md
+01_SRC/memory/consolidator.py:- Code patterns, architecture, file paths — derivable from the codebase
+01_SRC/memory/consolidator.py:2. Project decisions or facts made explicit (NOT derivable from code/git)
+01_SRC/memory/context.py:            f"(0-based) from the provided list. Select at most {max_results} entries. "
+01_SRC/memory/context.py:        from .scan import scan_all_memories
+01_SRC/memory/context.py:        from CLAW_2024_06_19_PROVIDERS_V01 import stream, AssistantTurn
+01_SRC/memory/context.py:    """Use a fast AI call to select the most relevant memories from candidates.
+01_SRC/memory/context.py:from .scan import scan_all_memories, format_memory_manifest, memory_freshness_text
+01_SRC/memory/context.py:from .store import (
+01_SRC/memory/context.py:from .types import MEMORY_SYSTEM_PROMPT
+01_SRC/memory/scan.py:        description: value from frontmatter `description:` field
+01_SRC/memory/scan.py:        type:        value from frontmatter `type:` field
+01_SRC/memory/scan.py:    """Lightweight descriptor loaded from a memory file's frontmatter.
+01_SRC/memory/scan.py:Mirrors the key ideas from Claude Code's memoryScan.ts and memoryAge.ts:
+01_SRC/memory/scan.py:from .store import get_memory_dir, parse_frontmatter, INDEX_FILENAME
+01_SRC/memory/scan.py:import math
+01_SRC/memory/store.py:    """A single memory entry loaded from a .md file.
+01_SRC/memory/store.py:    """Load memory entries from one or both scopes.
+01_SRC/memory/store.py:    """Rebuild MEMORY.md for the given scope from all .md files in that dir."""
+01_SRC/memory/tools.py:                        "'model' (inferred by AI), 'tool' (from tool output)."
+01_SRC/memory/tools.py:    from .store import load_entries
+01_SRC/memory/tools.py:    import math, time as _time
+01_SRC/memory/tools.py:from .context import find_relevant_memories
+01_SRC/memory/tools.py:from .scan import scan_all_memories, format_memory_manifest
+01_SRC/memory/tools.py:from .store import MemoryEntry, save_memory, delete_memory, load_index, check_conflict, touch_last_used
+01_SRC/memory/tools.py:from CLAW_2024_06_19_TOOL_REGISTRY_V01 import ToolDef, register_tool
+01_SRC/memory/types.py:        "Ongoing work, goals, bugs, or incidents not derivable from code or git history. "
+01_SRC/memory/types.py:**Before recommending from memory**: A memory naming a file, function, or flag may be stale.
+01_SRC/memory/types.py:**Types** (save only what cannot be derived from the codebase):
+01_SRC/memory/types.py:- Code patterns, conventions, architecture, file paths, or project structure — derivable from the codebase.
+01_SRC/memory/types.py:Four types capture context NOT derivable from the current project state.
+01_SRC/multi_agent/__init__.py:from .subagent import (
+01_SRC/multi_agent/subagent.py:                    f"Your changes are isolated from the main workspace at {git_root}. "
+01_SRC/multi_agent/subagent.py:                import yaml as _yaml
+01_SRC/multi_agent/subagent.py:            import CLAW_2024_06_19_AGENT_V01 as _agent_mod; AgentState = _agent_mod.AgentState
+01_SRC/multi_agent/subagent.py:    """Lazy-import wrapper to avoid circular dependency with agent module.
+01_SRC/multi_agent/subagent.py:    Uses absolute import so this works whether called from inside or outside
+01_SRC/multi_agent/subagent.py:    import CLAW_2024_06_19_AGENT_V01 as _agent_mod
+01_SRC/multi_agent/subagent.py:    model: str = ""            # model override; "" = inherit from parent
+01_SRC/multi_agent/subagent.py:# ── Loading agent definitions from .md files ──────────────────────────────
+01_SRC/multi_agent/subagent.py:from concurrent.futures import ThreadPoolExecutor, Future
+01_SRC/multi_agent/subagent.py:import queue
+01_SRC/multi_agent/subagent.py:import tempfile
+01_SRC/multi_agent/tools.py:            "types (coder, reviewer, researcher, tester, or custom from .clawspring/agents/), "
+01_SRC/multi_agent/tools.py:    Reads from config:
+01_SRC/multi_agent/tools.py:from .subagent import SubAgentManager, get_agent_definition, load_agent_definitions
+01_SRC/multi_agent/tools.py:from CLAW_2024_06_19_TOOL_REGISTRY_V01 import ToolDef, register_tool
+01_SRC/plugin/__init__.py:from .loader import (
+01_SRC/plugin/__init__.py:from .store import (
+01_SRC/plugin/__init__.py:from .types import PluginManifest, PluginEntry, PluginScope, parse_plugin_identifier
+01_SRC/plugin/loader.py:    """Dynamically import a module from a plugin directory."""
+01_SRC/plugin/loader.py:    """Return paths to skill markdown files from enabled plugins."""
+01_SRC/plugin/loader.py:    Import tool modules from all enabled plugins and collect their TOOL_SCHEMAS.
+01_SRC/plugin/loader.py:    Import tool modules from enabled plugins and register them into tool_registry.
+01_SRC/plugin/loader.py:"""Plugin loader: discover and load tools/skills/mcp from installed plugins."""
+01_SRC/plugin/loader.py:from .store import list_plugins
+01_SRC/plugin/loader.py:from .types import PluginEntry, PluginScope
+01_SRC/plugin/loader.py:import importlib.util
+01_SRC/plugin/recommend.py:    """Lower-case word tokens from text."""
+01_SRC/plugin/recommend.py:    # Also add tags from installed plugins to context (cross-pollination)
+01_SRC/plugin/recommend.py:from .store import list_plugins, USER_PLUGIN_DIR
+01_SRC/plugin/recommend.py:from .types import PluginManifest, PluginScope
+01_SRC/plugin/store.py:        # Install from local path or git
+01_SRC/plugin/store.py:        return False, f"Plugin '{name}' was installed from a local path; cannot auto-update."
+01_SRC/plugin/store.py:from .types import PluginEntry, PluginManifest, PluginScope, parse_plugin_identifier, sanitize_plugin_name
+01_SRC/plugin/store.py:import shutil
+01_SRC/plugin/types.py:            import yaml  # type: ignore
+01_SRC/plugin/types.py:        """Load manifest from a plugin directory (plugin.json or PLUGIN.md frontmatter)."""
+01_SRC/plugin/types.py:    """Parsed from PLUGIN.md YAML frontmatter or plugin.json."""
+01_SRC/skill/__init__.py:from . import builtin as _builtin  # noqa: F401
+01_SRC/skill/__init__.py:from .executor import execute_skill  # noqa: F401
+01_SRC/skill/__init__.py:from .loader import (  # noqa: F401
+01_SRC/skill/builtin.py:from .loader import SkillDef, register_builtin_skill
+01_SRC/skill/executor.py:        args: raw argument string from user (after the trigger word)
+01_SRC/skill/executor.py:        yield from _execute_forked(skill, message, config, system_prompt)
+01_SRC/skill/executor.py:        yield from _execute_inline(message, state, config, system_prompt)
+01_SRC/skill/executor.py:    import CLAW_2024_06_19_AGENT_V01 as _agent
+01_SRC/skill/executor.py:    yield from _agent.run(message, state, config, system_prompt)
+01_SRC/skill/executor.py:    yield from _agent.run(message, sub_state, sub_config, system_prompt)
+01_SRC/skill/executor.py:from .loader import SkillDef, substitute_arguments
+01_SRC/skill/loader.py:    """Return skills from disk + builtins, deduplicated (project > user > builtin)."""
+01_SRC/skill/tools.py:    import CLAW_2024_06_19_AGENT_V01 as _agent
+01_SRC/skill/tools.py:from .loader import find_skill, load_skills, substitute_arguments
+01_SRC/skill/tools.py:from CLAW_2024_06_19_TOOL_REGISTRY_V01 import ToolDef, register_tool
+01_SRC/skills.py:from skill.executor import execute_skill  # noqa: F401
+01_SRC/skills.py:from skill.loader import (  # noqa: F401
+01_SRC/skills.py:from skill.loader import _get_skill_paths as _gsp
+01_SRC/subagent.py:from multi_agent.subagent import (  # noqa: F401
+01_SRC/task/__init__.py:from .store import (
+01_SRC/task/__init__.py:from .types import Task, TaskStatus
+01_SRC/task/store.py:    """Force reload from disk (used in tests)."""
+01_SRC/task/store.py:# The store is kept in memory; we reload from disk on first access.
+01_SRC/task/store.py:from .types import Task, TaskStatus
+01_SRC/task/tools.py:from .store import create_task, get_task, list_tasks, update_task, delete_task
+01_SRC/task/tools.py:from .types import TaskStatus
+01_SRC/task/tools.py:from CLAW_2024_06_19_TOOL_REGISTRY_V01 import ToolDef, register_tool
+01_SRC/voice/__init__.py:from .keyterms import get_voice_keyterms
+01_SRC/voice/__init__.py:from .recorder import check_recording_availability, record_until_silence
+01_SRC/voice/__init__.py:from .stt import check_stt_availability, transcribe
+01_SRC/voice/keyterms.py:setting and adapted to pull context from the Python runtime environment.
+01_SRC/voice/recorder.py:            import numpy  # noqa: F401
+01_SRC/voice/recorder.py:        import sounddevice  # noqa: F401
+01_SRC/voice/recorder.py:    """Record from microphone until silence or max_seconds.
+01_SRC/voice/recorder.py:    import numpy as np
+01_SRC/voice/recorder.py:    import sounddevice as sd
+01_SRC/voice/recorder.py:import io
+01_SRC/voice/recorder.py:import shutil
+01_SRC/voice/stt.py:        from faster_whisper import WhisperModel
+01_SRC/voice/stt.py:        import ctranslate2
+01_SRC/voice/stt.py:        import faster_whisper  # noqa: F401
+01_SRC/voice/stt.py:        import torch
+01_SRC/voice/stt.py:        import whisper
+01_SRC/voice/stt.py:        import whisper  # noqa: F401
+01_SRC/voice/stt.py:    client = OpenAI()  # uses OPENAI_API_KEY from env
+01_SRC/voice/stt.py:    from openai import OpenAI
+01_SRC/voice/stt.py:    import numpy as np
+01_SRC/voice/stt.py:from .recorder import SAMPLE_RATE, CHANNELS, BYTES_PER_SAMPLE
+01_SRC/voice/stt.py:import io
+01_SRC/voice/stt.py:import struct
+01_SRC/voice/stt.py:import tempfile
+run_claw.py:import importlib
