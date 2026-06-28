@@ -11,7 +11,7 @@
 - Se verificaron las funciones que utilizan `@lru_cache`. No se encontraron usos inapropiados en funciones que dependen de `os.environ` en el código fuente principal actual.
 
 ## Benchmarks de Ollama (Framework)
-Se ha proporcionado un script `benchmark.py` para medir el rendimiento de modelos locales.
+Se ha proporcionado un script `02_TESTS/benchmark.py` para medir el rendimiento de modelos locales.
 
 ### Métricas:
 - **TTFT (Time to First Token)**

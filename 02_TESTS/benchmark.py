@@ -6,17 +6,16 @@ from pathlib import Path
 # Add paths for original structure
 project_root = Path('.').absolute()
 sys.path.insert(0, str(project_root / "01_SRC"))
-sys.path.insert(0, str(project_root)) # config and providers are here in original structure
-
-try:
-    import providers
-except ImportError:
-    # try 01_SRC
-    sys.path.insert(0, str(project_root / "01_SRC"))
-    import providers
+sys.path.insert(0, str(project_root))
 
 def benchmark_model(model_name, prompt="Hello, how are you?"):
     print(f"\nBenchmarking {model_name}...")
+
+    try:
+        import providers
+    except ImportError:
+        print("  Error: Could not import providers module.")
+        return None
 
     config = {
         "max_tokens": 512,
