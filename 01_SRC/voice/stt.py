@@ -1,1 +1,0 @@
-../2024-06-19_CLAW_VOICE_V01/stt.py

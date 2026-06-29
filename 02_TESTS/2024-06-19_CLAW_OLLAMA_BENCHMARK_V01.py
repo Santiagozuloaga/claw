@@ -8,14 +8,11 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent.absolute()
 sys.path.insert(0, str(project_root / "01_SRC"))
 
-try:
-    from CLAW_2024_06_19_PROVIDERS_V01 import stream, TextChunk, AssistantTurn
-except ImportError:
-    import importlib
-    providers = importlib.import_module("2024-06-19_CLAW_PROVIDERS_V01")
-    stream = providers.stream
-    TextChunk = providers.TextChunk
-    AssistantTurn = providers.AssistantTurn
+import importlib
+providers = importlib.import_module("2024-06-19_CLAW_PROVIDERS_V01")
+stream = providers.stream
+TextChunk = providers.TextChunk
+AssistantTurn = providers.AssistantTurn
 
 def benchmark_model(model_name, prompt="Explain quantum entanglement in 2 paragraphs."):
     print(f"\nBenchmarking {model_name}...")
