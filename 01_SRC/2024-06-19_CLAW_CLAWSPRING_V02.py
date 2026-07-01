@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-# === UTF-8 Windows fix (Bug #4) ===
-import sys as _sys, os as _os
-if _sys.platform == "win32":
-    if hasattr(_sys.stdout, "reconfigure"):
-        _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-    if hasattr(_sys.stderr, "reconfigure"):
-        _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
-    if hasattr(_sys.stdin, "reconfigure"):
-        _sys.stdin.reconfigure(encoding="utf-8", errors="replace")
-    _os.environ["PYTHONIOENCODING"] = "utf-8"
-# === FIN UTF-8 fix ===
 """
 ClawSpring — Minimal Python implementation of Claude Code.
 
@@ -76,9 +65,15 @@ import os
 import re
 import sys
 import random
+import json
+import threading
+from pathlib import Path
+from datetime import datetime
+from typing import Optional, Union
+
+# === UTF-8 Windows fix (Bug #4) ===
 if sys.platform == "win32":
-    os.system("")  # Enable ANSI escape codes on Windows CMD
-    # Corrección Bug #4: UTF-8 en Windows — DEBE ir antes de cualquier print()
+    # DEBE ir antes de cualquier print()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     if hasattr(sys.stderr, "reconfigure"):
@@ -86,36 +81,44 @@ if sys.platform == "win32":
     if hasattr(sys.stdin, "reconfigure"):
         sys.stdin.reconfigure(encoding="utf-8", errors="replace")
     os.environ["PYTHONIOENCODING"] = "utf-8"
+    os.system("")  # Enable ANSI escape codes on Windows CMD
     try:
         import subprocess as _sp
         _sp.run(["chcp", "65001"], shell=True, capture_output=True, check=False)
     except Exception:
-        pass  # chcp no crítico — el reconfigure ya fijó UTF-8
-import json
-try:
-    import readline
-except ImportError:
-    readline = None  # Windows compatibility
-import atexit
-import argparse
-import textwrap
-from pathlib import Path
-from datetime import datetime
-from typing import Optional, Union
-import threading
-# ── Optional rich for markdown rendering ──────────────────────────────────
-try:
-    from rich.console import Console
-    from rich.markdown import Markdown
-    from rich.live import Live
-    from rich.syntax import Syntax
-    from rich.panel import Panel
-    from rich import print as rprint
-    _RICH = True
-    console = Console()
-except ImportError:
-    _RICH = False
-    console = None
+        pass  # chcp no crítico
+# === FIN UTF-8 fix ===
+
+# Lazy-loaded rich components
+_RICH = False
+console = None
+Markdown = None
+Live = None
+
+def _init_rich(config=None):
+    """Lazy initialization of rich library to improve startup time."""
+    global _RICH, console, Markdown, Live
+    if _RICH: return
+    if _RICH is False and console is not None: return # already failed
+
+    # Check config to see if rich is disabled
+    if config and not config.get("rich_live", True):
+        _RICH = False
+        console = None # marker for failed/disabled
+        return
+
+    try:
+        from rich.console import Console as _Console
+        from rich.markdown import Markdown as _Markdown
+        from rich.live import Live as _Live
+        global Markdown, Live
+        Markdown = _Markdown
+        Live = _Live
+        console = _Console()
+        _RICH = True
+    except ImportError:
+        _RICH = False
+        console = None # marker for failed/disabled
 
 VERSION = "3.05.5"
 
@@ -168,7 +171,7 @@ _RICH_LIVE = True  # set to False (via config rich_live=false) to disable in-pla
 
 def _make_renderable(text: str):
     """Return a Rich renderable: Markdown if text contains markup, else plain."""
-    if any(c in text for c in ("#", "*", "`", "_", "[")):
+    if _RICH and Markdown and any(c in text for c in ("#", "*", "`", "_", "[")):
         return Markdown(text)
     return text
 
@@ -363,10 +366,9 @@ def ask_permission_interactive(desc: str, config: dict) -> bool:
 
 # ── Slash commands ─────────────────────────────────────────────────────────
 
-import time
-import traceback
-
 def _proactive_watcher_loop(config):
+    import time
+    import traceback
     """Background daemon that fires a wake-up prompt after a period of inactivity."""
     while True:
         time.sleep(1)
@@ -2600,13 +2602,18 @@ _CMD_META: dict[str, tuple[str, list[str]]] = {
 
 
 def setup_readline(history_file: Path):
-    if readline is None:
+    try:
+        import readline
+    except ImportError:
         return
+
     try:
         readline.read_history_file(str(history_file))
     except FileNotFoundError:
         pass  # Normal: no history file on first run — readline creates it on exit
     readline.set_history_length(1000)
+
+    import atexit
     atexit.register(readline.write_history_file, str(history_file))
 
     # Allow "/" to be part of a completion token so "/model" is one word
@@ -2659,6 +2666,7 @@ def setup_readline(history_file: Path):
 # ── Main REPL ──────────────────────────────────────────────────────────────
 
 def repl(config: dict, initial_prompt: str = None):
+    _init_rich(config)
     from config import HISTORY_FILE
     from context import build_system_prompt as _build_system_prompt_orig
     from agent import AgentState, run, TextChunk, ThinkingChunk, ToolStart, ToolEnd, TurnDone, PermissionRequest
@@ -3327,6 +3335,9 @@ def repl(config: dict, initial_prompt: str = None):
 # ── Entry point ────────────────────────────────────────────────────────────
 
 def main():
+    import argparse
+    import textwrap
+
     parser = argparse.ArgumentParser(
         prog="clawspring",
         description="ClawSpring — minimal Python Claude Code implementation",
