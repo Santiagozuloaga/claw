@@ -40,7 +40,7 @@ from typing import Optional
 # Módulos de correcciones
 from encoding import configure_encoding, safe_print
 from thinking import construir_params_thinking, modelo_soporta_thinking
-from memory import guardar_memoria_auto, cargar_sesion
+from session_memory import guardar_memoria_auto, cargar_sesion
 from error_utils import tarea_segura, ejecutar_hook_seguro, TareaConCancelacion
 
 # Aplicar configuración completa de encoding (incluye chcp 65001)
