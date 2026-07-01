@@ -64,8 +64,21 @@ from __future__ import annotations
 import os
 import re
 import sys
+
+# =============================================================================
+# ██ INICIO SEGURO — UTF-8 ANTES de cualquier import que use print/logging ██
+# =============================================================================
 if sys.platform == "win32":
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stdin, "reconfigure"):
+        sys.stdin.reconfigure(encoding="utf-8", errors="replace")
+    os.environ["PYTHONIOENCODING"] = "utf-8"
     os.system("")  # Enable ANSI escape codes on Windows CMD
+# =============================================================================
+
 import json
 try:
     import readline
