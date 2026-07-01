@@ -75,6 +75,7 @@ Slash commands in REPL:
 import os
 import re
 import sys
+import random
 if sys.platform == "win32":
     os.system("")  # Enable ANSI escape codes on Windows CMD
     # Corrección Bug #4: UTF-8 en Windows — DEBE ir antes de cualquier print()
@@ -265,7 +266,6 @@ def _start_tool_spinner():
     global _tool_spinner_thread
     if _tool_spinner_thread and _tool_spinner_thread.is_alive():
         return  # already running
-    import random
     with _spinner_lock:
         global _spinner_phrase
         _spinner_phrase = random.choice(_TOOL_SPINNER_PHRASES)
@@ -275,7 +275,6 @@ def _start_tool_spinner():
 
 def _change_spinner_phrase():
     """Change the spinner phrase without stopping it."""
-    import random
     with _spinner_lock:
         global _spinner_phrase
         _spinner_phrase = random.choice(_TOOL_SPINNER_PHRASES)
@@ -577,7 +576,6 @@ USER FOCUS: {user_topic}
             # Corrección Bug #1: except específico, no except: desnudo
             first = ["Alex", "Sam", "Taylor", "Jordan", "Casey", "Riley", "Drew", "Avery"]
             last = ["Garcia", "Martinez", "Lopez", "Hernandez", "Gonzalez", "Sanchez", "Ramirez", "Torres"]
-            import random
             return f"{letter}", f"{random.choice(first)} {random.choice(last)}"
             
     # ── Debate Loop ───────────────────────────────────────────────────────
@@ -2678,6 +2676,8 @@ def repl(config: dict, initial_prompt: str = None):
             return _build_sp_claw()
         return _build_system_prompt_orig()
 
+    _ANSI_RE = re.compile(r'\x1b\[[0-9;]*m')
+
     setup_readline(HISTORY_FILE)
     state = AgentState()
     verbose = config.get("verbose", False)
@@ -2704,7 +2704,7 @@ def repl(config: dict, initial_prompt: str = None):
         _box_w     = len(_top_left) + len(f"v{VERSION}") + len(_top_right)
 
         def _box_row(content: str) -> str:
-            vis_len = len(re.sub(r'\x1b\[[0-9;]*m', '', content))
+            vis_len = len(_ANSI_RE.sub('', content))
             pad     = _box_w - vis_len - 1
             return content + " " * max(0, pad) + clr("│", "dim")
 
@@ -2750,6 +2750,7 @@ def repl(config: dict, initial_prompt: str = None):
         t.start()
     
     def run_query(user_input: str, is_background: bool = False):
+        sage_check_cooling()
         nonlocal verbose
         
         with query_lock:
@@ -3402,3 +3403,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# --- ISO-SAGE Physical Security Rules ---
+import time as _sage_time
+_sage_start_time = _sage_time.time()
+
+def sage_check_cooling():
+    if _sage_time.time() - _sage_start_time > 3000: # 50 minutes
+        print("\n[ALERTA DE ENFRIAMIENTO] La ejecución ha superado los 50 minutos.")

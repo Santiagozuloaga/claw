@@ -6,6 +6,7 @@ import glob as _glob
 import difflib
 import subprocess
 import threading
+import itertools
 from pathlib import Path
 from typing import Callable, Optional
 
@@ -328,6 +329,12 @@ def _is_safe_bash(cmd: str) -> bool:
     return any(c.startswith(p) for p in _SAFE_PREFIXES)
 
 
+# ── Pre-compiled regex for performance ─────────────────────────────────────
+_RE_SCRIPT = re.compile(r"<script[^>]*>.*?</script>", flags=re.DOTALL | re.IGNORECASE)
+_RE_STYLE  = re.compile(r"<style[^>]*>.*?</style>", flags=re.DOTALL | re.IGNORECASE)
+_RE_HTML   = re.compile(r"<[^>]+>")
+_RE_WHITESPACE = re.compile(r"\s+")
+
 # ── Diff helpers ──────────────────────────────────────────────────────────
 
 def generate_unified_diff(old, new, filename, context_lines=3):
@@ -355,12 +362,14 @@ def _read(file_path: str, limit: int = None, offset: int = None) -> str:
     if p.is_dir():
         return f"Error: {file_path} is a directory"
     try:
-        # Explicitly use utf-8 and newline="" to avoid encoding/line-ending mismatches
-        lines = open(p, "r", encoding="utf-8", errors="replace", newline="").read().splitlines(keepends=True)
         start = offset or 0
-        chunk = lines[start:start + limit] if limit else lines[start:]
+        # Optimization: use islice to avoid reading entire large files into memory
+        with open(p, "r", encoding="utf-8", errors="replace", newline="") as f:
+            # Skip 'start' lines
+            chunk = list(itertools.islice(f, start, start + limit if limit else None))
+
         if not chunk:
-            return "(empty file)"
+            return "(empty file)" if start == 0 else f"(no more lines after offset {start})"
         # Use standard 6-char padding for line numbers, matching Claude's expected format
         return "".join(f"{start + i + 1:6}\t{l}" for i, l in enumerate(chunk))
     except Exception as e:
@@ -462,12 +471,18 @@ def _glob(pattern: str, path: str = None) -> str:
         return f"Error: {e}"
 
 
+_HAS_RG_CACHE = None
+
 def _has_rg() -> bool:
+    global _HAS_RG_CACHE
+    if _HAS_RG_CACHE is not None:
+        return _HAS_RG_CACHE
     try:
         subprocess.run(["rg", "--version"], capture_output=True, check=True)
-        return True
+        _HAS_RG_CACHE = True
     except Exception:
-        return False
+        _HAS_RG_CACHE = False
+    return _HAS_RG_CACHE
 
 
 def _grep(pattern: str, path: str = None, glob: str = None,
@@ -505,12 +520,10 @@ def _webfetch(url: str, prompt: str = None) -> str:
         r.raise_for_status()
         ct = r.headers.get("content-type", "")
         if "html" in ct:
-            text = re.sub(r"<script[^>]*>.*?</script>", "", r.text,
-                          flags=re.DOTALL | re.IGNORECASE)
-            text = re.sub(r"<style[^>]*>.*?</style>", "", text,
-                          flags=re.DOTALL | re.IGNORECASE)
-            text = re.sub(r"<[^>]+>", " ", text)
-            text = re.sub(r"\s+", " ", text).strip()
+            text = _RE_SCRIPT.sub("", r.text)
+            text = _RE_STYLE.sub("", text)
+            text = _RE_HTML.sub(" ", text)
+            text = _RE_WHITESPACE.sub(" ", text).strip()
         else:
             text = r.text
         return text[:25000]
