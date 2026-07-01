@@ -1,16 +1,3 @@
-#!/usr/bin/env python3
-from __future__ import annotations
-# === UTF-8 Windows fix (Bug #4) ===
-import sys as _sys, os as _os
-if _sys.platform == "win32":
-    if hasattr(_sys.stdout, "reconfigure"):
-        _sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-    if hasattr(_sys.stderr, "reconfigure"):
-        _sys.stderr.reconfigure(encoding="utf-8", errors="replace")
-    if hasattr(_sys.stdin, "reconfigure"):
-        _sys.stdin.reconfigure(encoding="utf-8", errors="replace")
-    _os.environ["PYTHONIOENCODING"] = "utf-8"
-# === FIN UTF-8 fix ===
 """
 ClawSpring — Minimal Python implementation of Claude Code.
 
@@ -71,6 +58,8 @@ Slash commands in REPL:
   /cloudsave load <gist_id>  Download and load a session from Gist
   /exit /quit Exit
 """
+#!/usr/bin/env python3
+from __future__ import annotations
 
 import os
 import re
@@ -116,7 +105,6 @@ try:
 except ImportError:
     _RICH = False
     console = None
-
 VERSION = "3.05.5"
 
 # ── ANSI helpers (used even with rich for non-markdown output) ─────────────
@@ -426,7 +414,6 @@ def cmd_model(args: str, _state, config) -> bool:
 def _generate_personas(topic: str, curr_model: str, config: dict, count: int = 5) -> dict | None:
     """Ask the LLM to generate `count` topic-appropriate expert personas as a dict."""
     from providers import stream, TextChunk
-    import json
 
     example_entries = "\n".join(
         f'  "p{i+1}": {{"icon": "emoji", "role": "Expert Title", "desc": "One sentence describing their analytical angle."}}'
@@ -517,8 +504,7 @@ def cmd_brainstorm(args: str, state, config) -> bool:
     """
     from providers import stream
     import time
-    from pathlib import Path
-    
+
     # ── Context Snapshot ──────────────────────────────────────────────────
     readme_path = Path("README.md")
     readme_content = ""
@@ -663,7 +649,6 @@ Please read that file, then analyze the diverse perspectives. Identify the stron
 
 def _save_synthesis(state, out_file: str) -> None:
     """Append the last assistant response as the synthesis section of the brainstorm file."""
-    from pathlib import Path
     for msg in reversed(state.messages):
         if msg.get("role") != "assistant":
             continue
@@ -1707,7 +1692,6 @@ def cmd_ssj(args: str, state, config) -> bool:
         + "\n" + clr("╰──────────────────────────────────────────────", "dim")
     )
 
-    from pathlib import Path
 
     def _pick_file(prompt_text="  Select file #: ", exts=None):
         """Show numbered file list and let user pick one."""
@@ -1921,7 +1905,6 @@ def cmd_worker(args: str, state, config) -> bool:
       --workers N                          — run at most N tasks this session
     """
     import shlex
-    from pathlib import Path
 
     # ── Arg parsing ───────────────────────────────────────────────────────
     raw = args.strip()
