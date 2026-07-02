@@ -131,17 +131,20 @@ def err(msg: str):    print(clr(f"Error: {msg}", "red"), file=sys.stderr)
 
 def render_diff(text: str):
     """Print diff text with ANSI colors: red for removals, green for additions."""
-    for line in text.splitlines():
+    lines = text.splitlines()
+    output = []
+    for line in lines:
         if line.startswith("+++") or line.startswith("---"):
-            print(C["bold"] + line + C["reset"])
+            output.append(C["bold"] + line + C["reset"])
         elif line.startswith("+"):
-            print(C["green"] + line + C["reset"])
+            output.append(C["green"] + line + C["reset"])
         elif line.startswith("-"):
-            print(C["red"] + line + C["reset"])
+            output.append(C["red"] + line + C["reset"])
         elif line.startswith("@@"):
-            print(C["cyan"] + line + C["reset"])
+            output.append(C["cyan"] + line + C["reset"])
         else:
-            print(line)
+            output.append(line)
+    sys.stdout.write("\n".join(output) + "\n")
 
 def _has_diff(text: str) -> bool:
     """Check if text contains a unified diff."""
@@ -175,9 +178,14 @@ def stream_text(chunk: str) -> None:
     if _RICH and _RICH_LIVE:
         if _current_live is None:
             _start_live()
-        _current_live.update(_make_renderable("".join(_accumulated_text)), refresh=True)
+        # Only update if chunk contains potentially formatting-changing characters
+        if any(c in chunk for c in ("#", "*", "`", "_", "[", "\n")):
+            _current_live.update(_make_renderable("".join(_accumulated_text)), refresh=True)
+        else:
+            _current_live.update(_make_renderable("".join(_accumulated_text)), refresh=False)
     else:
-        print(chunk, end="", flush=True)
+        sys.stdout.write(chunk)
+        sys.stdout.flush()
 
 def stream_thinking(chunk: str, verbose: bool):
     if verbose:
@@ -245,7 +253,8 @@ def _run_tool_spinner():
         with _spinner_lock:
             phrase = _spinner_phrase
         frame = chars[i % len(chars)]
-        sys.stdout.write(f"\r  {frame} {clr(phrase, 'dim')}   ")
+        # Direct ANSI for minor optimization
+        sys.stdout.write(f"\r  {frame} \033[2m{phrase}\033[0m   ")
         sys.stdout.flush()
         i += 1
         _tool_spinner_stop.wait(0.1)
